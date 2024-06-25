@@ -1,9 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { v4 as uuid } from 'uuid';
+import { Room } from './Room.entity';
 
 @Entity()
 export class Hotel {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string = uuid();
 
   @Column({ type: 'varchar', length: 50, nullable: false })
   name: string;
@@ -19,4 +21,7 @@ export class Hotel {
 
   @Column({ type: 'varchar', length: 100 })
   dectription: string;
+
+  @OneToMany(() => Room, (Room) => Room.hotel)
+  rooms: Room[];
 }
