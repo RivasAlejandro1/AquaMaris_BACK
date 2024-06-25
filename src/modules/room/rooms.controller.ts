@@ -6,7 +6,10 @@ export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
   @Get()
-  getUsers(@Query('page') page: number = 1, @Query('limit') limit: number = 5) {
+  getAllRoms(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 5,
+  ) {
     return this.roomsService.getAllRooms(page, limit);
   }
 }
