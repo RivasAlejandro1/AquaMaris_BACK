@@ -1,11 +1,11 @@
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
-
+import { v4 as uuid } from 'uuid';
 @Entity()
 @Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string = uuid();
 
   @Column({ length: 100 })
   name: string;
