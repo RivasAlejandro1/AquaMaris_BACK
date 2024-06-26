@@ -27,11 +27,16 @@ export class UserController {
     }
      
     /// admin
-    @Put('admin/:id')
+    @Put('superadmin/:id')
     @RolesAdmin(Roles.SUPERADMIN)
     @UseGuards(Guard_admin)
     adminupdate(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: User){
        return this.userservice.adminupdate(datauser, id)
+    }
+
+    @Put('admin/:id')     
+        UpdateDateColumn(){
+            
     }
     
 
