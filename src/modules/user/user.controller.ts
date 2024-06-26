@@ -34,10 +34,10 @@ export class UserController {
        return this.userservice.adminupdate(datauser, id)
     }
 
-    @Put('admin/:id')     
+   /*  @Put('admin/:id')     
         UpdateDateColumn(){
-            
-    }
+
+    } */
     
 
     @Put(':id')
