@@ -1,7 +1,15 @@
-import { Controller, Get, Query, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { RoomsService } from './rooms.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { filtersInterceptor } from 'src/interceptors/filtersInterceptor.interceptor';
-//import { ServicesRoomFilterDto } from 'src/dtos/servicesRoomFilter.dto';
 
 @Controller('rooms')
 export class RoomsController {
@@ -19,5 +27,14 @@ export class RoomsController {
   @UseInterceptors(filtersInterceptor)
   filterRooms(@Query() query) {
     return this.roomsService.filterRoom(query);
+  }
+  @Post()
+  async createRoom(@Body() infoRoom: any) {
+    return await this.roomsService.createRoom(infoRoom);
+  }
+
+  @Post('seeder')
+  async seederAllAboutRoom() {
+    return await this.roomsService.seederAllAboutRoom();
   }
 }
