@@ -18,7 +18,7 @@ export class Room {
   id: string = uuid();
 
   @Column({ type: 'varchar', length: 50, nullable: false })
-  tipe: string;
+  type: string;
 
   @Column({ type: 'decimal', nullable: false })
   price: number;
