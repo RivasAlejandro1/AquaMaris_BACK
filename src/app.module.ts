@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { User } from './entity/User.entity';
 import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { AuthModule } from './modules/auth/auth.module';
       },
       secret: process.env.JWT_SECRET,
     }),
-    AuthModule,
+    AuthModule,UserModule,
   ],
   providers: [],
 })

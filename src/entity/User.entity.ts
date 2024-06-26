@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
 
-@Entity()
+@Entity({name:"users"})
 @Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -16,8 +16,8 @@ export class User {
   @Column()
   password: string;
 
-  @Column('simple-array')
-  roles: string;
+  @Column()
+  role: string;
 
   @Column({ length: 15 })
   phone: string;
@@ -30,4 +30,14 @@ export class User {
 
   @Column({ type: 'enum', enum: MembershipStatus })
   membership_status: MembershipStatus;
+
+  @Column({default: true})
+  status:boolean;
+
+  @Column({default: new Date})
+  date_start: Date;
+
+  @Column({default:""})
+  date_end: string; 
+
 }

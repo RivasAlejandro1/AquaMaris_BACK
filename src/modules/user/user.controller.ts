@@ -1,12 +1,18 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Put, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, NotFoundException, Param, ParseUUIDPipe, Put, Query, UseGuards } from "@nestjs/common";
 import { CreateUserDto } from "src/dtos/CreateUser.dto";
 import { UserService } from "./user.service";
+import { RolesAdmin } from "src/help/roles.decoretion";
+import { Roles } from "src/enum/Role.enum";
+import { Guard_admin } from "src/guardiane/admin_guard";
+import { User } from "src/entity/User.entity";
 
 @Controller('user')
 export class UserController {
     constructor(private readonly userservice: UserService){}
 
     @Get()
+    @RolesAdmin(Roles.ADMIN)
+    @UseGuards(Guard_admin)
     alluser(@Query('page') page:number=1, @Query('limit') limit:number=5){
         if(page || limit){
             return this.userservice.alluser(page, limit)
@@ -19,6 +25,14 @@ export class UserController {
     userByid(@Param('id', ParseUUIDPipe) id:string){
         return this.userservice.userByid(id)
     }
+     
+    /// admin
+    @Put('admin/:id')
+    @RolesAdmin(Roles.SUPERADMIN)
+    @UseGuards(Guard_admin)
+    adminupdate(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: User){
+       return this.userservice.adminupdate(datauser, id)
+    }
     
 
     @Put(':id')
@@ -28,7 +42,6 @@ export class UserController {
 
     @Delete(':id')
     deleteuser(@Param('id', ParseUUIDPipe) id:string){
-
         return this.userservice.deleteuser(id)
     }
 
