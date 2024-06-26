@@ -29,9 +29,19 @@ export class User {
   @Column('text')
   address: string;
 
+
   @Column('text', { nullable: true })
   user_photo: string;
 
   @Column({ type: 'enum', enum: MembershipStatus })
   membership_status: MembershipStatus;
+   
+  @Column({default: true})
+  status:boolean;
+
+  @Column({default: new Date})
+  date_start: Date;
+
+  @Column({default:""})
+  date_end: string; 
 }

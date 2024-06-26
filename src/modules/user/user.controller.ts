@@ -26,7 +26,7 @@ export class UserController {
         return this.userservice.userByid(id)
     }
      
-    /// admin
+
     @Put('superadmin/:id')
     @RolesAdmin(Roles.SUPERADMIN)
     @UseGuards(Guard_admin)
