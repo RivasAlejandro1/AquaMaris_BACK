@@ -52,7 +52,6 @@ export class UserService{
             user.status = false
             user.date_end = date
             const userdelete = await this.userDBrepository.update(id, user)
-
-    
+            return "change whit successfull"
     }
 }
