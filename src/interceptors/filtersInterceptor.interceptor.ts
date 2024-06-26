@@ -3,6 +3,8 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
+  HttpException,
+  BadRequestException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
@@ -10,9 +12,11 @@ import { Observable } from 'rxjs';
 export class filtersInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
-    const { services, types } = request.query;
-
+    const { arrive_date, services, types } = request.query;
+    if (!arrive_date)
+      throw new BadRequestException('Debes ingresar una fecha de ingreso');
     const filters = {
+      arrive: arrive_date,
       services: services ? services.split(',') : undefined,
       types: types ? types.split(',') : undefined,
     };
