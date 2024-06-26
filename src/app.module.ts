@@ -3,13 +3,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeOrmConfig from './config/typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
-import { User } from './entity/User.entity';
+import { User} from './entity/User.entity';
 import { AuthModule } from './modules/auth/auth.module';
+import { Reservation } from './entity/Reservation.entity';
+import { ReservationModule } from './modules/reservation/reservartion.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Reservation]),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeOrmConfig],
@@ -27,6 +29,8 @@ import { UserModule } from './modules/user/user.module';
       secret: process.env.JWT_SECRET,
     }),
     AuthModule,UserModule,
+    AuthModule,
+    ReservationModule
   ],
   providers: [],
 })

@@ -1,11 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
+<<<<<<< HEAD
+import { v4 as uuid } from 'uuid';
+=======
+import { Reservation } from './Reservation.entity';
 
-@Entity({name:"users"})
+@Entity()
 @Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string = uuid();
 
   @Column({ length: 100 })
   name: string;
@@ -30,14 +34,4 @@ export class User {
 
   @Column({ type: 'enum', enum: MembershipStatus })
   membership_status: MembershipStatus;
-
-  @Column({default: true})
-  status:boolean;
-
-  @Column({default: new Date})
-  date_start: Date;
-
-  @Column({default:""})
-  date_end: string; 
-
 }
