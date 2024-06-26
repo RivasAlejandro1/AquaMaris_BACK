@@ -1,11 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
-<<<<<<< HEAD
 import { v4 as uuid } from 'uuid';
-=======
 import { Reservation } from './Reservation.entity';
-
->>>>>>> Alejandro_branch
 @Entity()
 @Unique(['email'])
 export class User {
