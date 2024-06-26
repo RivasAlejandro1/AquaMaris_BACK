@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
+import { Reservation } from './Reservation.entity';
 
 @Entity()
 @Unique(['email'])
@@ -30,4 +31,7 @@ export class User {
 
   @Column({ type: 'enum', enum: MembershipStatus })
   membership_status: MembershipStatus;
+
+/*   @OneToMany(() => Reservation, (reservation) => reservation.user)
+  reservations: Reservation[] */
 }
