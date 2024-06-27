@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from './User.entity';
+import { Room } from './Room.entity';
 
 @Entity()
 export class Reservation {
@@ -17,9 +24,10 @@ export class Reservation {
 
   @Column({ type: 'varchar', length: 100 })
   statePay: string;
-  /* 
-    @ManyToOne(() => Room, (room) => room.reservations)
-    room: room[] */
+
+  @ManyToOne(() => Room, (room) => room.reservations)
+  @JoinColumn()
+  room: Room[];
 
   /*  @Column()
     companions: ;

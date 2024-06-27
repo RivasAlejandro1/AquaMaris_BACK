@@ -54,11 +54,17 @@ export class RoomsRepository {
   async reserveredRooms(arrive: Date) {
     const reserveredRoomsId = await this.reservationsRepository
       .createQueryBuilder('reservation')
-      .select('reservation.room.id', 'room_id')
-      .where('reservation.depart_date > :arrive', { arrive })
+      .select('reservation.roomId', 'room_id')
+      .where('"reservation"."exit" > :entrance', { entrance: arrive })
       .getRawMany()
       .then((results) => results.map((result) => result.room_id));
-
+    if (reserveredRoomsId.length === 0) {
+      return await this.roomsRepository
+        .createQueryBuilder('room')
+        .leftJoinAndSelect('room.services', 'service')
+        .where('room.state = :state', { state: 'AVAILABLE' })
+        .getMany();
+    }
     const notReserveredRomms = await this.roomsRepository
       .createQueryBuilder('room')
       .leftJoinAndSelect('room.services', 'service')

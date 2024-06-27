@@ -12,7 +12,7 @@ export class AuthService {
   ) {}
 
   async signUp(createUserData: CreateUserDto) {
-    /* const { email, password } = createUserData;
+    const { email, password } = createUserData;
 
     if (createUserData.password !== createUserData.confirmPassword) {
       throw new BadRequestException('Passwords does not match');
@@ -34,6 +34,6 @@ export class AuthService {
       ...userWithoutPassword
     } = newUser;
 
-    return userWithoutPassword; */
+    return userWithoutPassword;
   }
 }

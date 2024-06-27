@@ -1,52 +1,65 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, ParseUUIDPipe, Put, Query, UseGuards } from "@nestjs/common";
-import { CreateUserDto } from "src/dtos/CreateUser.dto";
-import { UserService } from "./user.service";
-import { RolesAdmin } from "src/help/roles.decoretion";
-import { Roles } from "src/enum/Role.enum";
-import { Guard_admin } from "src/guardiane/admin_guard";
-import { User } from "src/entity/User.entity";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  ParseUUIDPipe,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { CreateUserDto } from 'src/dtos/CreateUser.dto';
+import { UserService } from './user.service';
+import { RolesAdmin } from 'src/help/roles.decoretion';
+import { Roles } from 'src/enum/Role.enum';
+import { Guard_admin } from 'src/guardiane/admin_guard';
+import { User } from 'src/entity/User.entity';
 
 @Controller('user')
 export class UserController {
-    constructor(private readonly userservice: UserService){}
+  constructor(private readonly userservice: UserService) {}
 
-    @Get()
-    @RolesAdmin(Roles.ADMIN)
-    @UseGuards(Guard_admin)
-    alluser(@Query('page') page:number=1, @Query('limit') limit:number=5){
-            return this.userservice.alluser(page, limit)
-    }
+  @Get()
+  @RolesAdmin(Roles.ADMIN)
+  @UseGuards(Guard_admin)
+  alluser(@Query('page') page: number = 1, @Query('limit') limit: number = 5) {
+    return this.userservice.alluser(page, limit);
+  }
 
-    @Get(':id')
-    userByid(@Param('id', ParseUUIDPipe) id:string){
-        return this.userservice.userByid(id)
-    }
-     
+  @Get(':id')
+  userByid(@Param('id', ParseUUIDPipe) id: string) {
+    return this.userservice.userByid(id);
+  }
 
-    @Put('superadmin/:id')
-    @RolesAdmin(Roles.SUPERADMIN)
-    @UseGuards(Guard_admin)
-    superadminupdate(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: Partial<user>){
-       return this.userservice.adminupdate(datauser, id)
-    }
+  @Put('superadmin/:id')
+  @RolesAdmin(Roles.SUPERADMIN)
+  @UseGuards(Guard_admin)
+  superadminupdate(@Param('id', ParseUUIDPipe) id: string, @Body() datauser) {
+    return this.userservice.adminupdate(datauser, id);
+  }
 
-    @Put(':id') 
-    @RolesAdmin(Roles.ADMIN)
-    @UseGuards(Guard_admin)    
-    Updateadmin(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: Partial<User>){
-     return this.userservice.updateadmin(datauser)
-    }
-    
+  @Put(':id')
+  @RolesAdmin(Roles.ADMIN)
+  @UseGuards(Guard_admin)
+  Updateadmin(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() datauser: Partial<User>,
+  ) {
+    return this.userservice.updateadmin(datauser);
+  }
 
-    @Put(':id')
-    updateuser(@Param('id', ParseUUIDPipe) id:string, @Body() data:Partial<CreateUserDto>){
-        return this.userservice.updateuser(id, data)
-    }
+  @Put(':id')
+  updateuser(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() data: Partial<CreateUserDto>,
+  ) {
+    return this.userservice.updateuser(id, data);
+  }
 
-    @Delete(':id')
-    deleteuser(@Param('id', ParseUUIDPipe) id:string){
-        return this.userservice.deleteuser(id)
-    }
-
-
+  @Delete(':id')
+  deleteuser(@Param('id', ParseUUIDPipe) id: string) {
+    return this.userservice.deleteuser(id);
+  }
 }
