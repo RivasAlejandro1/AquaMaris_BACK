@@ -28,7 +28,6 @@ export class AuthService {
       ...createUserData,
       password: hashedPassword,
     });
-
     const {
       confirmPassword: confirmP,
       password: pass,

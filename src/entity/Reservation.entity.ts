@@ -6,8 +6,8 @@ export class Reservation {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  /*     @ManyToOne(() => User, (user) => user.reservations)
-    user: User[] */
+  @ManyToOne(() => User, (user) => user.reservations)
+  user: User[];
 
   @Column('date')
   entrance: Date;

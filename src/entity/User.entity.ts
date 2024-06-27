@@ -23,8 +23,8 @@ export class User {
   @Column()
   password: string;
 
-  @Column('simple-array')
-  roles: string[];
+  @Column()
+  role: string;
 
   @Column({ length: 15 })
   phone: string;
@@ -38,6 +38,15 @@ export class User {
   @Column({ type: 'enum', enum: MembershipStatus })
   membership_status: MembershipStatus;
 
-  /* @OneToMany(() => Reservation, (reservation) => reservation.user)
-  reservations: Reservation[]; */
+  @Column({ default: true })
+  status: boolean;
+
+  @Column({ default: new Date() })
+  date_start: Date;
+
+  @Column({ default: '' })
+  date_end: string;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.user)
+  reservations: Reservation[];
 }
