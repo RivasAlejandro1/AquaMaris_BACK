@@ -11,14 +11,15 @@ import { v4 as uuid } from 'uuid';
 import { Hotel } from './Hotel.entity';
 import { Service } from './Service.entity';
 import { Image } from './Image.entity';
+import { Booking } from './Booking.entity';
 
-@Entity()
+@Entity({name: "room"})
 export class Room {
   @PrimaryGeneratedColumn('uuid')
   id: string = uuid();
 
   @Column({ type: 'varchar', length: 50, nullable: false })
-  tipe: string;
+  type: string;
 
   @Column({ type: 'decimal', nullable: false })
   price: number;
@@ -43,4 +44,7 @@ export class Room {
 
   @OneToMany(() => Image, (image) => image.room)
   images: Image[];
+
+  @OneToMany(() => Booking, (booking) => booking.room)
+  booking: Booking
 }

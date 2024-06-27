@@ -9,4 +9,8 @@ export class RoomsService {
     const allRooms = await this.roomsRepository.getAllRooms(page, limit);
     return allRooms;
   }
+
+  async roomSeeder(){
+    this.roomsRepository.roomSeeder()
+  }
 }

@@ -1,33 +1,37 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique, BeforeInsert } from 'typeorm';
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
-import { v4 as uuid } from 'uuid';
-@Entity()
+import { Booking } from './Booking.entity';
+
+@Entity({ name: "users" })
 @Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string = uuid();
+  id: string;
 
-  @Column({ length: 100 })
+  @Column({ type: "text"})
   name: string;
 
-  @Column({ length: 100 })
+  @Column({ type: "varchar", length: 255 })
   email: string;
 
-  @Column()
+  @Column({ type: "varchar" })
   password: string;
 
-  @Column('simple-array')
-  roles: string;
+  @Column()
+  role: string;
 
-  @Column({ length: 15 })
-  phone: string;
+  @Column({ type: "decimal" })
+  phone: number;
 
-  @Column('text')
+  @Column({ type: "varchar" })
   address: string;
 
-  @Column('text', { nullable: true })
+  @Column({ type: "varchar", nullable: true })
   user_photo: string;
 
-  @Column({ type: 'enum', enum: MembershipStatus })
+  @Column({ type: 'varchar', enum: MembershipStatus })
   membership_status: MembershipStatus;
+
+  @OneToMany(() => Booking, (booking) => booking.user)
+  booking: Booking[];
 }

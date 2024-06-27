@@ -6,7 +6,7 @@ import { Room } from './Room.entity';
 export class Image {
   @PrimaryGeneratedColumn('uuid')
   id: string = uuid();
-  @Column({ type: 'varchar', length: 100, nullable: false })
+  @Column({ type: 'varchar', nullable: false })
   url: string;
   @Column({ type: 'date', default: new Date() })
   date: Date;

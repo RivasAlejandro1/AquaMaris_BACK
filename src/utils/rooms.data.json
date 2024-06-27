@@ -1,0 +1,733 @@
+[
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 1,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 2,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 3,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 4,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 5,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 6,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 7,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 8,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 9,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 10,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 11,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 12,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 13,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 14,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Estándar",
+        "price": 350000,
+        "description": "Habitación estándar con comodidades básicas",
+        "state": "available",
+        "roomNumber": 15,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 16,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 17,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 18,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 19,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 20,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 21,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 22,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 23,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 24,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Doble",
+        "price": 450000,
+        "description": "Habitación doble con capacidad para dos personas",
+        "state": "available",
+        "roomNumber": 25,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Deluxe",
+        "price": 600000,
+        "description": "Habitación de lujo con capacidad para tres personas",
+        "state": "available",
+        "roomNumber": 26,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Deluxe",
+        "price": 600000,
+        "description": "Habitación de lujo con capacidad para tres personas",
+        "state": "available",
+        "roomNumber": 27,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Deluxe",
+        "price": 600000,
+        "description": "Habitación de lujo con capacidad para tres personas",
+        "state": "available",
+        "roomNumber": 28,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Deluxe",
+        "price": 600000,
+        "description": "Habitación de lujo con capacidad para tres personas",
+        "state": "available",
+        "roomNumber": 29,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Deluxe",
+        "price": 600000,
+        "description": "Habitación de lujo con capacidad para tres personas",
+        "state": "available",
+        "roomNumber": 30,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Suite",
+        "price": 900000,
+        "description": "Suite de lujo con capacidad para cuatro personas",
+        "state": "available",
+        "roomNumber": 31,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi",
+            "Vista al mar"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Suite",
+        "price": 900000,
+        "description": "Suite de lujo con capacidad para cuatro personas",
+        "state": "available",
+        "roomNumber": 32,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi",
+            "Vista al mar"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Suite",
+        "price": 900000,
+        "description": "Suite de lujo con capacidad para cuatro personas",
+        "state": "available",
+        "roomNumber": 33,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi",
+            "Vista al mar"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Suite",
+        "price": 900000,
+        "description": "Suite de lujo con capacidad para cuatro personas",
+        "state": "available",
+        "roomNumber": 34,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi",
+            "Vista al mar"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Familiar",
+        "price": 1200000,
+        "description": "Habitación familiar espaciosa con capacidad para seis personas",
+        "state": "available",
+        "roomNumber": 35,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi",
+            "Calefacción",
+            "Desayuno"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Familiar",
+        "price": 1200000,
+        "description": "Habitación familiar espaciosa con capacidad para seis personas",
+        "state": "available",
+        "roomNumber": 36,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi",
+            "Calefacción",
+            "Desayuno"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Familiar",
+        "price": 1200000,
+        "description": "Habitación familiar espaciosa con capacidad para seis personas",
+        "state": "available",
+        "roomNumber": 37,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi",
+            "Calefacción",
+            "Desayuno"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Familiar",
+        "price": 1200000,
+        "description": "Habitación familiar espaciosa con capacidad para seis personas",
+        "state": "available",
+        "roomNumber": 38,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi",
+            "Calefacción",
+            "Desayuno"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    },
+    {
+        "type": "Familiar",
+        "price": 1200000,
+        "description": "Habitación familiar espaciosa con capacidad para seis personas",
+        "state": "available",
+        "roomNumber": 39,
+        "hotel": "AquaMaris Hotel's Beach",
+        "services": [
+            "Wi-Fi",
+            "Televisión",
+            "Aire acondicionado",
+            "Jacuzzi",
+            "Calefacción",
+            "Desayuno"
+        ],
+        "images": [
+            "https://imgs.search.brave.com/i23MMHgsPlBcek8BaSMjidLE-HqrAlDG1taaI2xwR78/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/eG90ZWxzLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMC8w/My9ob3RlbC1yb29t/LXR5cGUteG90ZWxz/LWhvdGVsLW1hbmFn/ZW1lbnQtY29tcGFu/eS04MDB4NTk5Lndl/YnA",
+            "https://imgs.search.brave.com/lvKs5K0bDTzrrKhMM3MEysJLAgHE-Be71Lb4YXgPRgY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/NjMxNDAwNi9lcy9m/b3RvL21vZGVybm8t/aW50ZXJpb3ItZGUt/dW4tZG9ybWl0b3Jp/by5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9ZDlaOVZTQ0Zo/TE5IZFdWS3hTaHFi/UHk5QzhBRmx6eWFM/bzE0NDBUTG9VTT0",
+            "https://imgs.search.brave.com/cMRrufmz7R1GNok1dBOSPiko9P3Mlv2M6qm-eOI2jkU/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9vY3Rv/cmF0ZS5jb20vd29y/ZHByZXNzL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzAyL2Nh/bWVyYS1kZWx1eGUt/c2lnbmlmaWNhdG8u/d2VicA"
+        ]
+    }
+]

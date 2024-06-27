@@ -12,4 +12,9 @@ export class RoomsController {
   ) {
     return this.roomsService.getAllRooms(page, limit);
   }
+
+  @Get()
+  roomsSeeder(){
+    return this.roomsService.roomSeeder()
+  }
 }
