@@ -37,25 +37,34 @@ export class RoomsRepository {
   }
 
   async filterRoom(filters) {
-    const { arrive, types, services } = filters;
-    const availableRooms = await this.reserveredRooms(arrive);
+    const { arrive, departure_date, types, services, people } = filters;
+    let { page } = filters;
+    if (!page) page = 1;
+    const pageSize = 3;
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    let availableRooms = await this.reserveredRooms(arrive, departure_date);
 
-    if (types && services) {
-      const typesFiltered = this.getByType(types, availableRooms);
-      return this.getByServices(services, typesFiltered);
-    } else if (types && !services) {
-      return this.getByType(types, availableRooms);
-    } else if (!types && services) {
-      return this.getByServices(services, availableRooms);
-    }
-    return availableRooms;
+    if (people) availableRooms = this.getByPeople(people, availableRooms);
+
+    if (types) availableRooms = this.getByType(types, availableRooms);
+
+    if (services) availableRooms = this.getByServices(services, availableRooms);
+
+    const paginatedRooms = availableRooms.slice(startIndex, endIndex);
+    return paginatedRooms;
   }
 
-  async reserveredRooms(arrive: Date) {
+  async reserveredRooms(arrive: Date, depart?: Date) {
     const reserveredRoomsId = await this.reservationsRepository
       .createQueryBuilder('reservation')
       .select('reservation.roomId', 'room_id')
-      .where('"reservation"."exit" > :entrance', { entrance: arrive })
+      .where(
+        depart
+          ? '(reservation.entrance >= :entrance AND reservation.entrance < :exit) OR (reservation."exit" > :entrance AND reservation."exit" <= :exit) OR (reservation.entrance <= :entrance AND reservation."exit" >= :exit) OR (reservation.entrance >= :entrance AND reservation."exit" <= :exit)'
+          : 'reservation.entrance <= :entrance AND reservation."exit" >= :entrance',
+        { entrance: arrive, exit: depart },
+      )
       .getRawMany()
       .then((results) => results.map((result) => result.room_id));
     if (reserveredRoomsId.length === 0) {
@@ -77,14 +86,27 @@ export class RoomsRepository {
 
   getByServices(services, rooms) {
     return rooms.filter((room) =>
-      services.every((serviceId) =>
-        room.services.some((service) => service.id === serviceId),
+      services.every((serviceName) =>
+        room.services.some((service) => service.name === serviceName),
       ),
     );
   }
 
   getByType(types, rooms) {
     return rooms.filter((room) => types.includes(room.type));
+  }
+
+  getByPeople(capacity, rooms) {
+    const capacityMap: { [key: number]: string[] } = {
+      1: ['Estandar', 'Doble', 'Deluxe', 'Suite', 'Familiar'],
+      2: ['Estandar', 'Doble', 'Deluxe', 'Suite', 'Familiar'],
+      3: ['Deluxe', 'Suite', 'Familiar'],
+      4: ['Suite', 'Familiar'],
+      6: ['Familiar'],
+    };
+    const roomTypes = capacityMap[capacity] || [];
+
+    return rooms.filter((room) => roomTypes.includes(room.type));
   }
   async getRoomById(id) {
     return this.roomsRepository.findOneBy({ id });
