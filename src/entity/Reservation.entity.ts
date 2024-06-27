@@ -1,32 +1,30 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./User.entity";
-
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './User.entity';
 
 @Entity()
 export class Reservation {
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-/*     @ManyToOne(() => User, (user) => user.reservations)
+  /*     @ManyToOne(() => User, (user) => user.reservations)
     user: User[] */
-    
-    @Column("date")
-    entrance: Date;
-    
-    @Column("date")
-    exit: Date;
-    
-    @Column({type: "varchar", length: 100})
-    statePay: string;
-/* 
+
+  @Column('date')
+  entrance: Date;
+
+  @Column('date')
+  exit: Date;
+
+  @Column({ type: 'varchar', length: 100 })
+  statePay: string;
+  /* 
     @ManyToOne(() => Room, (room) => room.reservations)
     room: room[] */
 
-
-/*  @Column()
+  /*  @Column()
     companions: ;
      */
 
-    @Column({ type: "simple-array", nullable : true  })
-    companions: any[];
+  @Column({ type: 'simple-array', nullable: true })
+  companions: any[];
 }

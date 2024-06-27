@@ -1,12 +1,18 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
-import { v4 as uuid } from 'uuid';
 import { Reservation } from './Reservation.entity';
+
 @Entity()
 @Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string = uuid();
+  id: string;
 
   @Column({ length: 100 })
   name: string;
@@ -18,7 +24,7 @@ export class User {
   password: string;
 
   @Column('simple-array')
-  roles: string;
+  roles: string[];
 
   @Column({ length: 15 })
   phone: string;
@@ -32,6 +38,6 @@ export class User {
   @Column({ type: 'enum', enum: MembershipStatus })
   membership_status: MembershipStatus;
 
-/*   @OneToMany(() => Reservation, (reservation) => reservation.user)
-  reservations: Reservation[] */
+  /* @OneToMany(() => Reservation, (reservation) => reservation.user)
+  reservations: Reservation[]; */
 }

@@ -39,7 +39,6 @@ export class RoomsRepository {
   async filterRoom(filters) {
     const { arrive, types, services } = filters;
     const availableRooms = await this.reserveredRooms(arrive);
-    console.log(availableRooms);
 
     if (types && services) {
       const typesFiltered = this.getByType(types, availableRooms);
@@ -49,7 +48,6 @@ export class RoomsRepository {
     } else if (!types && services) {
       return this.getByServices(services, availableRooms);
     }
-    //return this.AllRooms;
     return availableRooms;
   }
 

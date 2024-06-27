@@ -32,7 +32,7 @@ import { ImageModule } from './modules/images/image.module';
     AuthModule,
     ReservationModule,
     RoomsModule,
-    ImageModule
+    ImageModule,
   ],
   providers: [],
 })
