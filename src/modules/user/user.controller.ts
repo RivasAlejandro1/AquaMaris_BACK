@@ -11,10 +11,10 @@ export class UserController {
     constructor(private readonly userservice: UserService){}
 
     @Get()
-    @RolesAdmin(Roles.ADMIN)
-    @UseGuards(Guard_admin)
+    /* @RolesAdmin(Roles.ADMIN)
+    @UseGuards(Guard_admin) */
     alluser(@Query('page') page:number=1, @Query('limit') limit:number=5){
-            return this.userservice.alluser(page, limit)
+        return this.userservice.alluser(page,limit)
     }
 
     @Get(':id')
@@ -26,14 +26,14 @@ export class UserController {
     @Put('superadmin/:id')
     @RolesAdmin(Roles.SUPERADMIN)
     @UseGuards(Guard_admin)
-    superadminupdate(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: Partial<user>){
+    superadminupdate(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: CreateUserDto){
        return this.userservice.adminupdate(datauser, id)
     }
 
     @Put(':id') 
     @RolesAdmin(Roles.ADMIN)
     @UseGuards(Guard_admin)    
-    Updateadmin(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: Partial<User>){
+    Updateadmin(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: CreateUserDto){
      return this.userservice.updateadmin(datauser)
     }
     
