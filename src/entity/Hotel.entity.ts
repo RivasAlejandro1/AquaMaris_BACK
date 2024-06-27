@@ -19,7 +19,7 @@ export class Hotel {
   @Column({ type: 'varchar', length: 50, nullable: false })
   email: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar' })
   description: string;
 
   @OneToMany(() => Room, (Room) => Room.hotel)

@@ -1,12 +1,12 @@
-import { Controller, Get } from "@nestjs/common";
-import { ServiceService } from "./service.service";
+import { Controller, Get } from '@nestjs/common';
+import { ServiceService } from './service.service';
 
 @Controller('services')
-export class ServiceController{
-    constructor(private readonly serviceService: ServiceService){}
+export class ServiceController {
+  constructor(private readonly serviceService: ServiceService) {}
 
-    @Get()
-    serviceSeeder(){
-        return this.serviceService.serviceSeeder()
-    }
+  @Get()
+  serviceSeeder(success: boolean) {
+    return this.serviceService.serviceSeeder();
+  }
 }

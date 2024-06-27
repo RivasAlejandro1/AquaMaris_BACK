@@ -11,7 +11,7 @@ export class RoomsService {
   }
 
   async roomSeeder() {
-    this.roomsRepository.roomSeeder();
+    return await this.roomsRepository.roomSeeder();
   }
   async filterRoom(filters) {
     const rooms = await this.roomsRepository.filterRoom(filters);

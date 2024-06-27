@@ -1,42 +1,42 @@
 [
-    {
-      "name": "Wi-Fi",
-      "description": "Conexión inalámbrica a internet de alta velocidad"
-    },
-    {
-      "name": "Televisión",
-      "description": "Televisión por cable con canales nacionales e internacionales"
-    },
-    {
-      "name": "Vista al mar",
-      "description": "Habitaciones con vista panorámica al mar"
-    },
-    {
-      "name": "Aire acondicionado",
-      "description": "Sistema de aire acondicionado en todas las habitaciones"
-    },
-    {
-      "name": "Calefacción",
-      "description": "Sistema de calefacción para mayor confort en invierno"
-    },
-    {
-      "name": "Caja fuerte",
-      "description": "Caja fuerte para guardar objetos de valor"
-    },
-    {
-      "name": "Estacionamiento",
-      "description": "Estacionamiento privado disponible para los huéspedes"
-    },
-    {
-      "name": "Desayuno",
-      "description": "Desayuno buffet incluido en la estancia"
-    },
-    {
-      "name": "Nevera",
-      "description": "Nevera en la habitación para mayor comodidad"
-    },
-    {
-      "name": "Jacuzzi",
-      "description": "Jacuzzi disponible en las suites"
-    }
-  ]
+  {
+    "name": "wifi",
+    "description": "Conexión inalámbrica a internet de alta velocidad"
+  },
+  {
+    "name": "television",
+    "description": "Televisión por cable con canales nacionales e internacionales"
+  },
+  {
+    "name": "seaView",
+    "description": "Habitaciones con vista panorámica al mar"
+  },
+  {
+    "name": "airConditioning",
+    "description": "Sistema de aire acondicionado en todas las habitaciones"
+  },
+  {
+    "name": "heater",
+    "description": "Sistema de calefacción para mayor confort en invierno"
+  },
+  {
+    "name": "safeBox",
+    "description": "Caja fuerte para guardar objetos de valor"
+  },
+  {
+    "name": "parking",
+    "description": "Estacionamiento privado disponible para los huéspedes"
+  },
+  {
+    "name": "breakfast",
+    "description": "Desayuno buffet incluido en la estancia"
+  },
+  {
+    "name": "fridge",
+    "description": "Nevera en la habitación para mayor comodidad"
+  },
+  {
+    "name": "jacuzzi",
+    "description": "Jacuzzi disponible en las suites"
+  }
+]

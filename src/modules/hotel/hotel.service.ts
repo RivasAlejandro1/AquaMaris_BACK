@@ -28,6 +28,7 @@ export class HotelService {
 
         await this.hotelRepository.save(newHotel);
       }
+      return true;
     } catch (err) {
       console.log('Error seeding hotels from hotels.data.json ', err);
       throw new Error('Error seeding hotels');

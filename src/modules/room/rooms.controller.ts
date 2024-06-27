@@ -24,8 +24,8 @@ export class RoomsController {
   }
 
   @Get()
-  roomsSeeder() {
-    return this.roomsService.roomSeeder();
+  async roomsSeeder(success: boolean) {
+    return await this.roomsService.roomSeeder();
   }
 
   @Get('filter')

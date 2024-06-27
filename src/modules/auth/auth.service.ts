@@ -31,15 +31,13 @@ export class AuthService {
       throw new BadRequestException('User Email is already registered');
     }
 
-    const parsePhone = parseInt(createUserData.phone);
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await this.userRepository.save({
       name: createUserData.name,
       email: createUserData.email,
       password: hashedPassword,
-      role: createUserData.roles,
-      phone: parsePhone,
+      role: createUserData.role,
+      phone: createUserData.phone,
       address: createUserData.address,
       user_photo: createUserData.user_photo,
       membership_status: MembershipStatus.DISABLED,

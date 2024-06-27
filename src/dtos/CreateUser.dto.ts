@@ -35,7 +35,7 @@ export class CreateUserDto {
 
   @IsNumberString()
   @Length(1, 15)
-  phone: string;
+  phone: number;
 
   @IsString()
   @IsNotEmpty()

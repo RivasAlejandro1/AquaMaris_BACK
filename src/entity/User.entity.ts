@@ -40,4 +40,13 @@ export class User {
 
   @OneToMany(() => Booking, (booking) => booking.user)
   booking: Booking[];
+
+  @Column({ default: true })
+  status: boolean;
+
+  @Column({ default: new Date() })
+  date_start: Date;
+
+  @Column({ default: '' })
+  date_end: string;
 }

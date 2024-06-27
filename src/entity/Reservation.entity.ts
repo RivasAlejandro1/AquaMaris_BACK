@@ -13,7 +13,7 @@ export class Reservation {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.reservations)
+  @ManyToOne(() => User, (user) => user.booking)
   user: User[];
 
   @Column('date')
@@ -25,7 +25,7 @@ export class Reservation {
   @Column({ type: 'varchar', length: 100 })
   statePay: string;
 
-  @ManyToOne(() => Room, (room) => room.reservations)
+  @ManyToOne(() => Room, (room) => room.booking)
   @JoinColumn()
   room: Room[];
 

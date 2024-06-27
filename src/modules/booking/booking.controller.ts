@@ -6,7 +6,7 @@ export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
   @Get()
-  bookingSeeder() {
-    this.bookingService.bookingSeeder();
+  async bookingSeeder(success: boolean) {
+    await this.bookingService.bookingSeeder();
   }
 }

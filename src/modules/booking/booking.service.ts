@@ -51,9 +51,23 @@ export class BookingService {
 
         await this.bookingRepository.save(newBooking);
       }
+      return true;
     } catch (err) {
       console.log('Error seeding data', err);
       throw new Error('Error seeding booking data');
     }
   }
+
+  // async createReservation() {
+  //   const entrance = new Date();
+  //   const exit = new Date();
+  //   return await this.bookingRepository.save({
+  //     entrance,
+  //     exit,
+  //     statePay: 'asasf',
+  //   });
+  // }
+  // async getAllReservation() {
+  //   return await this.bookingRepository.find();
+  // }
 }

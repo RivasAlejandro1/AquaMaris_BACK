@@ -3,9 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entity/User.entity';
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
 import { Repository } from 'typeorm';
+import * as users from '../../utils/users.data.json';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(
     @InjectRepository(User) private userDBrepository: Repository<User>,
   ) {}
@@ -13,15 +14,13 @@ export class UserService {
   async userSeeder() {
     try {
       for (const user of users) {
-        const existingUser = await this.userRepository
+        const existingUser = await this.userDBrepository
           .createQueryBuilder('users')
           .where('users.email =:email', { email: user.email })
           .getOne();
 
-        console.log(user.name);
-
         if (!existingUser) {
-          const newUser = this.userRepository.create({
+          const newUser = this.userDBrepository.create({
             name: user.name,
             email: user.email,
             password: user.password,
@@ -32,9 +31,10 @@ export class UserService {
             membership_status: MembershipStatus.ACTIVE,
           });
 
-          await this.userRepository.save(newUser);
+          await this.userDBrepository.save(newUser);
         }
       }
+      return true;
     } catch (error) {
       console.error('Error during the seeding process:', error);
       throw new Error('Error importing users.data.json');

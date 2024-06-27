@@ -4,13 +4,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Reservation } from 'src/entity/Reservation.entity';
 import { Hotel } from 'src/entity/Hotel.entity';
 import { Room } from 'src/entity/Room.entity';
 import { Service } from 'src/entity/Service.entity';
 import { Repository } from 'typeorm';
 import * as data from '../../utils/rooms.data.json';
 import { Image } from 'src/entity/Image.entity';
+import { Booking } from 'src/entity/Booking.entity';
 
 @Injectable()
 export class RoomsRepository {
@@ -19,8 +19,8 @@ export class RoomsRepository {
     @InjectRepository(Service) private serviceRepository: Repository<Service>,
     @InjectRepository(Hotel) private hotelRepository: Repository<Hotel>,
     @InjectRepository(Image) private imagesRepository: Repository<Image>,
-    @InjectRepository(Reservation)
-    private reservationsRepository: Repository<Reservation>,
+    @InjectRepository(Booking)
+    private reservationsRepository: Repository<Booking>,
   ) {}
 
   async getAllRooms(page, limit) {
@@ -152,7 +152,6 @@ export class RoomsRepository {
     });
 
     const findedHotel = await this.hotelRepository.findOneBy({ id: hotel_id });
-    console.log(findedHotel);
     newRoom.hotel = findedHotel;
 
     const allServicesFinded = await Promise.all(
@@ -173,62 +172,27 @@ export class RoomsRepository {
     });
   }
 
-  async seederAllAboutRoom() {
-    await Promise.all(
-      infoSeederHotels.map(async (infoHotel) => {
-        const newHotel = this.hotelRepository.create(infoHotel);
-        await this.hotelRepository.save(newHotel);
-      }),
-    );
-
-    await Promise.all(
-      infoSeederServices.map(async (infoServie) => {
-        const newHotel = this.serviceRepository.create(infoServie);
-        await this.serviceRepository.save(newHotel);
-      }),
-    );
-
-    const allHotels = await this.hotelRepository.find({
-      relations: {
-        rooms: true,
-      },
-    });
-    const allServices = await this.serviceRepository.find();
-
-    return {
-      message: 'The hotels and services was created',
-      info: { allHotels, allServices },
-    };
-  }
-
   async roomSeeder() {
     try {
       for (const dato of data) {
         const existingHotel = await this.hotelRepository
           .createQueryBuilder('hotel')
-          .where('hotel.name =:name', { name: dato.hotel })
+          .where('hotel.name = :name', { name: dato.hotel })
           .getOne();
 
         if (existingHotel) {
           const existingRoom = await this.roomsRepository
             .createQueryBuilder('room')
-            .where('room.roomNumber =:roomNumber', {
+            .where('room.roomNumber = :roomNumber', {
               roomNumber: dato.roomNumber,
             })
             .getOne();
 
-          if (existingRoom) {
+          if (!existingRoom) {
             const service = await this.serviceRepository
               .createQueryBuilder('service')
               .where('service.name IN (:...names)', { names: dato.services })
               .getMany();
-
-            if (!service) {
-              console.log(
-                `Service ${dato.services} not found for room ${dato.roomNumber}`,
-              );
-              continue;
-            }
 
             const images = await this.imagesRepository
               .createQueryBuilder('image')
@@ -247,13 +211,15 @@ export class RoomsRepository {
             });
 
             await this.roomsRepository.save(newRoom);
+          } else {
           }
         } else {
-          console.log('Hotel does not exist');
-          throw new NotFoundException('Hotel not found');
+          throw new NotFoundException(`Hotel ${dato.hotel} not found`);
         }
       }
-    } catch {
+      return true;
+    } catch (error) {
+      console.error('Error seeding rooms:', error);
       throw new BadRequestException('Error seeding rooms');
     }
   }

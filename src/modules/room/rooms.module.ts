@@ -9,12 +9,10 @@ import { Service } from 'src/entity/Service.entity';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { CloudinaryConfig } from 'src/config/cloudinary';
 import { Image } from 'src/entity/Image.entity';
-import { Reservation } from 'src/entity/Reservation.entity';
+import { Booking } from 'src/entity/Booking.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Room, Hotel, Service, Image, Reservation]),
-  ],
+  imports: [TypeOrmModule.forFeature([Room, Hotel, Service, Image, Booking])],
   controllers: [RoomsController],
   providers: [RoomsService, RoomsRepository],
 })

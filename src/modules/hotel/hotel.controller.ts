@@ -6,7 +6,7 @@ export class HotelController {
   constructor(private readonly hotelService: HotelService) {}
 
   @Get()
-  hotelSeeder() {
-    this.hotelService.hotelSeeder();
+  async hotelSeeder(success: boolean) {
+    return await this.hotelService.hotelSeeder();
   }
 }
