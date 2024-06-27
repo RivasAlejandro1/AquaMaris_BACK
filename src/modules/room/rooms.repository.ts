@@ -25,15 +25,45 @@ export class RoomsRepository {
 
   async getAllRooms(page, limit) {
     const offset = (page - 1) * limit;
-    const allRooms = await this.roomsRepository.find({
+    const allRooms = await this.roomsRepository
+      .createQueryBuilder('room')
+      .leftJoinAndSelect('room.services', 'services')
+      .leftJoinAndSelect('room.images', 'images')
+      .leftJoinAndSelect(
+        'room.reservations',
+        'reservations',
+        'reservations."exit" >= :today',
+        {
+          today: new Date().toISOString().split('T')[0],
+        },
+      )
+      .select([
+        'room.id',
+        'room.type',
+        'room.price',
+        'room.description',
+        'room.state',
+        'room.roomNumber',
+        'services',
+        'images',
+        'reservations.entrance',
+        'reservations.exit',
+      ])
+      .skip(offset)
+      .take(limit)
+      .getMany();
+
+    return allRooms;
+    /* const allRooms = await this.roomsRepository.find({
       relations: {
         services: true,
         images: true,
+        reservations: true,
       },
       skip: offset,
       take: limit,
     });
-    return allRooms;
+    return allRooms; */
   }
 
   async filterRoom(filters) {
@@ -61,7 +91,7 @@ export class RoomsRepository {
       .select('reservation.roomId', 'room_id')
       .where(
         depart
-          ? '(reservation.entrance >= :entrance AND reservation.entrance < :exit) OR (reservation."exit" > :entrance AND reservation."exit" <= :exit) OR (reservation.entrance <= :entrance AND reservation."exit" >= :exit) OR (reservation.entrance >= :entrance AND reservation."exit" <= :exit)'
+          ? '(reservation.entrance >= :entrance AND reservation.entrance <= :exit) OR (reservation."exit" >= :entrance AND reservation."exit" <= :exit) OR (reservation.entrance <= :entrance AND reservation."exit" >= :exit) OR (reservation.entrance >= :entrance AND reservation."exit" <= :exit)'
           : 'reservation.entrance <= :entrance AND reservation."exit" >= :entrance',
         { entrance: arrive, exit: depart },
       )
