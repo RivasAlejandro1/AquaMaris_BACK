@@ -37,6 +37,14 @@ export class UserService{
         return "update success";
     }
 
+    async updateadmin(datauser: User){
+        const {role, ...datawhituser} = datauser
+        const user = await this.userDBrepository.findOneBy({id:datauser.id})
+        if(!user) throw new NotFoundException("not user found")
+            const userupdate = await this.userDBrepository.update(user.id, datawhituser)
+        return "update success";
+    }
+
     async updateuser(id:string, data:Partial<User>) {
        const {role, ...datauser} = data
         const user = await this.userDBrepository.findOneBy({id:id})

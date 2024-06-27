@@ -14,11 +14,7 @@ export class UserController {
     @RolesAdmin(Roles.ADMIN)
     @UseGuards(Guard_admin)
     alluser(@Query('page') page:number=1, @Query('limit') limit:number=5){
-        if(page || limit){
             return this.userservice.alluser(page, limit)
-        }else{
-            return this.userservice.alluser(page, limit)
-        }
     }
 
     @Get(':id')
@@ -30,14 +26,16 @@ export class UserController {
     @Put('superadmin/:id')
     @RolesAdmin(Roles.SUPERADMIN)
     @UseGuards(Guard_admin)
-    adminupdate(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: User){
+    superadminupdate(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: Partial<CreateUserDto>){
        return this.userservice.adminupdate(datauser, id)
     }
 
-   /*  @Put('admin/:id')     
-        UpdateDateColumn(){
-
-    } */
+    @Put(':id') 
+    @RolesAdmin(Roles.ADMIN)
+    @UseGuards(Guard_admin)    
+    Updateadmin(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: Partial<User>){
+     return this.userservice.updateadmin(datauser)
+    }
     
 
     @Put(':id')

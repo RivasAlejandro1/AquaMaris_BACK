@@ -1,8 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
-<<<<<<< HEAD
 import { v4 as uuid } from 'uuid';
-=======
 import { Reservation } from './Reservation.entity';
 
 @Entity()
@@ -44,4 +42,7 @@ export class User {
 
   @Column({default:""})
   date_end: string; 
+
+  @OneToMany(() => Reservation, (reservation) => reservation.user)
+  reservations: Reservation[] 
 }
