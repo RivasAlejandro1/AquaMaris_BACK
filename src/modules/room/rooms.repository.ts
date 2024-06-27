@@ -194,6 +194,10 @@ export class RoomsRepository {
               .where('service.name IN (:...names)', { names: dato.services })
               .getMany();
 
+            if (!service) {
+              throw new NotFoundException('Services not found');
+            }
+
             const images = await this.imagesRepository
               .createQueryBuilder('image')
               .where('image.url IN (:...urls)', { urls: dato.images })
@@ -210,6 +214,7 @@ export class RoomsRepository {
               images: images,
             });
 
+            console.log(newRoom);
             await this.roomsRepository.save(newRoom);
           } else {
           }

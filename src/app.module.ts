@@ -88,15 +88,15 @@ export class AppModule {
   async onApplicationBootstrap() {
     console.log('RUN HOTEL SEEDER');
     const successHotel = await this.hotelController.hotelSeeder(true);
+    console.log('RUN SERVICE SEEDER');
+    const successService =
+      await this.serviceController.serviceSeeder(successHotel);
     console.log('RUN USERS SEEDER');
-    const successUser = await this.userController.seeder(successHotel);
+    const successUser = await this.userController.seeder(successService);
     console.log('RUN IMAGES SEEDER');
     const successImages = await this.ImagesController.imagesSeeder(successUser);
     console.log('RUN ROOMS SEEDER');
     const successRooms = await this.roomsController.roomsSeeder(successImages);
-    console.log('RUN SERVICE SEEDER');
-    const successService =
-      await this.serviceController.serviceSeeder(successRooms);
     console.log('RUN BOOKING SEEDER');
     await this.bookingController.bookingSeeder(successService);
   }
