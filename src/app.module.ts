@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeOrmConfig from './config/typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
-import { User} from './entity/User.entity';
+import { User } from './entity/User.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { Reservation } from './entity/Reservation.entity';
 import { ReservationModule } from './modules/reservation/reservartion.module';
@@ -30,11 +30,11 @@ import { ImageModule } from './modules/images/image.module';
       },
       secret: process.env.JWT_SECRET,
     }),
-    AuthModule,UserModule,
     AuthModule,
+    UserModule,
     ReservationModule,
     RoomsModule,
-    ImageModule
+    ImageModule,
   ],
   providers: [],
 })

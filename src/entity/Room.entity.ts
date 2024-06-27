@@ -11,6 +11,7 @@ import { v4 as uuid } from 'uuid';
 import { Hotel } from './Hotel.entity';
 import { Service } from './Service.entity';
 import { Image } from './Image.entity';
+import { Reservation } from './Reservation.entity';
 
 @Entity()
 export class Room {
@@ -43,4 +44,7 @@ export class Room {
 
   @OneToMany(() => Image, (image) => image.room)
   images: Image[];
+
+  @OneToMany(() => Reservation, (reservation) => reservation.room)
+  reservations: Reservation[];
 }

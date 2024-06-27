@@ -10,11 +10,15 @@ export class RoomsService {
     return allRooms;
   }
 
-  async createRoom(infoRoom){
-    return await this.roomsRepository.createRoom(infoRoom)
+  async filterRoom(filters) {
+    const rooms = await this.roomsRepository.filterRoom(filters);
+    return rooms;
+  }
+  async createRoom(infoRoom) {
+    return await this.roomsRepository.createRoom(infoRoom);
   }
 
-  async seederAllAboutRoom(){
-    return await this.roomsRepository.seederAllAboutRoom()
+  async seederAllAboutRoom() {
+    return await this.roomsRepository.seederAllAboutRoom();
   }
 }
