@@ -1,0 +1,23 @@
+[
+    {
+      "name": "Hotel Ejemplo 1",
+      "direction": "Calle Principal 123",
+      "phoneNumber": 1234567890,
+      "email": "hotel1@example.com",
+      "description": "Un hotel acogedor en el corazón de la ciudad."
+    },
+    {
+      "name": "Hotel Ejemplo 2",
+      "direction": "Avenida Central 456",
+      "phoneNumber": 9876543210,
+      "email": "hotel2@example.com",
+      "description": "Un hotel moderno con vista al mar."
+    },
+    {
+      "name": "Hotel Ejemplo 3",
+      "direction": "Plaza Mayor 789",
+      "phoneNumber": 6549873210,
+      "email": "hotel3@example.com",
+      "description": "Un hotel de lujo en el centro histórico."
+    }
+  ]

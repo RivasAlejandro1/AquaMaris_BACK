@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { Room } from './Room.entity';
 
@@ -20,7 +20,7 @@ export class Hotel {
   email: string;
 
   @Column({ type: 'varchar', length: 100 })
-  dectription: string;
+  description: string;
 
   @OneToMany(() => Room, (Room) => Room.hotel)
   rooms: Room[];

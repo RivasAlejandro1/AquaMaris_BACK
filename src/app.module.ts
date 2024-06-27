@@ -8,6 +8,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { Reservation } from './entity/Reservation.entity';
 import { ReservationModule } from './modules/reservation/reservartion.module';
 import { UserModule } from './modules/user/user.module';
+import { RoomsModule } from './modules/room/rooms.module';
+import { ImageModule } from './modules/images/image.module';
 
 @Module({
   imports: [
@@ -30,7 +32,9 @@ import { UserModule } from './modules/user/user.module';
     }),
     AuthModule,UserModule,
     AuthModule,
-    ReservationModule
+    ReservationModule,
+    RoomsModule,
+    ImageModule
   ],
   providers: [],
 })
