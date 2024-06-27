@@ -26,7 +26,7 @@ export class UserController {
     @Put('superadmin/:id')
     @RolesAdmin(Roles.SUPERADMIN)
     @UseGuards(Guard_admin)
-    superadminupdate(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: Partial<CreateUserDto>){
+    superadminupdate(@Param('id', ParseUUIDPipe) id:string, @Body() datauser: Partial<user>){
        return this.userservice.adminupdate(datauser, id)
     }
 
