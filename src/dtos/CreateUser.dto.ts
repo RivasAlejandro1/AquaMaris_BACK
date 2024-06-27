@@ -31,7 +31,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsEnum(Role)
-  roles: Role;
+  role: Role;
 
   @IsNumberString()
   @Length(1, 15)

@@ -1,5 +1,15 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { RoomsService } from './rooms.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { filtersInterceptor } from 'src/interceptors/filtersInterceptor.interceptor';
 
 @Controller('rooms')
 export class RoomsController {
@@ -8,7 +18,7 @@ export class RoomsController {
   @Get()
   getAllRoms(
     @Query('page') page: number = 1,
-    @Query('limit') limit: number = 5,
+    @Query('limit') limit: number = 6,
   ) {
     return this.roomsService.getAllRooms(page, limit);
   }
@@ -16,5 +26,15 @@ export class RoomsController {
   @Get()
   roomsSeeder() {
     return this.roomsService.roomSeeder();
+  }
+
+  @Get('filter')
+  @UseInterceptors(filtersInterceptor)
+  filterRooms(@Query() query) {
+    return this.roomsService.filterRoom(query);
+  }
+  @Post()
+  async createRoom(@Body() infoRoom: any) {
+    return await this.roomsService.createRoom(infoRoom);
   }
 }

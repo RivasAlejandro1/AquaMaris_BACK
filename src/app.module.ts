@@ -71,6 +71,8 @@ import { RoomsRepository } from './modules/room/rooms.repository';
     UsersService,
     BookingService,
     RoomsRepository,
+    UserModule,
+    RoomsModule,
   ],
 })
 export class AppModule {

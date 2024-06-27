@@ -13,4 +13,11 @@ export class RoomsService {
   async roomSeeder() {
     this.roomsRepository.roomSeeder();
   }
+  async filterRoom(filters) {
+    const rooms = await this.roomsRepository.filterRoom(filters);
+    return rooms;
+  }
+  async createRoom(infoRoom) {
+    return await this.roomsRepository.createRoom(infoRoom);
+  }
 }

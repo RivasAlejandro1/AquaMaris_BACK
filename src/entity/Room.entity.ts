@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -13,7 +14,7 @@ import { Service } from './Service.entity';
 import { Image } from './Image.entity';
 import { Booking } from './Booking.entity';
 
-@Entity({name: "room"})
+@Entity({ name: 'room' })
 export class Room {
   @PrimaryGeneratedColumn('uuid')
   id: string = uuid();
@@ -46,5 +47,5 @@ export class Room {
   images: Image[];
 
   @OneToMany(() => Booking, (booking) => booking.room)
-  booking: Booking
+  booking: Booking;
 }

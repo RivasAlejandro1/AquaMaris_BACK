@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from 'src/dtos/CreateUser.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from 'src/dtos/LoginUser.dto';
@@ -12,8 +16,8 @@ import { Repository } from 'typeorm';
 export class AuthService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    private readonly jwtService: JwtService
-  ) { }
+    private readonly jwtService: JwtService,
+  ) {}
 
   async signUp(createUserData: CreateUserDto) {
     const { email, password } = createUserData;
@@ -27,7 +31,7 @@ export class AuthService {
       throw new BadRequestException('User Email is already registered');
     }
 
-    const parsePhone = parseInt(createUserData.phone)
+    const parsePhone = parseInt(createUserData.phone);
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await this.userRepository.save({
@@ -40,7 +44,6 @@ export class AuthService {
       user_photo: createUserData.user_photo,
       membership_status: MembershipStatus.DISABLED,
     });
-
     const {
       confirmPassword: confirmP,
       password: pass,
@@ -51,27 +54,28 @@ export class AuthService {
   }
 
   async login(loginUserData: LoginUserDto) {
-    const { email, password } = loginUserData
+    const { email, password } = loginUserData;
 
-    const user = await this.userRepository.findOne({ where: { email } })
+    const user = await this.userRepository.findOne({ where: { email } });
 
     if (!user) {
-      throw new NotFoundException('User not found')
+      throw new NotFoundException('User not found');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password)
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid) throw new BadRequestException('Email or password is invalid')
+    if (!isPasswordValid)
+      throw new BadRequestException('Email or password is invalid');
 
     const userPayload = {
       sub: user.id,
       id: user.id,
       email: user.email,
-      role: user.role
-    }
+      role: user.role,
+    };
 
-    const token = this.jwtService.sign(userPayload)
+    const token = this.jwtService.sign(userPayload);
 
-    return { message: 'User Logged succesfully', token }
+    return { message: 'User Logged succesfully', token };
   }
 }
