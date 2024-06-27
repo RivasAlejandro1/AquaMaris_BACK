@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeo
 import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
 import { v4 as uuid } from 'uuid';
 import { Reservation } from './Reservation.entity';
-
+2
 @Entity()
 @Unique(['email'])
 export class User {
