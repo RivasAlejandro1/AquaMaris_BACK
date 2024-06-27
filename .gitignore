@@ -2,6 +2,7 @@
 /dist
 /node_modules
 /build
+.env.development
 
 # Logs
 logs
@@ -55,5 +56,7 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+packege_lock.json
+packege.json
 
 node_modules
