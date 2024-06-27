@@ -10,7 +10,7 @@ export class RoomsService {
     return allRooms;
   }
 
-  async roomSeeder(){
-    this.roomsRepository.roomSeeder()
+  async roomSeeder() {
+    this.roomsRepository.roomSeeder();
   }
 }

@@ -55,14 +55,14 @@ import { RoomsRepository } from './modules/room/rooms.repository';
     ImagesModule,
     RoomsModule,
     ServiceModule,
-    UserModule
+    UserModule,
   ],
   providers: [
-    HotelController, 
-    ServiceController, 
-    RoomsController, 
-    ImagesController, 
-    UserController, 
+    HotelController,
+    ServiceController,
+    RoomsController,
+    ImagesController,
+    UserController,
     BookingController,
     HotelService,
     ServiceService,
@@ -71,7 +71,6 @@ import { RoomsRepository } from './modules/room/rooms.repository';
     UsersService,
     BookingService,
     RoomsRepository,
-
   ],
 })
 export class AppModule {
@@ -81,15 +80,23 @@ export class AppModule {
     private readonly roomsController: RoomsController,
     private readonly ImagesController: ImagesController,
     private readonly userController: UserController,
-    private readonly bookingController: BookingController
-  ) { }
+    private readonly bookingController: BookingController,
+  ) {}
 
   async onApplicationBootstrap() {
-    await this.hotelController.hotelSeeder()
-    await this.roomsController.roomsSeeder()
-    await this.serviceController.serviceSeeder()
-    await this.userController.seeder()
-    await this.ImagesController.imagesSeeder()
-    await this.bookingController.bookingSeeder()
+    await this.hotelController.hotelSeeder();
+    console.log('RUN HOTEL SEEDER');
+    await this.roomsController.roomsSeeder();
+    console.log('RUN ROOMS SEEDER');
+    await this.serviceController.serviceSeeder();
+    console.log('RUN SERVICE SEEDER');
+    await this.userController.seeder();
+    console.log('RUN USER SEEDER');
+
+    await this.ImagesController.imagesSeeder();
+    console.log('RUN IMAGES SEEDER');
+
+    await this.bookingController.bookingSeeder();
+    console.log('RUN BOOKING SEEDER');
   }
 }

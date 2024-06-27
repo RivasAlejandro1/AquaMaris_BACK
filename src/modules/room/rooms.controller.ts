@@ -14,7 +14,7 @@ export class RoomsController {
   }
 
   @Get()
-  roomsSeeder(){
-    return this.roomsService.roomSeeder()
+  roomsSeeder() {
+    return this.roomsService.roomSeeder();
   }
 }

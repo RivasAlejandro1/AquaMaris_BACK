@@ -1,21 +1,24 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Room } from 'src/entity/Room.entity';
 import { Repository } from 'typeorm';
-import * as data from '../../utils/rooms.data.json'
+import * as data from '../../utils/rooms.data.json';
 import { Service } from 'src/entity/Service.entity';
 import { Hotel } from 'src/entity/Hotel.entity';
-import { Image } from 'src/entity/Image.entity'; 
+import { Image } from 'src/entity/Image.entity';
 
 @Injectable()
 export class RoomsRepository {
-
   constructor(
     @InjectRepository(Room) private roomsRepository: Repository<Room>,
     @InjectRepository(Service) private serviceRepository: Repository<Service>,
     @InjectRepository(Hotel) private hotelRepository: Repository<Hotel>,
-    @InjectRepository(Image) private imagesRepository: Repository<Image>, 
-  ) { }
+    @InjectRepository(Image) private imagesRepository: Repository<Image>,
+  ) {}
 
   async getAllRooms(page, limit) {
     const offset = (page - 1) * limit;
@@ -36,29 +39,33 @@ export class RoomsRepository {
         const existingHotel = await this.hotelRepository
           .createQueryBuilder('hotel')
           .where('hotel.name =:name', { name: dato.hotel })
-          .getOne()
+          .getOne();
 
         if (existingHotel) {
           const existingRoom = await this.roomsRepository
             .createQueryBuilder('room')
-            .where('room.roomNumber =:roomNumber', { roomNumber: dato.roomNumber })
-            .getOne()
+            .where('room.roomNumber =:roomNumber', {
+              roomNumber: dato.roomNumber,
+            })
+            .getOne();
 
-          if (!existingRoom) {
+          if (existingRoom) {
             const service = await this.serviceRepository
               .createQueryBuilder('service')
-              .where('service.name IN (:...names)', { names: dato.services }) 
-              .getMany()
+              .where('service.name IN (:...names)', { names: dato.services })
+              .getMany();
 
             if (!service) {
-              console.log(`Service ${dato.services} not found for room ${dato.roomNumber}`)
+              console.log(
+                `Service ${dato.services} not found for room ${dato.roomNumber}`,
+              );
               continue;
             }
 
             const images = await this.imagesRepository
               .createQueryBuilder('image')
               .where('image.url IN (:...urls)', { urls: dato.images })
-              .getMany()
+              .getMany();
 
             const newRoom = this.roomsRepository.create({
               type: dato.type,
@@ -68,18 +75,18 @@ export class RoomsRepository {
               roomNumber: dato.roomNumber,
               services: service,
               hotel: existingHotel,
-              images: images
-            })
+              images: images,
+            });
 
             await this.roomsRepository.save(newRoom);
           }
         } else {
-          console.log("Hotel does not exist")
-          throw new NotFoundException('Hotel not found')
+          console.log('Hotel does not exist');
+          throw new NotFoundException('Hotel not found');
         }
       }
     } catch {
-      throw new BadRequestException('Error seeding rooms')
+      throw new BadRequestException('Error seeding rooms');
     }
   }
 }
