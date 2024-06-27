@@ -13,7 +13,10 @@ export class UserService {
   async alluser(page: number, limit: number) {
     const start = (page - 1) * limit;
     const end = start + limit;
-    const user = await this.userDBrepository.find();
+    const user = await this.userDBrepository.find({
+      relations: ['reservations'],
+    });
+
     if (user.length > 0) {
       const userpage = user.slice(start, end);
       return userpage;
@@ -29,7 +32,7 @@ export class UserService {
     return userwhitout;
   }
 
-  async adminupdate(datauser: User, id: string) {
+  async adminupdate(datauser: Partial<User>, id: string) {
     const user = this.userDBrepository.findOneBy({ id: datauser.id });
     if (!user) throw new NotFoundException('not user found');
     const userupdate = await this.userDBrepository.update(id, datauser);

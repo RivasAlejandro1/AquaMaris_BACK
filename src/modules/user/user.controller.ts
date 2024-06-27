@@ -22,8 +22,8 @@ export class UserController {
   constructor(private readonly userservice: UserService) {}
 
   @Get()
-  @RolesAdmin(Roles.ADMIN)
-  @UseGuards(Guard_admin)
+  /* @RolesAdmin(Roles.ADMIN)
+    @UseGuards(Guard_admin) */
   alluser(@Query('page') page: number = 1, @Query('limit') limit: number = 5) {
     return this.userservice.alluser(page, limit);
   }
@@ -36,7 +36,10 @@ export class UserController {
   @Put('superadmin/:id')
   @RolesAdmin(Roles.SUPERADMIN)
   @UseGuards(Guard_admin)
-  superadminupdate(@Param('id', ParseUUIDPipe) id: string, @Body() datauser) {
+  superadminupdate(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() datauser: CreateUserDto,
+  ) {
     return this.userservice.adminupdate(datauser, id);
   }
 
@@ -45,7 +48,7 @@ export class UserController {
   @UseGuards(Guard_admin)
   Updateadmin(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() datauser: Partial<User>,
+    @Body() datauser: CreateUserDto,
   ) {
     return this.userservice.updateadmin(datauser);
   }
