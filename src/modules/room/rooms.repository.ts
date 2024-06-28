@@ -68,13 +68,17 @@ export class RoomsRepository {
       departure_date,
       sort,
     );
-    console.log(availableRooms);
+
     if (people) availableRooms = this.getByPeople(people, availableRooms);
 
     if (types) availableRooms = this.getByType(types, availableRooms);
 
     if (services) availableRooms = this.getByServices(services, availableRooms);
+    console.log('sin paginado');
+    console.log(availableRooms);
     const paginatedRooms = availableRooms.slice(startIndex, endIndex);
+    console.log('con paginado');
+    console.log(paginatedRooms);
     return paginatedRooms;
   }
 
@@ -104,14 +108,13 @@ export class RoomsRepository {
         roomsQuery = roomsQuery.orderBy('room.price', 'ASC');
       } else if (orderBy === 'DESC') {
         roomsQuery = roomsQuery.orderBy('room.price', 'DESC');
-      } else if (orderBy === 'random') {
-        roomsQuery = roomsQuery.orderBy('RANDOM()');
+      } else if (orderBy === undefined) {
+        roomsQuery = roomsQuery.orderBy('room.id', 'ASC');
       }
 
       const notReserveredRooms = await roomsQuery.getMany();
       return notReserveredRooms;
     }
-
     const query = this.roomsRepository
       .createQueryBuilder('room')
       .leftJoinAndSelect('room.services', 'service')
@@ -123,9 +126,8 @@ export class RoomsRepository {
     } else if (orderBy === 'DESC') {
       query.orderBy('room.price', 'DESC');
     } else {
-      query.orderBy('RANDOM()');
+      query.orderBy('room.id', 'ASC');
     }
-
     const notReservedRooms = await query.getMany();
     return notReservedRooms;
   }
@@ -165,8 +167,9 @@ export class RoomsRepository {
       description,
       state,
       roomNumber,
-      hotel_id,
-      services_id,
+      hotel,
+      services,
+      images,
     } = infoRoom;
 
     const newRoom = this.roomsRepository.create({
@@ -177,11 +180,11 @@ export class RoomsRepository {
       roomNumber,
     });
 
-    const findedHotel = await this.hotelRepository.findOneBy({ id: hotel_id });
+    const findedHotel = await this.hotelRepository.findOneBy({ id: hotel });
     newRoom.hotel = findedHotel;
 
     const allServicesFinded = await Promise.all(
-      services_id.map(async (id) => {
+      services.map(async (id) => {
         return await this.serviceRepository.findOneBy({ id });
       }),
     );
@@ -189,13 +192,19 @@ export class RoomsRepository {
 
     await this.roomsRepository.save(newRoom);
 
-    return await this.roomsRepository.find({
-      relations: {
-        hotel: true,
-        services: true,
-        images: true,
-      },
-    });
+    const allImageMaked = await Promise.all(
+      images.map(async (url) => {
+        const newImage = this.imagesRepository.create({ url });
+        newImage.date = new Date();
+        newImage.room = newRoom;
+
+        const saveImage = await this.imagesRepository.save(newImage);
+        return saveImage;
+      }),
+    );
+    newRoom.images = allImageMaked;
+
+    return newRoom;
   }
 
   async roomSeeder() {

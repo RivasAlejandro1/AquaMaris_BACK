@@ -15,15 +15,19 @@ export class ImageRepository {
     @InjectRepository(Room) private readonly roomRepository: Repository<Room>,
   ) {}
 
-  async UploudImage(file, room_id) {
-    const uploadImage = await this.cloudinaryService.uploudImage(file);
-    const newImage = this.imageRepository.create();
-    newImage.url = uploadImage.url;
-    newImage.date = new Date();
+    async getAllImages(){
+        return await this.imageRepository.find({relations: {room: true}})
+    }
 
-    const roomFinded = await this.roomRepository.findOne({
-      where: { id: room_id },
-    });
+    async UploudImage(file, room_id) {
+      const uploadImage = await this.cloudinaryService.uploudImage(file);
+      const newImage = this.imageRepository.create();
+      newImage.url = uploadImage.url;
+      newImage.date = new Date();
+
+      const roomFinded = await this.roomRepository.findOne({
+        where: { id: room_id },
+      });
     //newImage.room = roomFinded;
 
     //roomFinded.images.push(newImage);
