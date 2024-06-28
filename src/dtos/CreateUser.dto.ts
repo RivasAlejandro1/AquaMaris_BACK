@@ -7,8 +7,8 @@ import {
   IsEnum,
   IsOptional,
 } from 'class-validator';
-import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
-import { Role } from 'src/enum/Role.enum';
+import { MembershipStatus } from '../enum/MembershipStatus.enum';
+import { Role } from '../enum/Role.enum';
 
 export class CreateUserDto {
   @IsString()

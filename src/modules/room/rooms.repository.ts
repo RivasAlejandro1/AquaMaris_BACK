@@ -4,13 +4,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Hotel } from 'src/entity/Hotel.entity';
-import { Room } from 'src/entity/Room.entity';
-import { Service } from 'src/entity/Service.entity';
+import { Hotel } from '../../entity/Hotel.entity';
+import { Room } from '../../entity/Room.entity';
+import { Service } from '../../entity/Service.entity';
 import { Repository } from 'typeorm';
 import * as data from '../../utils/rooms.data.json';
-import { Image } from 'src/entity/Image.entity';
-import { Booking } from 'src/entity/Booking.entity';
+import { Image } from '../../entity/Image.entity';
+import { Booking } from '../../entity/Booking.entity';
 
 @Injectable()
 export class RoomsRepository {

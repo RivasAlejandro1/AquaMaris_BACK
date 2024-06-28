@@ -3,13 +3,13 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/dtos/CreateUser.dto';
+import { CreateUserDto } from '../../dtos/CreateUser.dto';
 import * as bcrypt from 'bcrypt';
-import { LoginUserDto } from 'src/dtos/LoginUser.dto';
+import { LoginUserDto } from '../../dtos/LoginUser.dto';
 import { JwtService } from '@nestjs/jwt';
-import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
+import { MembershipStatus } from '../../enum/MembershipStatus.enum';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/entity/User.entity';
+import { User } from '../../entity/User.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
