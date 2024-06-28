@@ -23,8 +23,9 @@ export class RoomsRepository {
     private reservationsRepository: Repository<Booking>,
   ) {}
 
+  
   async getAllRooms(page, limit) {
-    const offset = (page - 1) * limit;
+   /* 
     const allRooms = await this.roomsRepository
       .createQueryBuilder('room')
       .leftJoinAndSelect('room.services', 'services')
@@ -53,7 +54,8 @@ export class RoomsRepository {
       .take(limit)
       .getMany();
 
-    return allRooms;
+    return allRooms; */
+    return  await this.roomsRepository.find()
   }
 
   async filterRoom(filters) {
@@ -95,7 +97,7 @@ export class RoomsRepository {
         
         const newImage = this.imagesRepository.create({url});
         newImage.date = new Date();
-        newImage.room = newRoom
+        //newImage.room = newRoom
         
         const saveImage = await this.imagesRepository.save(newImage)
         return saveImage;

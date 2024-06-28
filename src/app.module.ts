@@ -29,6 +29,7 @@ import { ImagesService } from './modules/images/images.service';
 import { UsersService } from './modules/user/user.service';
 import { BookingService } from './modules/booking/booking.service';
 import { RoomsRepository } from './modules/room/rooms.repository';
+import { ImageModule } from './modules/images/image.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { RoomsRepository } from './modules/room/rooms.repository';
     AuthModule,
     BookingModule,
     HotelModule,
+    ImageModule,
     ImagesModule,
     RoomsModule,
     ServiceModule,
