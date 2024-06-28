@@ -8,25 +8,28 @@ import * as hotels from '../../utils/hotels.data.json';
 export class HotelService {
   constructor(
     @InjectRepository(Hotel) private hotelRepository: Repository<Hotel>,
-  ) {}
+  ) { }
 
   async hotelSeeder() {
     try {
       for (const hotel of hotels) {
+        let number = 1
         const existingHotel = await this.hotelRepository
-          .createQueryBuilder('hotel')
-          .where('hotel.name =:name', { name: hotel.name })
-          .getOne();
-
-        const newHotel = await this.hotelRepository.create({
-          name: hotel.name,
-          direction: hotel.direction,
-          phoneNumber: hotel.phoneNumber,
-          email: hotel.email,
-          description: hotel.description,
-        });
-
-        await this.hotelRepository.save(newHotel);
+        .createQueryBuilder('hotel')
+        .where('hotel.name =:name', { name: hotel.name })
+        .getOne();
+        
+        if (!existingHotel) {
+          const newHotel = await this.hotelRepository.create({
+            name: hotel.name,
+            direction: hotel.direction,
+            phoneNumber: hotel.phoneNumber,
+            email: hotel.email,
+            description: hotel.description,
+          });
+          
+          await this.hotelRepository.save(newHotel);
+        }
       }
       return true;
     } catch (err) {

@@ -209,54 +209,59 @@ export class RoomsRepository {
   }
 
   async roomSeeder() {
+    let number = 1
     try {
       for (const dato of data) {
+        console.log(number++)
         const existingHotel = await this.hotelRepository
           .createQueryBuilder('hotel')
           .where('hotel.name = :name', { name: dato.hotel })
           .getOne();
-
-        if (existingHotel) {
-          const existingRoom = await this.roomsRepository
-            .createQueryBuilder('room')
-            .where('room.roomNumber = :roomNumber', {
-              roomNumber: dato.roomNumber,
-            })
-            .getOne();
-
-          if (!existingRoom) {
-            const service = await this.serviceRepository
-              .createQueryBuilder('service')
-              .where('service.name IN (:...names)', { names: dato.services })
-              .getMany();
-
-            if (!service) {
-              throw new NotFoundException('Services not found');
-            }
-
-            const images = await this.imagesRepository
-              .createQueryBuilder('image')
-              .where('image.url IN (:...urls)', { urls: dato.images })
-              .getMany();
-
-            const newRoom = this.roomsRepository.create({
-              type: dato.type,
-              price: dato.price,
-              description: dato.description,
-              state: dato.state,
-              roomNumber: dato.roomNumber,
-              services: service,
-              hotel: existingHotel,
-              images: images,
-            });
-
-            console.log(newRoom);
-            await this.roomsRepository.save(newRoom);
-          } else {
-          }
-        } else {
+  
+        if (!existingHotel) {
           throw new NotFoundException(`Hotel ${dato.hotel} not found`);
         }
+  
+        const existingRoom = await this.roomsRepository
+          .createQueryBuilder('room')
+          .where('room.roomNumber = :roomNumber', {
+            roomNumber: dato.roomNumber,
+          })
+          .getOne();
+  
+        if (existingRoom) {
+          continue; 
+        }
+  
+        const services = await this.serviceRepository
+          .createQueryBuilder('service')
+          .where('service.name IN (:...names)', { names: dato.services })
+          .getMany();
+  
+        if (!services.length) {
+          throw new NotFoundException('Services not found');
+        }
+  
+        const images = await Promise.all(
+          dato.images.map(async (url) => {
+              const images = this.imagesRepository.create({ url, date: new Date() });
+              await this.imagesRepository.save(images);
+              return images;
+          }),
+        );
+  
+        const newRoom = this.roomsRepository.create({
+          type: dato.type,
+          price: dato.price,
+          description: dato.description,
+          state: dato.state,
+          roomNumber: dato.roomNumber,
+          services: services,
+          hotel: existingHotel,
+          images: images,
+        });
+        console.log(newRoom)
+        await this.roomsRepository.save(newRoom);
       }
       return true;
     } catch (error) {

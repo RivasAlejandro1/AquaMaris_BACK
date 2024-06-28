@@ -29,6 +29,7 @@ import { ImagesService } from './modules/images/images.service';
 import { UsersService } from './modules/user/user.service';
 import { BookingService } from './modules/booking/booking.service';
 import { RoomsRepository } from './modules/room/rooms.repository';
+import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { RoomsRepository } from './modules/room/rooms.repository';
     BookingController,
     HotelService,
     ServiceService,
+    CloudinaryService,
     RoomsService,
     ImagesService,
     UsersService,
