@@ -5,6 +5,8 @@ import { Repository } from "typeorm";
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { RoomsRepository } from "../room/rooms.repository";
 import { Room } from "src/entity/Room.entity";
+import { UploadApiResponse, v2 } from "cloudinary";
+const ToStream = require('buffer-to-stream');
 
 
 
@@ -18,9 +20,6 @@ export class ImageRepository {
     ){}
 
     async UploudImage(file , room_id){
-
-
-        
         const uploadImage = await this.cloudinaryService.uploudImage(file);
         const newImage = this.imageRepository.create()
         newImage.url = uploadImage.url;
@@ -38,4 +37,17 @@ export class ImageRepository {
         const imageRegister = await this.imageRepository.findOne({ where:{ id: idImage.id}, relations: { room: true}})  */
         return {url: newImage.url}//, idImage} //, imageRegister }
     }
+
+    async imageuser( file:Express.Multer.File):Promise<UploadApiResponse>{
+        return  new Promise((resolve, reject)=>{
+            const upload = v2.uploader.upload_stream(
+             {resource_type:'auto'},
+             (error,result)=>{
+              (error)?reject(error):resolve(result)
+             }
+          )
+        ToStream(file.buffer).pipe(upload)
+      })
+    
+      }
 }

@@ -17,6 +17,11 @@ export class UserController {
         return this.userservice.alluser(page,limit)
     }
 
+   @Get('superadmin')
+   superadmin(){
+     return this.userservice.superadmin()
+   }
+
     @Get(':id')
     userByid(@Param('id', ParseUUIDPipe) id:string){
         return this.userservice.userByid(id)

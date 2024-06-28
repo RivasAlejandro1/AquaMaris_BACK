@@ -7,12 +7,13 @@ import { Image } from "src/entity/Image.entity";
 import { CloudinaryConfig } from "src/config/cloudinary";
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
 import { Room } from "src/entity/Room.entity";
+import { User } from "src/entity/User.entity";
 
 
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Image, Room])],
+    imports: [TypeOrmModule.forFeature([Image, Room, User])],
     controllers: [ImageController],
     providers: [ImageService, ImageRepository,CloudinaryConfig, CloudinaryService]
 })

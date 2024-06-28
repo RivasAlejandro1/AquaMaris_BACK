@@ -12,4 +12,11 @@ export class ImageController{
     async UploudImage(@Param() id: string,  @UploadedFile() file: Express.Multer.File){
         return await this.imageService.UploudImage(file,id)
     }
+
+    @Post("perfil/:id")
+    @UseInterceptors(FileInterceptor('file'))
+    async imageuser(@Param('id') id:string, @UploadedFile() file:Express.Multer.File){
+        return this.imageService.imageuser(id, file)
+    }
+    
 }
