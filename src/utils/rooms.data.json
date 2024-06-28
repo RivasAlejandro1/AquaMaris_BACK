@@ -1,8 +1,8 @@
 [
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 1,
     "hotel": "AquaMaris Hotel's Beach",
@@ -14,9 +14,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 2,
     "hotel": "AquaMaris Hotel's Beach",
@@ -28,9 +28,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 3,
     "hotel": "AquaMaris Hotel's Beach",
@@ -42,9 +42,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 4,
     "hotel": "AquaMaris Hotel's Beach",
@@ -56,9 +56,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 5,
     "hotel": "AquaMaris Hotel's Beach",
@@ -70,9 +70,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 6,
     "hotel": "AquaMaris Hotel's Beach",
@@ -84,9 +84,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 7,
     "hotel": "AquaMaris Hotel's Beach",
@@ -98,9 +98,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 8,
     "hotel": "AquaMaris Hotel's Beach",
@@ -112,9 +112,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 9,
     "hotel": "AquaMaris Hotel's Beach",
@@ -126,9 +126,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 10,
     "hotel": "AquaMaris Hotel's Beach",
@@ -140,9 +140,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 11,
     "hotel": "AquaMaris Hotel's Beach",
@@ -154,9 +154,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 12,
     "hotel": "AquaMaris Hotel's Beach",
@@ -168,9 +168,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 13,
     "hotel": "AquaMaris Hotel's Beach",
@@ -182,9 +182,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 14,
     "hotel": "AquaMaris Hotel's Beach",
@@ -196,9 +196,9 @@
     ]
   },
   {
-    "type": "Estándar",
+    "type": "Estandar",
     "price": 350000,
-    "description": "Habitación estándar con comodidades básicas",
+    "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
     "roomNumber": 15,
     "hotel": "AquaMaris Hotel's Beach",

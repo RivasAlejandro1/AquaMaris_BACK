@@ -22,7 +22,7 @@ export class Room {
   @Column({ type: 'varchar', length: 50, nullable: false })
   type: string;
 
-  @Column({ type: 'decimal', nullable: false })
+  @Column({ type: 'numeric', precision: 10, scale: 2, nullable: false })
   price: number;
 
   @Column({ type: 'varchar', length: 100 })

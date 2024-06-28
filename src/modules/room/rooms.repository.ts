@@ -20,7 +20,7 @@ export class RoomsRepository {
     @InjectRepository(Hotel) private hotelRepository: Repository<Hotel>,
     @InjectRepository(Image) private imagesRepository: Repository<Image>,
     @InjectRepository(Booking)
-    private reservationsRepository: Repository<Booking>,
+    private bookingsRepository: Repository<Booking>,
   ) {}
 
   async getAllRooms(page, limit) {
@@ -30,9 +30,9 @@ export class RoomsRepository {
       .leftJoinAndSelect('room.services', 'services')
       .leftJoinAndSelect('room.images', 'images')
       .leftJoinAndSelect(
-        'room.reservations',
-        'reservations',
-        'reservations."exit" >= :today',
+        'room.booking',
+        'booking',
+        'booking.check_in_date >= :today',
         {
           today: new Date().toISOString().split('T')[0],
         },
@@ -46,8 +46,8 @@ export class RoomsRepository {
         'room.roomNumber',
         'services',
         'images',
-        'reservations.entrance',
-        'reservations.exit',
+        'booking.check_in_date',
+        'booking.check_out_date',
       ])
       .skip(offset)
       .take(limit)
@@ -57,80 +57,80 @@ export class RoomsRepository {
   }
 
   async filterRoom(filters) {
-    const { arrive, departure_date, types, services, people } = filters;
+    const { arrive, departure_date, types, services, people, sort } = filters;
     let { page } = filters;
     if (!page) page = 1;
     const pageSize = 3;
     const startIndex = (page - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    let availableRooms = await this.reserveredRooms(arrive, departure_date);
+    let availableRooms = await this.reserveredRooms(
+      arrive,
+      departure_date,
+      sort,
+    );
 
     if (people) availableRooms = this.getByPeople(people, availableRooms);
 
     if (types) availableRooms = this.getByType(types, availableRooms);
 
     if (services) availableRooms = this.getByServices(services, availableRooms);
-
+    console.log('sin paginado');
+    console.log(availableRooms);
     const paginatedRooms = availableRooms.slice(startIndex, endIndex);
+    console.log('con paginado');
+    console.log(paginatedRooms);
     return paginatedRooms;
   }
 
-  async createRoom(infoRoom){
-      const { type, price, description, state, roomNumber, hotel, services, images} = infoRoom;
 
-      const newRoom = this.roomsRepository.create({ type, price, description, state, roomNumber})
-
-      const  findedHotel =  await this.hotelRepository.findOneBy({id: hotel})
-      newRoom.hotel = findedHotel;
-
-      const allServicesFinded =  await Promise.all( services.map( async id => {
-        return  await this.serviceRepository.findOneBy({id})
-      }))
-      newRoom.services = allServicesFinded;
-
-      const allImageMaked =  await Promise.all( images.map( async url => {
-        
-        const newImage = this.imagesRepository.create({url});
-        newImage.date = new Date();
-        //newImage.room = newRoom
-        
-        const saveImage = await this.imagesRepository.save(newImage)
-        return saveImage;
-        
-      }))
-      newRoom.images = allImageMaked;
-      
-      await this.roomsRepository.save(newRoom);
-      
-      return newRoom;
-    }
-  async reserveredRooms(arrive: Date, depart?: Date) {
-    const reserveredRoomsId = await this.reservationsRepository
-      .createQueryBuilder('reservation')
-      .select('reservation.roomId', 'room_id')
+  async reserveredRooms(arrive: Date, depart?: Date, orderBy?) {
+    const reserveredRoomsId = await this.bookingsRepository
+      .createQueryBuilder('booking')
+      .select('booking.roomId', 'room_id')
       .where(
         depart
-          ? '(reservation.entrance >= :entrance AND reservation.entrance <= :exit) OR (reservation."exit" >= :entrance AND reservation."exit" <= :exit) OR (reservation.entrance <= :entrance AND reservation."exit" >= :exit) OR (reservation.entrance >= :entrance AND reservation."exit" <= :exit)'
-          : 'reservation.entrance <= :entrance AND reservation."exit" >= :entrance',
-        { entrance: arrive, exit: depart },
+          ? `(booking.check_in_date >= :check_in_date AND booking.check_in_date <= :exit)
+         OR (booking.check_out_date >= :check_in_date AND booking.check_out_date <= :exit)
+         OR (booking.check_in_date <= :check_in_date AND booking.check_out_date >= :exit)
+         OR (booking.check_in_date >= :check_in_date AND booking.check_out_date <= :exit)`
+          : 'booking.check_in_date <= :check_in_date AND booking.check_out_date >= :check_in_date',
+        { check_in_date: arrive, exit: depart },
       )
       .getRawMany()
       .then((results) => results.map((result) => result.room_id));
     if (reserveredRoomsId.length === 0) {
-      return await this.roomsRepository
+      let roomsQuery = this.roomsRepository
         .createQueryBuilder('room')
         .leftJoinAndSelect('room.services', 'service')
-        .where('room.state = :state', { state: 'AVAILABLE' })
-        .getMany();
+        .leftJoinAndSelect('room.images', 'image')
+        .where('room.state = :state', { state: 'available' });
+
+      if (orderBy === 'ASC') {
+        roomsQuery = roomsQuery.orderBy('room.price', 'ASC');
+      } else if (orderBy === 'DESC') {
+        roomsQuery = roomsQuery.orderBy('room.price', 'DESC');
+      } else if (orderBy === undefined) {
+        roomsQuery = roomsQuery.orderBy('room.id', 'ASC');
+      }
+
+      const notReserveredRooms = await roomsQuery.getMany();
+      return notReserveredRooms;
     }
-    const notReserveredRomms = await this.roomsRepository
+    const query = this.roomsRepository
       .createQueryBuilder('room')
       .leftJoinAndSelect('room.services', 'service')
       .leftJoinAndSelect('room.images', 'image')
       .where('room.id NOT IN (:...reserveredRoomsId)', { reserveredRoomsId })
-      .andWhere('room.state != :state', { state: 'mantenimiento' })
-      .getMany();
-    return notReserveredRomms;
+      .andWhere('room.state != :state', { state: 'mantenimiento' });
+    if (orderBy === 'ASC') {
+      query.orderBy('room.price', 'ASC');
+    } else if (orderBy === 'DESC') {
+      query.orderBy('room.price', 'DESC');
+    } else {
+      query.orderBy('room.id', 'ASC');
+    }
+    const notReservedRooms = await query.getMany();
+    return notReservedRooms;
   }
 
   getByServices(services, rooms) {
@@ -142,13 +142,13 @@ export class RoomsRepository {
   }
 
   getByType(types, rooms) {
-    return rooms.filter((room) => types.includes(room.type));
+    return rooms.filter((room) => types.some((type) => room.type === type));
   }
 
   getByPeople(capacity, rooms) {
     const capacityMap: { [key: number]: string[] } = {
-      1: ['Estandar', 'Doble', 'Deluxe', 'Suite', 'Familiar'],
-      2: ['Estandar', 'Doble', 'Deluxe', 'Suite', 'Familiar'],
+      1: ['Estándar', 'Doble', 'Deluxe', 'Suite', 'Familiar'],
+      2: ['Estándar', 'Doble', 'Deluxe', 'Suite', 'Familiar'],
       3: ['Deluxe', 'Suite', 'Familiar'],
       4: ['Suite', 'Familiar'],
       6: ['Familiar'],
@@ -161,6 +161,52 @@ export class RoomsRepository {
     return this.roomsRepository.findOneBy({ id });
   }
 
+  async createRoom(infoRoom) {
+    const {
+      type,
+      price,
+      description,
+      state,
+      roomNumber,
+      hotel,
+      services,
+      images,
+    } = infoRoom;
+
+    const newRoom = this.roomsRepository.create({
+      type,
+      price,
+      description,
+      state,
+      roomNumber,
+    });
+
+    const findedHotel = await this.hotelRepository.findOneBy({ id: hotel });
+    newRoom.hotel = findedHotel;
+
+    const allServicesFinded = await Promise.all(
+      services.map(async (id) => {
+        return await this.serviceRepository.findOneBy({ id });
+      }),
+    );
+    newRoom.services = allServicesFinded;
+
+    
+    const allImageMaked = await Promise.all(
+      images.map(async (url) => {
+        const newImage = this.imagesRepository.create({ url });
+        newImage.date = new Date();
+        
+        const saveImage = await this.imagesRepository.save(newImage);
+        return saveImage;
+      }),
+    );
+    newRoom.images = allImageMaked;
+    
+    await this.roomsRepository.save(newRoom);
+    
+    return newRoom;
+  }
 
   async roomSeeder() {
     try {
