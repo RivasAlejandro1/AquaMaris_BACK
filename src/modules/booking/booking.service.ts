@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Booking } from 'src/entity/Booking.entity';
-import { User } from 'src/entity/User.entity';
-import { Room } from 'src/entity/Room.entity';
-import { PaymentStatus } from 'src/enum/PaymentStatus.enum';
+import { Booking } from '../../entity/Booking.entity';
+import { User } from '../../entity/User.entity';
+import { Room } from '../../entity/Room.entity';
+import { PaymentStatus } from '../../enum/PaymentStatus.enum';
 import * as bookingData from '../../utils/booking.data.json';
 
 @Injectable()

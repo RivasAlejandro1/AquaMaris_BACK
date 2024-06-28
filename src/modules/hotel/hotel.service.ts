@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Hotel } from 'src/entity/Hotel.entity';
+import { Hotel } from '../../entity/Hotel.entity';
 import { Repository } from 'typeorm';
 import * as hotels from '../../utils/hotels.data.json';
 

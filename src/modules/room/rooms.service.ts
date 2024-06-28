@@ -20,5 +20,4 @@ export class RoomsService {
   async createRoom(infoRoom) {
     return await this.roomsRepository.createRoom(infoRoom);
   }
-  
 }

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Image } from 'src/entity/Image.entity';
+import { Image } from '../../entity/Image.entity';
 import { Repository } from 'typeorm';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { RoomsRepository } from '../room/rooms.repository';
-import { Room } from 'src/entity/Room.entity';
+import { Room } from '../../entity/Room.entity';
 
 @Injectable()
 export class ImageRepository {
@@ -15,19 +15,19 @@ export class ImageRepository {
     @InjectRepository(Room) private readonly roomRepository: Repository<Room>,
   ) {}
 
-    async getAllImages(){
-        return await this.imageRepository.find({relations: {room: true}})
-    }
+  async getAllImages() {
+    return await this.imageRepository.find({ relations: { room: true } });
+  }
 
-    async UploudImage(file, room_id) {
-      const uploadImage = await this.cloudinaryService.uploudImage(file);
-      const newImage = this.imageRepository.create();
-      newImage.url = uploadImage.url;
-      newImage.date = new Date();
+  async UploudImage(file, room_id) {
+    const uploadImage = await this.cloudinaryService.uploudImage(file);
+    const newImage = this.imageRepository.create();
+    newImage.url = uploadImage.url;
+    newImage.date = new Date();
 
-      const roomFinded = await this.roomRepository.findOne({
-        where: { id: room_id },
-      });
+    const roomFinded = await this.roomRepository.findOne({
+      where: { id: room_id },
+    });
     //newImage.room = roomFinded;
 
     //roomFinded.images.push(newImage);
