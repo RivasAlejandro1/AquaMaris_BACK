@@ -2,6 +2,7 @@
 /dist
 /node_modules
 /build
+.env.development
 
 # Logs
 logs
@@ -37,7 +38,6 @@ lerna-debug.log*
 
 # dotenv environment variable files
 .env
-.env.development
 .env.development.local
 .env.test.local
 .env.production.local
@@ -56,5 +56,7 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+packege_lock.json
+packege.json
 
 node_modules

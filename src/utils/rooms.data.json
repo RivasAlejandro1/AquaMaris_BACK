@@ -1,0 +1,583 @@
+[
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 1,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 2,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 3,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 4,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 5,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 6,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 7,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 8,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 9,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 10,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 11,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 12,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 13,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 14,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Estándar",
+    "price": 350000,
+    "description": "Habitación estándar con comodidades básicas",
+    "state": "available",
+    "roomNumber": 15,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 16,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 17,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 18,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 19,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 20,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 21,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 22,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 23,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 24,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Doble",
+    "price": 450000,
+    "description": "Habitación doble con capacidad para dos personas",
+    "state": "available",
+    "roomNumber": 25,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Deluxe",
+    "price": 600000,
+    "description": "Habitación de lujo con capacidad para tres personas",
+    "state": "available",
+    "roomNumber": 26,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning", "jacuzzi"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Deluxe",
+    "price": 600000,
+    "description": "Habitación de lujo con capacidad para tres personas",
+    "state": "available",
+    "roomNumber": 27,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning", "jacuzzi"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Deluxe",
+    "price": 600000,
+    "description": "Habitación de lujo con capacidad para tres personas",
+    "state": "available",
+    "roomNumber": 28,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning", "jacuzzi"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Deluxe",
+    "price": 600000,
+    "description": "Habitación de lujo con capacidad para tres personas",
+    "state": "available",
+    "roomNumber": 29,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning", "jacuzzi"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Deluxe",
+    "price": 600000,
+    "description": "Habitación de lujo con capacidad para tres personas",
+    "state": "available",
+    "roomNumber": 30,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning", "jacuzzi"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Suite",
+    "price": 900000,
+    "description": "Suite de lujo con capacidad para cuatro personas",
+    "state": "available",
+    "roomNumber": 31,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning", "jacuzzi", "seaView"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Suite",
+    "price": 900000,
+    "description": "Suite de lujo con capacidad para cuatro personas",
+    "state": "available",
+    "roomNumber": 32,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning", "jacuzzi", "seaView"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Suite",
+    "price": 900000,
+    "description": "Suite de lujo con capacidad para cuatro personas",
+    "state": "available",
+    "roomNumber": 33,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning", "jacuzzi", "seaView"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Suite",
+    "price": 900000,
+    "description": "Suite de lujo con capacidad para cuatro personas",
+    "state": "available",
+    "roomNumber": 34,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": ["wifi", "television", "airConditioning", "jacuzzi", "seaView"],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Familiar",
+    "price": 1200000,
+    "description": "Habitación familiar espaciosa con capacidad para seis personas",
+    "state": "available",
+    "roomNumber": 35,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": [
+      "wifi",
+      "television",
+      "airConditioning",
+      "jacuzzi",
+      "heater",
+      "breakfast"
+    ],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Familiar",
+    "price": 1200000,
+    "description": "Habitación familiar espaciosa con capacidad para seis personas",
+    "state": "available",
+    "roomNumber": 36,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": [
+      "wifi",
+      "television",
+      "airConditioning",
+      "jacuzzi",
+      "heater",
+      "breakfast"
+    ],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Familiar",
+    "price": 1200000,
+    "description": "Habitación familiar espaciosa con capacidad para seis personas",
+    "state": "available",
+    "roomNumber": 37,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": [
+      "wifi",
+      "television",
+      "airConditioning",
+      "jacuzzi",
+      "heater",
+      "breakfast"
+    ],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Familiar",
+    "price": 1200000,
+    "description": "Habitación familiar espaciosa con capacidad para seis personas",
+    "state": "available",
+    "roomNumber": 38,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": [
+      "wifi",
+      "television",
+      "airConditioning",
+      "jacuzzi",
+      "heater",
+      "breakfast"
+    ],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  },
+  {
+    "type": "Familiar",
+    "price": 1200000,
+    "description": "Habitación familiar espaciosa con capacidad para seis personas",
+    "state": "available",
+    "roomNumber": 39,
+    "hotel": "AquaMaris Hotel's Beach",
+    "services": [
+      "wifi",
+      "television",
+      "airConditioning",
+      "jacuzzi",
+      "heater",
+      "breakfast"
+    ],
+    "images": [
+      "https://i.pinimg.com/564x/14/40/87/144087b48437019a1330a5c919faf582.jpg",
+      "https://i.pinimg.com/564x/c4/2c/1a/c42c1a943fbde7703cdac240b9b19681.jpg",
+      "https://i.pinimg.com/564x/54/13/4b/54134b8ca1bf13cdb8eb35008621d250.jpg"
+    ]
+  }
+]
