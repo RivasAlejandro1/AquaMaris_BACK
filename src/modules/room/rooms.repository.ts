@@ -52,7 +52,6 @@ export class RoomsRepository {
       .skip(offset)
       .take(limit)
       .getMany();
-
     return allRooms;
   }
 
@@ -262,5 +261,16 @@ export class RoomsRepository {
       console.error('Error seeding rooms:', error);
       throw new BadRequestException('Error seeding rooms');
     }
+  }
+
+  async getById(id) {
+    return await this.roomsRepository.findOne({
+      where: { id: id },
+      relations: {
+        booking: true,
+        services: true,
+        images: true,
+      },
+    });
   }
 }
