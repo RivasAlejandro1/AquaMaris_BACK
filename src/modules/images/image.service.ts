@@ -12,4 +12,8 @@ export class ImageService {
     async UploudImage(file,room_id){
         return await this.imageRepository.UploudImage(file,room_id)
     }
+
+    async getAllImages(){
+        return await this.imageRepository.getAllImages()
+    }
 }

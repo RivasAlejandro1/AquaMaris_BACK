@@ -17,10 +17,12 @@ export class ImageRepository {
         
     ){}
 
+    async getAllImages(){
+        return await this.imageRepository.find({relations: {room: true}})
+    }
+
+
     async UploudImage(file , room_id){
-
-
-        
         const uploadImage = await this.cloudinaryService.uploudImage(file);
         const newImage = this.imageRepository.create()
         newImage.url = uploadImage.url;

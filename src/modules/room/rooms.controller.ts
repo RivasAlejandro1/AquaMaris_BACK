@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Image } from 'src/entity/Image.entity';
 
 @Controller('rooms')
 export class RoomsController {
@@ -15,13 +16,13 @@ export class RoomsController {
   }
 
   @Post()
-   async createRoom(@Body() infoRoom:any){
-    
-   return await this.roomsService.createRoom(infoRoom);
+  async createRoom(@Body() infoRoom:any){
+    return await this.roomsService.createRoom(infoRoom);
   }
 
   @Post("seeder")
   async seederAllAboutRoom(){
    return  await this.roomsService.seederAllAboutRoom();
  }
+
 }

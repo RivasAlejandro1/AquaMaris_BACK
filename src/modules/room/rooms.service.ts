@@ -17,4 +17,5 @@ export class RoomsService {
   async seederAllAboutRoom(){
     return await this.roomsRepository.seederAllAboutRoom()
   }
+  
 }

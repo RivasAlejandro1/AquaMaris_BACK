@@ -34,29 +34,34 @@ export class RoomsRepository {
   }
 
   async createRoom(infoRoom){
-      const { type, price, description, state, roomNumber, hotel_id, services_id} = infoRoom;
+      const { type, price, description, state, roomNumber, hotel, services, images} = infoRoom;
 
       const newRoom = this.roomsRepository.create({ type, price, description, state, roomNumber})
 
-      const  findedHotel =  await this.hotelRepository.findOneBy({id: hotel_id})
-      console.log(findedHotel)
+      const  findedHotel =  await this.hotelRepository.findOneBy({id: hotel})
       newRoom.hotel = findedHotel;
 
-
-      const allServicesFinded =  await Promise.all( services_id.map( async id => {
+      const allServicesFinded =  await Promise.all( services.map( async id => {
         return  await this.serviceRepository.findOneBy({id})
       }))
       newRoom.services = allServicesFinded;
 
       await this.roomsRepository.save(newRoom);
 
-      return await this.roomsRepository.find({
-        relations: {
-            hotel: true,
-            services: true,
-            images: true
-        },
-      });
+
+      const allImageMaked =  await Promise.all( images.map( async url => {
+        
+        const newImage = this.imageRepository.create({url});
+        newImage.date = new Date();
+        newImage.room = newRoom
+        
+        const saveImage = await this.imageRepository.save(newImage)
+        return saveImage;
+        
+      }))
+      newRoom.images = allImageMaked;
+      
+      return newRoom;
   }
 
   async seederAllAboutRoom(){
