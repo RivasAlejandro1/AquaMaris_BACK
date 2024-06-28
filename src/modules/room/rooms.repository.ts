@@ -88,20 +88,19 @@ export class RoomsRepository {
       }))
       newRoom.services = allServicesFinded;
 
-      await this.roomsRepository.save(newRoom);
-
-
       const allImageMaked =  await Promise.all( images.map( async url => {
         
         const newImage = this.imagesRepository.create({url});
         newImage.date = new Date();
-        newImage.room = newRoom
+        //newImage.room = newRoom
         
         const saveImage = await this.imagesRepository.save(newImage)
         return saveImage;
         
       }))
       newRoom.images = allImageMaked;
+      
+      await this.roomsRepository.save(newRoom);
       
       return newRoom;
     }
