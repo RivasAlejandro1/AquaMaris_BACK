@@ -32,6 +32,11 @@ export class RoomsController {
   async createRoom(@Body() infoRoom: any) {
     return await this.roomsService.createRoom(infoRoom);
   }
+  @Get('filter')
+  @UseInterceptors(filtersInterceptor)
+  filterRooms(@Query() query) {
+    return this.roomsService.filterRoom(query);
+  }
   @Get(':id')
   async getById(@Param('id', ParseUUIDPipe) id: string) {
     return await this.roomsService.getById(id);
@@ -40,11 +45,5 @@ export class RoomsController {
   @Get()
   async roomsSeeder(success: boolean) {
     return await this.roomsService.roomSeeder();
-  }
-
-  @Get('filter')
-  @UseInterceptors(filtersInterceptor)
-  filterRooms(@Query() query) {
-    return this.roomsService.filterRoom(query);
   }
 }
