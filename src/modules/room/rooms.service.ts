@@ -20,4 +20,7 @@ export class RoomsService {
   async createRoom(infoRoom) {
     return await this.roomsRepository.createRoom(infoRoom);
   }
+  async getById(id) {
+    return await this.roomsRepository.getById(id);
+  }
 }
