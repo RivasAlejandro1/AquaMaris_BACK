@@ -75,6 +75,7 @@ import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
     RoomsRepository,
     UserModule,
     RoomsModule,
+    CloudinaryService,
   ],
 })
 export class AppModule {
