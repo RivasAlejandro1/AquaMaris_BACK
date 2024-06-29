@@ -19,8 +19,10 @@ export class BookingService {
   ) {}
 
   async bookingSeeder() {
+    let number = 1
     try {
       for (const book of bookingData) {
+        console.log(number++)
         const existingUser = await this.userRepository
           .createQueryBuilder('user')
           .where('user.name = :name', { name: book.user })
@@ -41,6 +43,25 @@ export class BookingService {
           );
         }
 
+        const existingBooking = await this.bookingRepository
+          .createQueryBuilder('booking')
+          .where('booking.user = :user', { user: existingUser.id })
+          .andWhere('booking.room = :room', { room: existingRoom.id })
+          .andWhere('booking.check_in_date = :check_in_date', {
+            check_in_date: new Date(book.check_in_date),
+          })
+          .andWhere('booking.check_out_date = :check_out_date', {
+            check_out_date: new Date(book.check_out_date),
+          })
+          .getOne();
+
+        if (existingBooking) {
+          console.log(
+            `Booking for user ${book.user} in room ${book.room} already exists`,
+          );
+          continue;
+        }
+
         const newBooking = this.bookingRepository.create({
           user: existingUser,
           room: existingRoom,
@@ -57,17 +78,4 @@ export class BookingService {
       throw new Error('Error seeding booking data');
     }
   }
-
-  // async createReservation() {
-  //   const entrance = new Date();
-  //   const exit = new Date();
-  //   return await this.bookingRepository.save({
-  //     entrance,
-  //     exit,
-  //     statePay: 'asasf',
-  //   });
-  // }
-  // async getAllReservation() {
-  //   return await this.bookingRepository.find();
-  // }
 }
