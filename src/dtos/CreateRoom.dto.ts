@@ -25,19 +25,22 @@ export class CreateRoomDto {
   type: TypesRooms;
 
   @IsNumber()
+  @IsNotEmpty()
   price: number;
 
   @IsString()
+  @IsNotEmpty()
   description: string;
 
-  @IsNotEmpty()
   @IsEnum(RoomStates)
+  @IsNotEmpty()
   state: string;
 
 
   @IsNumber()
   @IsInt()
   @IsPositive()
+  @IsNotEmpty()
   roomNumber: number;
   
   @IsUUID()
@@ -46,6 +49,7 @@ export class CreateRoomDto {
   
   @IsArray()
   @IsEnum(Services, { each: true })
+  @IsOptional()
   services: Services[];
   
     
