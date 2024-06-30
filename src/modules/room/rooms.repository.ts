@@ -4,13 +4,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Hotel } from 'src/entity/Hotel.entity';
-import { Room } from 'src/entity/Room.entity';
-import { Service } from 'src/entity/Service.entity';
+import { Hotel } from '../../entity/Hotel.entity';
+import { Room } from '../../entity/Room.entity';
+import { Service } from '../../entity/Service.entity';
 import { Repository } from 'typeorm';
 import * as data from '../../utils/rooms.data.json';
-import { Image } from 'src/entity/Image.entity';
-import { Booking } from 'src/entity/Booking.entity';
+import { Image } from '../../entity/Image.entity';
+import { Booking } from '../../entity/Booking.entity';
 
 @Injectable()
 export class RoomsRepository {
@@ -52,7 +52,6 @@ export class RoomsRepository {
       .skip(offset)
       .take(limit)
       .getMany();
-
     return allRooms;
   }
 
@@ -81,7 +80,6 @@ export class RoomsRepository {
     console.log(paginatedRooms);
     return paginatedRooms;
   }
-
 
   async reserveredRooms(arrive: Date, depart?: Date, orderBy?) {
     const reserveredRoomsId = await this.bookingsRepository
@@ -147,11 +145,11 @@ export class RoomsRepository {
 
   getByPeople(capacity, rooms) {
     const capacityMap: { [key: number]: string[] } = {
-      1: ['Estándar', 'Doble', 'Deluxe', 'Suite', 'Familiar'],
-      2: ['Estándar', 'Doble', 'Deluxe', 'Suite', 'Familiar'],
-      3: ['Deluxe', 'Suite', 'Familiar'],
-      4: ['Suite', 'Familiar'],
-      6: ['Familiar'],
+      1: ['standard', 'double', 'deluxe', 'suite', 'family'],
+      2: ['standard', 'double', 'deluxe', 'Suite', 'family'],
+      3: ['deluxe', 'suite', 'family'],
+      4: ['suite', 'family'],
+      6: ['family'],
     };
     const roomTypes = capacityMap[capacity] || [];
 
@@ -191,77 +189,95 @@ export class RoomsRepository {
     );
     newRoom.services = allServicesFinded;
 
-    
     const allImageMaked = await Promise.all(
       images.map(async (url) => {
         const newImage = this.imagesRepository.create({ url });
         newImage.date = new Date();
-        
+
         const saveImage = await this.imagesRepository.save(newImage);
         return saveImage;
       }),
     );
     newRoom.images = allImageMaked;
-    
+
     await this.roomsRepository.save(newRoom);
-    
+
     return newRoom;
   }
 
   async roomSeeder() {
+    let number = 1;
     try {
       for (const dato of data) {
+        console.log(number++);
         const existingHotel = await this.hotelRepository
           .createQueryBuilder('hotel')
           .where('hotel.name = :name', { name: dato.hotel })
           .getOne();
 
-        if (existingHotel) {
-          const existingRoom = await this.roomsRepository
-            .createQueryBuilder('room')
-            .where('room.roomNumber = :roomNumber', {
-              roomNumber: dato.roomNumber,
-            })
-            .getOne();
-
-          if (!existingRoom) {
-            const service = await this.serviceRepository
-              .createQueryBuilder('service')
-              .where('service.name IN (:...names)', { names: dato.services })
-              .getMany();
-
-            if (!service) {
-              throw new NotFoundException('Services not found');
-            }
-
-            const images = await this.imagesRepository
-              .createQueryBuilder('image')
-              .where('image.url IN (:...urls)', { urls: dato.images })
-              .getMany();
-
-            const newRoom = this.roomsRepository.create({
-              type: dato.type,
-              price: dato.price,
-              description: dato.description,
-              state: dato.state,
-              roomNumber: dato.roomNumber,
-              services: service,
-              hotel: existingHotel,
-              images: images,
-            });
-
-            console.log(newRoom);
-            await this.roomsRepository.save(newRoom);
-          } else {
-          }
-        } else {
+        if (!existingHotel) {
           throw new NotFoundException(`Hotel ${dato.hotel} not found`);
         }
+
+        const existingRoom = await this.roomsRepository
+          .createQueryBuilder('room')
+          .where('room.roomNumber = :roomNumber', {
+            roomNumber: dato.roomNumber,
+          })
+          .getOne();
+
+        if (existingRoom) {
+          continue;
+        }
+
+        const services = await this.serviceRepository
+          .createQueryBuilder('service')
+          .where('service.name IN (:...names)', { names: dato.services })
+          .getMany();
+
+        if (!services.length) {
+          throw new NotFoundException('Services not found');
+        }
+
+        const images = await Promise.all(
+          dato.images.map(async (url) => {
+            const images = this.imagesRepository.create({
+              url,
+              date: new Date(),
+            });
+            await this.imagesRepository.save(images);
+            return images;
+          }),
+        );
+
+        const newRoom = this.roomsRepository.create({
+          type: dato.type,
+          price: dato.price,
+          description: dato.description,
+          state: dato.state,
+          roomNumber: dato.roomNumber,
+          services: services,
+          hotel: existingHotel,
+          images: images,
+        });
+        console.log(newRoom);
+        await this.roomsRepository.save(newRoom);
       }
       return true;
     } catch (error) {
       console.error('Error seeding rooms:', error);
       throw new BadRequestException('Error seeding rooms');
     }
+  }
+
+  async getById(id) {
+    return await this.roomsRepository.findOne({
+      where: { id: id },
+      relations: {
+        booking: true,
+        services: true,
+        images: true,
+      },
+    });
   }
 }

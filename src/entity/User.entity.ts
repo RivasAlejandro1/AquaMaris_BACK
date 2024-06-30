@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
+import { MembershipStatus } from '../enum/MembershipStatus.enum';
 import { Booking } from './Booking.entity';
 
 @Entity({ name: 'users' })

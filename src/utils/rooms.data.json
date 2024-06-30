@@ -1,6 +1,6 @@
 [
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -14,7 +14,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -28,7 +28,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -42,7 +42,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -56,7 +56,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -70,7 +70,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -84,7 +84,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -98,7 +98,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -112,7 +112,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -126,7 +126,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -140,7 +140,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -154,7 +154,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -168,7 +168,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -182,7 +182,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -196,7 +196,7 @@
     ]
   },
   {
-    "type": "Estandar",
+    "type": "standard",
     "price": 350000,
     "description": "Habitación Estandar con comodidades básicas",
     "state": "available",
@@ -210,7 +210,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -224,7 +224,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -238,7 +238,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -252,7 +252,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -266,7 +266,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -280,7 +280,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -294,7 +294,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -308,7 +308,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -322,7 +322,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -336,7 +336,7 @@
     ]
   },
   {
-    "type": "Doble",
+    "type": "double",
     "price": 450000,
     "description": "Habitación doble con capacidad para dos personas",
     "state": "available",
@@ -350,7 +350,7 @@
     ]
   },
   {
-    "type": "Deluxe",
+    "type": "deluxe",
     "price": 600000,
     "description": "Habitación de lujo con capacidad para tres personas",
     "state": "available",
@@ -364,7 +364,7 @@
     ]
   },
   {
-    "type": "Deluxe",
+    "type": "deluxe",
     "price": 600000,
     "description": "Habitación de lujo con capacidad para tres personas",
     "state": "available",
@@ -378,7 +378,7 @@
     ]
   },
   {
-    "type": "Deluxe",
+    "type": "deluxe",
     "price": 600000,
     "description": "Habitación de lujo con capacidad para tres personas",
     "state": "available",
@@ -392,7 +392,7 @@
     ]
   },
   {
-    "type": "Deluxe",
+    "type": "deluxe",
     "price": 600000,
     "description": "Habitación de lujo con capacidad para tres personas",
     "state": "available",
@@ -406,7 +406,7 @@
     ]
   },
   {
-    "type": "Deluxe",
+    "type": "deluxe",
     "price": 600000,
     "description": "Habitación de lujo con capacidad para tres personas",
     "state": "available",
@@ -420,7 +420,7 @@
     ]
   },
   {
-    "type": "Suite",
+    "type": "suite",
     "price": 900000,
     "description": "Suite de lujo con capacidad para cuatro personas",
     "state": "available",
@@ -434,7 +434,7 @@
     ]
   },
   {
-    "type": "Suite",
+    "type": "suite",
     "price": 900000,
     "description": "Suite de lujo con capacidad para cuatro personas",
     "state": "available",
@@ -448,7 +448,7 @@
     ]
   },
   {
-    "type": "Suite",
+    "type": "suite",
     "price": 900000,
     "description": "Suite de lujo con capacidad para cuatro personas",
     "state": "available",
@@ -462,7 +462,7 @@
     ]
   },
   {
-    "type": "Suite",
+    "type": "suite",
     "price": 900000,
     "description": "Suite de lujo con capacidad para cuatro personas",
     "state": "available",
@@ -476,7 +476,7 @@
     ]
   },
   {
-    "type": "Familiar",
+    "type": "family",
     "price": 1200000,
     "description": "Habitación familiar espaciosa con capacidad para seis personas",
     "state": "available",
@@ -497,7 +497,7 @@
     ]
   },
   {
-    "type": "Familiar",
+    "type": "family",
     "price": 1200000,
     "description": "Habitación familiar espaciosa con capacidad para seis personas",
     "state": "available",
@@ -518,7 +518,7 @@
     ]
   },
   {
-    "type": "Familiar",
+    "type": "family",
     "price": 1200000,
     "description": "Habitación familiar espaciosa con capacidad para seis personas",
     "state": "available",
@@ -539,7 +539,7 @@
     ]
   },
   {
-    "type": "Familiar",
+    "type": "family",
     "price": 1200000,
     "description": "Habitación familiar espaciosa con capacidad para seis personas",
     "state": "available",
@@ -560,7 +560,7 @@
     ]
   },
   {
-    "type": "Familiar",
+    "type": "family",
     "price": 1200000,
     "description": "Habitación familiar espaciosa con capacidad para seis personas",
     "state": "available",

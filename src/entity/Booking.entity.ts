@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { User } from './User.entity';
 import { Room } from './Room.entity';
-import { PaymentStatus } from 'src/enum/PaymentStatus.enum';
+import { PaymentStatus } from '../enum/PaymentStatus.enum';
 
 @Entity()
 export class Booking {

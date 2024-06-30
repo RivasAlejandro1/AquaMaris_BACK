@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/entity/User.entity';
-import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
+import { User } from '../../entity/User.entity';
+import { MembershipStatus } from '../../enum/MembershipStatus.enum';
 import { Repository } from 'typeorm';
 import * as users from '../../utils/users.data.json';
 

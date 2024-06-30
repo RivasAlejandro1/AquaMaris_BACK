@@ -2,14 +2,19 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  ParseUUIDPipe,
   Post,
   Query,
   UseInterceptors,
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
-import { filtersInterceptor } from 'src/interceptors/filtersInterceptor.interceptor';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { filtersInterceptor } from '../../interceptors/filtersInterceptor.interceptor';
+import { filterResponseInterceptor } from '../../interceptors/filtersResponseInterceptor';
 
 @Controller('rooms')
+@UseInterceptors(filterResponseInterceptor)
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
@@ -31,11 +36,18 @@ export class RoomsController {
   async roomsSeeder(success: boolean) {
     return await this.roomsService.roomSeeder();
   }
-  
+
+
   @Get('filter')
   @UseInterceptors(filtersInterceptor)
   filterRooms(@Query() query) {
     return this.roomsService.filterRoom(query);
   }
 
+
+  @Get(':id')
+  async getById(@Param('id', ParseUUIDPipe) id: string) {
+    return await this.roomsService.getById(id);
+  }
+  
 }

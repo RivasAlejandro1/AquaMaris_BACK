@@ -9,11 +9,11 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/dtos/CreateUser.dto';
+import { CreateUserDto } from '../../dtos/CreateUser.dto';
 import { UsersService } from './user.service';
-import { RolesAdmin } from 'src/help/roles.decoretion';
-import { Guard_admin } from 'src/guardiane/admin_guard';
-import { Role } from 'src/enum/Role.enum';
+import { RolesAdmin } from '../../help/roles.decoretion';
+import { Guard_admin } from '../../guardiane/admin_guard';
+import { Role } from '../../enum/Role.enum';
 
 @Controller('user')
 export class UserController {
