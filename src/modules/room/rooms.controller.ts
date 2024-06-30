@@ -23,7 +23,7 @@ export class RoomsController {
   @Get()
   getAllRoms(
     @Query('page') page: number = 1,
-    @Query('limit') limit: number = 6,
+    @Query('limit') limit: number = 3,
   ) {
     return this.roomsService.getAllRooms(page, limit);
   }
