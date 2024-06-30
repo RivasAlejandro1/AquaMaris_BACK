@@ -43,16 +43,17 @@ export class CreateRoomDto {
   @IsNotEmpty()
   roomNumber: number;
   
-  @IsUUID()
   @IsOptional()
+  @IsUUID()
   hotel: string;
   
+  @IsOptional()
   @IsArray()
   @IsEnum(Services, { each: true })
-  @IsOptional()
   services: Services[];
   
     
+  @IsOptional()
   @IsArray()
   @IsUrl({}, {each: true})
   images: string[];

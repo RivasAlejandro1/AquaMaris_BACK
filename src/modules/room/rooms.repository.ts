@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,6 +12,7 @@ import { Repository } from 'typeorm';
 import * as data from '../../utils/rooms.data.json';
 import { Image } from '../../entity/Image.entity';
 import { Booking } from '../../entity/Booking.entity';
+import { UUID } from 'crypto';
 
 @Injectable()
 export class RoomsRepository {
@@ -171,15 +173,7 @@ export class RoomsRepository {
       services,
       images,
     } = infoRoom;
-
-
     
-    const hotel = infoRoom.hotel ? infoRoom.hotel : await this.hotelRepository.find({
-      select: {
-        id: true,
-      },
-    })[0]
-
     const newRoom = this.roomsRepository.create({
       type,
       price,
@@ -188,32 +182,77 @@ export class RoomsRepository {
       roomNumber,
     });
 
-      
+    let hotelFound :any
+    try {
+      hotelFound = infoRoom.hotel ? 
+          { id : infoRoom.hotel} 
+        : 
+          await this.hotelRepository.findOne({
+          where: {
+            name: "AquaMaris Hotel's Beach"
+          },
+          select: [ "id"]
+        })
+        
+      }catch(Error){
+        throw new NotFoundException()
+    }
+    const hotelID = hotelFound.id
+    
+    
+    try{
+      const findedHotel = await this.hotelRepository.findOneOrFail({
+        where:{
+          id: hotelID
+        }
+      });
+      newRoom.hotel = findedHotel;
+    } catch(error) {
+      if(error.name === "EntityNotFoundError"){
+        throw new NotFoundException(`Hotel with name ${hotelID} not exist in DB`)
+      }else{
+        console.log(error)
+        throw new InternalServerErrorException("")
+      }
+    }
 
-    const findedHotel = await this.hotelRepository.findOneBy({ id: hotel });
-    newRoom.hotel = findedHotel;
 
-    const allServicesFinded = await Promise.all(
-      services.map(async (name) => {
-        return await this.serviceRepository.findOneBy({ name });
-      }),
-    );
-    newRoom.services = allServicesFinded;
+    let currentName: string;// Tomar valor donde salio el error de la petición de servicio
+    try {
+      const allServicesFinded = !services ? [] : await Promise.all(
+        services.map(async (name) => {
+            currentName = name;
+            const service = await this.serviceRepository.findOneOrFail({ 
+              where : {
+                  name 
+                } 
+            });
+            return service
+          }),
+        );
+        newRoom.services = allServicesFinded;
+      }catch(error){
+        if(error.name === "EntityNotFoundError"){
+          throw new NotFoundException(`Service with name ${currentName} not exist in DB`)
+        }else{
+          throw new InternalServerErrorException(`Database connection error`);
+      }
+    }
 
-    const allImageMaked = await Promise.all(
+    
+    try{
+      const allImageMaked = !images ? [] : await Promise.all(
       images.map(async (url) => {
         const newImage = this.imagesRepository.create({ url });
         newImage.date = new Date();
-
-        console.log(newImage)
-        return await this.imagesRepository.save(newImage);;
-      }),
-    );
-
-    console.log(allImageMaked)
-    newRoom.images = allImageMaked;
-    
-    return await this.roomsRepository.save(newRoom);
+          return await this.imagesRepository.save(newImage);;
+        }),
+      );
+      newRoom.images = allImageMaked;
+      return await this.roomsRepository.save(newRoom);
+    }catch(error){
+      throw new InternalServerErrorException("Database connection error")
+    }
 
   }
   
