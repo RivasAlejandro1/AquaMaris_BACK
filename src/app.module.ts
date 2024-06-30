@@ -31,6 +31,7 @@ import { BookingService } from './modules/booking/booking.service';
 import { RoomsRepository } from './modules/room/rooms.repository';
 import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
 
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Booking, Hotel, Image, Room, Service]),

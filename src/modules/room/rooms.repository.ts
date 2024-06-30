@@ -23,6 +23,7 @@ export class RoomsRepository {
     private bookingsRepository: Repository<Booking>,
   ) {}
 
+  
   async getAllRooms(page, limit) {
     const offset = (page - 1) * limit;
     const allRooms = await this.roomsRepository
@@ -52,7 +53,8 @@ export class RoomsRepository {
       .skip(offset)
       .take(limit)
       .getMany();
-    return allRooms;
+
+      return allRooms;
   }
 
   async filterRoom(filters) {
@@ -203,7 +205,9 @@ export class RoomsRepository {
     await this.roomsRepository.save(newRoom);
 
     return newRoom;
+
   }
+  
 
   async roomSeeder() {
     let number = 1;

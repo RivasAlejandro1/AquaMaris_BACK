@@ -12,6 +12,7 @@ import { RoomsService } from './rooms.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { filtersInterceptor } from '../../interceptors/filtersInterceptor.interceptor';
 import { filterResponseInterceptor } from '../../interceptors/filtersResponseInterceptor';
+import { CreateRoomDto } from 'src/dtos/CreateRoom.dto';
 
 @Controller('rooms')
 @UseInterceptors(filterResponseInterceptor)
@@ -26,10 +27,10 @@ export class RoomsController {
     return this.roomsService.getAllRooms(page, limit);
   }
 
-  @Post()
-  async createRoom(@Body() infoRoom:any){
-    return await this.roomsService.createRoom(infoRoom);
-  }
+    @Post()
+    async createRoom(@Body() infoRoom: CreateRoomDto){
+      return await this.roomsService.createRoom(infoRoom);
+    }
 
   
   @Get()
