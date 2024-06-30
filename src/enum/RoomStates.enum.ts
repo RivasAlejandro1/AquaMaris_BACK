@@ -1,6 +1,6 @@
 
 export enum RoomStates {
-    AVAILABLE = "Available",
-    MAINTENANCE = "InMaintenance",
-    OCCUPIED = "Occupied"
+    AVAILABLE = "available",
+    MAINTENANCE = "inmaintenance",
+    OCCUPIED = "occupied"
 }

@@ -11,9 +11,11 @@ import {
   IsEnum,
   Validate,
   ValidationArguments,
+  IsOptional,
 } from 'class-validator';
 import { RoomStates } from 'src/enum/RoomStates.enum';
 import { TypesRooms } from 'src/enum/RoomTypes.enum';
+import { Services } from 'src/enum/Services.enum';
 
 
 export class CreateRoomDto {
@@ -39,12 +41,12 @@ export class CreateRoomDto {
   roomNumber: number;
   
   @IsUUID()
-  @IsNotEmpty()
+  @IsOptional()
   hotel: string;
   
   @IsArray()
-  @IsUUID("all", { each: true })
-  services: string[];
+  @IsEnum(Services, { each: true })
+  services: Services[];
   
     
   @IsArray()

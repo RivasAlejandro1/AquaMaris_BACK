@@ -160,7 +160,7 @@ export class RoomsRepository {
   async getRoomById(id) {
     return this.roomsRepository.findOneBy({ id });
   }
-
+  //! CURRENT
   async createRoom(infoRoom) {
     const {
       type,
@@ -168,10 +168,17 @@ export class RoomsRepository {
       description,
       state,
       roomNumber,
-      hotel,
       services,
       images,
     } = infoRoom;
+
+
+    
+    const hotel = infoRoom.hotel ? infoRoom.hotel : await this.hotelRepository.find({
+      select: {
+        id: true,
+      },
+    })[0]
 
     const newRoom = this.roomsRepository.create({
       type,
@@ -181,12 +188,14 @@ export class RoomsRepository {
       roomNumber,
     });
 
+      
+
     const findedHotel = await this.hotelRepository.findOneBy({ id: hotel });
     newRoom.hotel = findedHotel;
 
     const allServicesFinded = await Promise.all(
-      services.map(async (id) => {
-        return await this.serviceRepository.findOneBy({ id });
+      services.map(async (name) => {
+        return await this.serviceRepository.findOneBy({ name });
       }),
     );
     newRoom.services = allServicesFinded;
@@ -196,15 +205,15 @@ export class RoomsRepository {
         const newImage = this.imagesRepository.create({ url });
         newImage.date = new Date();
 
-        const saveImage = await this.imagesRepository.save(newImage);
-        return saveImage;
+        console.log(newImage)
+        return await this.imagesRepository.save(newImage);;
       }),
     );
+
+    console.log(allImageMaked)
     newRoom.images = allImageMaked;
-
-    await this.roomsRepository.save(newRoom);
-
-    return newRoom;
+    
+    return await this.roomsRepository.save(newRoom);
 
   }
   
