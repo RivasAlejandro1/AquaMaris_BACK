@@ -153,6 +153,7 @@ export class RoomsRepository {
       2: ['standard', 'double', 'deluxe', 'Suite', 'family'],
       3: ['deluxe', 'suite', 'family'],
       4: ['suite', 'family'],
+      5: ['family'],
       6: ['family'],
     };
     const roomTypes = capacityMap[capacity] || [];
