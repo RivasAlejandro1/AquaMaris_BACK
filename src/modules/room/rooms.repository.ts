@@ -218,7 +218,7 @@ export class RoomsRepository {
     }
 
 
-    let currentName: string;// Tomar valor donde salio el error de la petición de servicio
+    let currentName: string;
     try {
       const allServicesFinded = !services ? [] : await Promise.all(
         services.map(async (name) => {
@@ -259,10 +259,8 @@ export class RoomsRepository {
   
 
   async roomSeeder() {
-    let number = 1;
     try {
       for (const dato of data) {
-        console.log(number++);
         const existingHotel = await this.hotelRepository
           .createQueryBuilder('hotel')
           .where('hotel.name = :name', { name: dato.hotel })
@@ -313,7 +311,6 @@ export class RoomsRepository {
           hotel: existingHotel,
           images: images,
         });
-        console.log(newRoom);
         await this.roomsRepository.save(newRoom);
       }
       return true;

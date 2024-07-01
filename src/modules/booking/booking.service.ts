@@ -19,10 +19,8 @@ export class BookingService {
   ) {}
 
   async bookingSeeder() {
-    let number = 1
     try {
       for (const book of bookingData) {
-        console.log(number++)
         const existingUser = await this.userRepository
           .createQueryBuilder('user')
           .where('user.name = :name', { name: book.user })
