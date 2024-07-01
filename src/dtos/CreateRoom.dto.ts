@@ -12,11 +12,24 @@ import {
   Validate,
   ValidationArguments,
   IsOptional,
+  ValidatorConstraintInterface,
+  ValidatorConstraint,
 } from 'class-validator';
 import { RoomStates } from 'src/enum/RoomStates.enum';
 import { TypesRooms } from 'src/enum/RoomTypes.enum';
 import { Services } from 'src/enum/Services.enum';
 
+@ValidatorConstraint({name: "TwoDecimals", async: false})
+export class TwoDecimals implements ValidatorConstraintInterface {
+  validate(value: any, validationArguments?: ValidationArguments): boolean | Promise<boolean> {
+    const regex = /^\d+(\.\d{0,2})?$/
+    return regex.test(value.toString())
+  }
+
+  defaultMessage(validationArguments?: ValidationArguments): string {
+    return `Price must have between cero and two decimals `
+  }
+}
 
 export class CreateRoomDto {
 
@@ -25,30 +38,36 @@ export class CreateRoomDto {
   type: TypesRooms;
 
   @IsNumber()
+  @Validate(TwoDecimals)
+  @IsNotEmpty()
   price: number;
 
   @IsString()
+  @IsNotEmpty()
   description: string;
 
-  @IsNotEmpty()
   @IsEnum(RoomStates)
+  @IsNotEmpty()
   state: string;
 
 
   @IsNumber()
   @IsInt()
   @IsPositive()
+  @IsNotEmpty()
   roomNumber: number;
   
-  @IsUUID()
   @IsOptional()
+  @IsUUID()
   hotel: string;
   
+  @IsOptional()
   @IsArray()
   @IsEnum(Services, { each: true })
   services: Services[];
   
     
+  @IsOptional()
   @IsArray()
   @IsUrl({}, {each: true})
   images: string[];
