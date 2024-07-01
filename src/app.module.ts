@@ -29,7 +29,7 @@ import { ImagesService } from './modules/images/images.service';
 import { UsersService } from './modules/user/user.service';
 import { BookingService } from './modules/booking/booking.service';
 import { RoomsRepository } from './modules/room/rooms.repository';
-import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
+// import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
 
 
 @Module({
@@ -68,7 +68,7 @@ import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
     BookingController,
     HotelService,
     ServiceService,
-    CloudinaryService,
+    // CloudinaryService,
     RoomsService,
     ImagesService,
     UsersService,
@@ -76,7 +76,6 @@ import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
     RoomsRepository,
     UserModule,
     RoomsModule,
-    CloudinaryService,
   ],
 })
 export class AppModule {
