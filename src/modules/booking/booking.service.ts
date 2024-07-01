@@ -19,7 +19,7 @@ export class BookingService {
   ) {}
 
   async bookingSeeder() {
-    try {
+      try {
       for (const book of bookingData) {
         const existingUser = await this.userRepository
           .createQueryBuilder('user')
