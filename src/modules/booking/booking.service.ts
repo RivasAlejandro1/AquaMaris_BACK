@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Booking } from '../../entity/Booking.entity';
@@ -77,5 +77,39 @@ export class BookingService {
       console.log('Error seeding data', err);
       throw new Error('Error seeding booking data');
     }
+  }
+
+  async createBooking(infoBooking: any){
+    /* entryDate, 
+    departureDate, 
+    paymentStatus, */ 
+    const {
+      userId, 
+      roomId, 
+      companions,
+      ...infoCreateBooking
+    } = infoBooking;
+    const newBooking = this.bookingRepository.create(infoCreateBooking);
+    
+
+
+    try{
+      const userFinded = await this.userRepository.findOneOrFail({
+        where: {
+          id: userId
+        }
+      })
+
+      userFinded.booking = newBooking
+
+    }catch(error){
+      if(error.name = "NotFoundEntityError") throw new NotFoundException(`The found the user with id: ${userId}`)
+      throw new InternalServerErrorException("Conection error DB")
+    }
+
+
+  await this.bookingRepository.save(newBooking);
+    
+    return 
   }
 }
