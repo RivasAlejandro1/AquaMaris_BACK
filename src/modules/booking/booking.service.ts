@@ -80,27 +80,34 @@ export class BookingService {
   }
 
   async createBooking(infoBooking: any){
-    /* entryDate, 
-    departureDate, 
-    paymentStatus, */ 
     const {
+      check_in_date, 
+      check_out_date, 
+      paymentStatus, 
       userId, 
       roomId, 
       companions,
       ...infoCreateBooking
     } = infoBooking;
-    const newBooking = this.bookingRepository.create(infoCreateBooking);
+    const newBooking : Booking = this.bookingRepository.create({check_in_date, check_out_date, paymentStatus});
     
 
 
     try{
-      const userFinded = await this.userRepository.findOneOrFail({
+      const userFinded = await this.userRepository.exists({
         where: {
           id: userId
         }
       })
 
-      userFinded.booking = newBooking
+      if(!userFinded) throw new NotFoundException(`The found the user with id: ${userId}`)
+      await this.userRepository
+      .createQueryBuilder("user")
+      .update(User)
+      .set({ booking: ()=> `array_append(booking, '${newBooking}')` })
+      .where("id = :id", { id: userId })
+      .execute()
+
 
     }catch(error){
       if(error.name = "NotFoundEntityError") throw new NotFoundException(`The found the user with id: ${userId}`)
