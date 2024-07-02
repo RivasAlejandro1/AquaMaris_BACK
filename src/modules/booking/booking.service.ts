@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Booking } from '../../entity/Booking.entity';
@@ -19,7 +23,7 @@ export class BookingService {
   ) {}
 
   async bookingSeeder() {
-      try {
+    try {
       for (const book of bookingData) {
         const existingUser = await this.userRepository
           .createQueryBuilder('user')
@@ -77,44 +81,45 @@ export class BookingService {
     }
   }
 
-  async createBooking(infoBooking: any){
+  async createBooking(infoBooking: any) {
     const {
-      check_in_date, 
-      check_out_date, 
-      paymentStatus, 
-      userId, 
-      roomId, 
+      check_in_date,
+      check_out_date,
+      paymentStatus,
+      userId,
+      roomId,
       companions,
       ...infoCreateBooking
     } = infoBooking;
-    const newBooking : Booking = this.bookingRepository.create({check_in_date, check_out_date, paymentStatus});
-    
+    const newBooking: Booking = this.bookingRepository.create({
+      check_in_date,
+      check_out_date,
+      paymentStatus,
+    });
 
-
-    try{
+    try {
       const userFinded = await this.userRepository.exists({
         where: {
-          id: userId
-        }
-      })
+          id: userId,
+        },
+      });
 
-      if(!userFinded) throw new NotFoundException(`The found the user with id: ${userId}`)
+      if (!userFinded)
+        throw new NotFoundException(`The found the user with id: ${userId}`);
       await this.userRepository
-      .createQueryBuilder("user")
-      .update(User)
-      .set({ booking: ()=> `array_append(booking, '${newBooking}')` })
-      .where("id = :id", { id: userId })
-      .execute()
-
-
-    }catch(error){
-      if(error.name = "NotFoundEntityError") throw new NotFoundException(`The found the user with id: ${userId}`)
-      throw new InternalServerErrorException("Conection error DB")
+        .createQueryBuilder('user')
+        .update(User)
+        .set({ booking: () => `array_append(booking, '${newBooking}')` })
+        .where('id = :id', { id: userId })
+        .execute();
+    } catch (error) {
+      if ((error.name = 'NotFoundEntityError'))
+        throw new NotFoundException(`The found the user with id: ${userId}`);
+      throw new InternalServerErrorException('Conection error DB');
     }
 
+    await this.bookingRepository.save(newBooking);
 
-  await this.bookingRepository.save(newBooking);
-    
-    return 
+    return;
   }
 }
