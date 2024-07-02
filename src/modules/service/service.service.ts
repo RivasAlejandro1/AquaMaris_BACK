@@ -11,10 +11,8 @@ export class ServiceService {
   ) {}
 
   async serviceSeeder() {
-    let number = 1
     try {
       for (const service of services) {
-        console.log(number++)
         const existingService = await this.serviceRepository
           .createQueryBuilder('service')
           .where('service.name = :name', { name: service.name })

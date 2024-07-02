@@ -22,12 +22,12 @@ export class ImagesController {
     return await this.imagesServices.getAllImages();
   }
 
-  @Post(':id')
-  @UseInterceptors(FileInterceptor('file'))
-  async UploudImage(
-    @Param() id: string,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    return await this.imagesServices.UploadImage(file, id);
-  }
+  // @Post(':id')
+  // @UseInterceptors(FileInterceptor('file'))
+  // async UploudImage(
+  //   @Param() id: string,
+  //   @UploadedFile() file: Express.Multer.File,
+  // ) {
+  //   return await this.imagesServices.UploadImage(file, id);
+  // }
 }
