@@ -7,8 +7,8 @@ import {
   IsEnum,
   IsOptional,
 } from 'class-validator';
-import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
-import { Roles } from 'src/enum/Role.enum';
+import { MembershipStatus } from '../enum/MembershipStatus.enum';
+import { Role } from '../enum/Role.enum';
 
 export class CreateUserDto {
   @IsString()
@@ -30,12 +30,12 @@ export class CreateUserDto {
   confirmPassword: string;
 
   @IsNotEmpty()
-  @IsEnum(Roles)
-  roles: Roles;
+  @IsEnum(Role)
+  role: Role;
 
   @IsNumberString()
   @Length(1, 15)
-  phone: string;
+  phone: number;
 
   @IsString()
   @IsNotEmpty()

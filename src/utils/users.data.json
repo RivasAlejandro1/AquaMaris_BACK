@@ -1,0 +1,47 @@
+[
+  {
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "password": "password1",
+    "role": "USER",
+    "phone": 1234567890,
+    "address": "123 Main St",
+    "user_photo": "john_doe_photo.jpg"
+  },
+  {
+    "name": "Jane Smith",
+    "email": "janesmith@example.com",
+    "password": "password2",
+    "role": "USER",
+    "phone": 215165181,
+    "address": "456 Elm St",
+    "user_photo": "jane_smith_photo.jpg"
+  },
+  {
+    "name": "Alice Johnson",
+    "email": "alicejohnson@example.com",
+    "password": "password3",
+    "role": "USER",
+    "phone": 1122334455,
+    "address": "789 Oak St",
+    "user_photo": "alice_johnson_photo.jpg"
+  },
+  {
+    "name": "Bob Brown",
+    "email": "bobbrown@example.com",
+    "password": "password4",
+    "role": "USER",
+    "phone": 5566778899,
+    "address": "101 Pine St",
+    "user_photo": "bob_brown_photo.jpg"
+  },
+  {
+    "name": "Carol White",
+    "email": "carolwhite@example.com",
+    "password": "password5",
+    "role": "USER",
+    "phone": 2233445566,
+    "address": "202 Birch St",
+    "user_photo": "carol_white_photo.jpg"
+  }
+]
