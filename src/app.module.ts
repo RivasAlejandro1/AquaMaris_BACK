@@ -29,6 +29,8 @@ import { ImagesService } from './modules/images/images.service';
 import { UsersService } from './modules/user/user.service';
 import { BookingService } from './modules/booking/booking.service';
 import { RoomsRepository } from './modules/room/rooms.repository';
+import { MailService } from './modules/mail/mail.service';
+import { MailController } from './modules/mail/mail.controller';
 import { Companion } from './entity/Companion.entity';
 import { Payment } from './entity/Payment.entity';
 import { PaymentModule } from './modules/payment/payment.module';
@@ -74,6 +76,7 @@ import { PaymentService } from './modules/payment/payment.service';
     PaymentModule,
   ],
   providers: [
+    MailService,
     HotelController,
     ServiceController,
     RoomsController,
@@ -91,6 +94,9 @@ import { PaymentService } from './modules/payment/payment.service';
     UserModule,
     RoomsModule,
   ],
+  controllers: [
+    MailController
+  ]
 })
 export class AppModule {
   constructor(

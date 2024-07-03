@@ -11,13 +11,15 @@ import { MembershipStatus } from '../../enum/MembershipStatus.enum';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../entity/User.entity';
 import { Repository } from 'typeorm';
+import { Role } from 'src/enum/Role.enum';
 
 @Injectable()
 export class AuthService {
+
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(createUserData: CreateUserDto) {
     const { email, password } = createUserData;
@@ -36,9 +38,9 @@ export class AuthService {
       name: createUserData.name,
       email: createUserData.email,
       password: hashedPassword,
-      role: createUserData.role,
+      role: Role.USER,
       phone: createUserData.phone,
-      address: createUserData.address,
+      country: createUserData.country,
       user_photo: createUserData.user_photo,
       membership_status: MembershipStatus.DISABLED,
     });
@@ -74,6 +76,19 @@ export class AuthService {
 
     const token = this.jwtService.sign(userPayload);
 
-    return { message: 'User Logged succesfully', token };
+    return { message: 'User Logged succesfully', token , userId: user.id};
+  }
+
+  async auth0login(user: any) {
+    const payload = { 
+      sub: user.id, 
+      id: user.id,
+      email: user.email, 
+      name: user.name 
+    }
+    return {
+      access_token: this.jwtService.sign(payload), 
+      userId: user.id,
+    }
   }
 }
