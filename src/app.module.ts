@@ -29,12 +29,13 @@ import { ImagesService } from './modules/images/images.service';
 import { UsersService } from './modules/user/user.service';
 import { BookingService } from './modules/booking/booking.service';
 import { RoomsRepository } from './modules/room/rooms.repository';
+import { Companion } from './entity/Companion.entity';
 // import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
 
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Booking, Hotel, Image, Room, Service]),
+    TypeOrmModule.forFeature([User, Booking, Hotel, Image, Room, Service, Companion]),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeOrmConfig],

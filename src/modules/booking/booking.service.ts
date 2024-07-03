@@ -1,11 +1,12 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { InsertResult, Repository } from 'typeorm';
 import { Booking } from '../../entity/Booking.entity';
 import { User } from '../../entity/User.entity';
 import { Room } from '../../entity/Room.entity';
 import { PaymentStatus } from '../../enum/PaymentStatus.enum';
 import * as bookingData from '../../utils/booking.data.json';
+import { Companion } from 'src/entity/Companion.entity';
 
 @Injectable()
 export class BookingService {
@@ -16,6 +17,8 @@ export class BookingService {
     private userRepository: Repository<User>,
     @InjectRepository(Room)
     private roomRepository: Repository<Room>,
+    @InjectRepository(Companion)
+    private companionRepository: Repository<Companion>,
   ) {}
 
   async bookingSeeder() {
@@ -77,44 +80,63 @@ export class BookingService {
     }
   }
 
-  async createBooking(infoBooking: any){
+  async makeBooking(infoBooking: any){
     const {
       check_in_date, 
       check_out_date, 
-      paymentStatus, 
       userId, 
       roomId, 
       companions,
       ...infoCreateBooking
     } = infoBooking;
-    const newBooking : Booking = this.bookingRepository.create({check_in_date, check_out_date, paymentStatus});
+    const paymentStatus = PaymentStatus.PENDING
     
-
+    const newBooking : Booking = this.bookingRepository.create({check_in_date, check_out_date});
 
     try{
-      const userFinded = await this.userRepository.exists({
-        where: {
-          id: userId
-        }
-      })
-
-      if(!userFinded) throw new NotFoundException(`The found the user with id: ${userId}`)
-      await this.userRepository
-      .createQueryBuilder("user")
-      .update(User)
-      .set({ booking: ()=> `array_append(booking, '${newBooking}')` })
-      .where("id = :id", { id: userId })
-      .execute()
-
-
+      const roomFinded = await this.roomRepository.findOneByOrFail({ id: roomId })
+      newBooking.room = roomFinded;
     }catch(error){
-      if(error.name = "NotFoundEntityError") throw new NotFoundException(`The found the user with id: ${userId}`)
+      if(error.name == "EntityNotFoundError") throw new NotFoundException(`The found the room with id: ${roomId}`)
+      console.log(error)
+      console.log(error.name)
       throw new InternalServerErrorException("Conection error DB")
     }
 
+  
+    try{
+      const userFinded = await this.userRepository.findOneByOrFail({ id: userId })
+      newBooking.user = userFinded;
+    }catch(error){
+      if(error.name == "EntityNotFoundError") throw new NotFoundException(`The found the user with id: ${userId}`)
+      console.log(error)
+      throw new InternalServerErrorException("Conection error DB")
+    } 
 
-  await this.bookingRepository.save(newBooking);
+    const result = await this.bookingRepository.save(newBooking)
+    try{
+      if(companions){
+        await Promise.all( 
+          companions.map(
+            async companion => {
+              const {name , identityCard } = companion
+              const newCompanion = this.companionRepository.create({name , identityCard });
+              newCompanion.booking = newBooking;
+              await this.companionRepository.save(newCompanion)
+            }
+          )
+        )
+      }
+    }catch(error){
+      if(error.name == "EntityNotFoundError") throw new NotFoundException(`The found the user with id: ${userId}`)
+      console.log(error)
+      console.log(error.name)
+      throw new InternalServerErrorException("Conection error DB")
+    } 
+
+
     
-    return 
+    return result;
+    
   }
 }
