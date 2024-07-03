@@ -15,11 +15,11 @@ import { JwtAuthGuard } from 'src/guardiane/jwt-auth.guard';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: {expiresIn: '1hr'}
-    })
-],
+      signOptions: { expiresIn: '1hr' },
+    }),
+  ],
   providers: [AuthService, UsersService, JwtStrategy, JwtAuthGuard],
   controllers: [AuthController],
-  exports: [JwtAuthGuard]
+  exports: [JwtAuthGuard],
 })
-export class AuthModule { }
+export class AuthModule {}
