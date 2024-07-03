@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -11,10 +12,13 @@ import { Room } from '../../entity/Room.entity';
 import { PaymentStatus } from '../../enum/PaymentStatus.enum';
 import * as bookingData from '../../utils/booking.data.json';
 import { Companion } from 'src/entity/Companion.entity';
+import { PaymentService } from '../payment/payment.service';
+import { Payment } from 'mercadopago';
 
 @Injectable()
 export class BookingService {
   constructor(
+    private readonly paymentService: PaymentService,
     @InjectRepository(Booking)
     private bookingRepository: Repository<Booking>,
     @InjectRepository(User)
@@ -95,11 +99,16 @@ export class BookingService {
     } = infoBooking;
     const paymentStatus = PaymentStatus.PENDING
     
-    const newBooking : Booking = this.bookingRepository.create({check_in_date, check_out_date});
+    const newBooking : Booking = this.bookingRepository.create({check_in_date, check_out_date, paymentStatus});
+    const newBookingID = newBooking.id;
 
+    let price: number;
+    let typeRoom;
     try{
       const roomFinded = await this.roomRepository.findOneByOrFail({ id: roomId })
       newBooking.room = roomFinded;
+      price = Number(roomFinded.price);
+      typeRoom = roomFinded.type
     }catch(error){
       if(error.name == "EntityNotFoundError") throw new NotFoundException(`The found the room with id: ${roomId}`)
       console.log(error)
@@ -136,8 +145,16 @@ export class BookingService {
       console.log(error)
       console.log(error.name)
       throw new InternalServerErrorException("Conection error DB")
-    } 
-    return result;
+    }
+    console.log(price)
+    if(typeof price != "number") {
+      console.log(price)
+      console.log(typeof price)
+      throw new BadRequestException("Price must be number") 
+    
+    }const infoOrder = { id : 1, title: typeRoom, price, orderId: newBooking.id }
+     await this.paymentService.createOrder(infoOrder)
+    return newBooking;
     
 
   }

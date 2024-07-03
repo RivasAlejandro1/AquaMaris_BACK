@@ -32,6 +32,7 @@ import { RoomsRepository } from './modules/room/rooms.repository';
 import { Companion } from './entity/Companion.entity';
 import { Payment } from './entity/Payment.entity';
 import { PaymentModule } from './modules/payment/payment.module';
+import { PaymentService } from './modules/payment/payment.service';
 // import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
 
 @Module({
