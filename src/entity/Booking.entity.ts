@@ -1,13 +1,15 @@
+
 import {
   Column,
   Entity,
   ManyToOne,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './User.entity';
 import { Room } from './Room.entity';
 import { PaymentStatus } from '../enum/PaymentStatus.enum';
+import { Companion } from './Companion.entity';
 
 @Entity()
 export class Booking {
@@ -17,7 +19,7 @@ export class Booking {
   @ManyToOne(() => User, (user) => user.booking)
   user: User;
 
-  @ManyToOne(() => Room, (room) => room.booking)
+  @ManyToOne(() => Room, (room) => room.bookings)
   room: Room;
 
   @Column({ type: 'date', nullable: false })
@@ -28,4 +30,7 @@ export class Booking {
 
   @Column({ type: 'enum', enum: PaymentStatus })
   paymentStatus: PaymentStatus;
+
+  @OneToMany(() => Companion, (companion) => companion.booking)
+  companions: Companion[];
 }
