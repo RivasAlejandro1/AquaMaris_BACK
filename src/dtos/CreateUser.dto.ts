@@ -41,13 +41,13 @@ export class CreateUserDto {
   @IsString()
   @IsOptional()
   @Length(1, 255)
-  address: string;
+  country: string;
 
   @IsString()
   @IsOptional()
   user_photo: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(MembershipStatus)
   membership_status: MembershipStatus;
 }

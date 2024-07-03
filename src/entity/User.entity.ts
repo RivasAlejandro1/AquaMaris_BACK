@@ -29,13 +29,13 @@ export class User {
   @Column({ type: 'decimal', nullable: true})
   phone: number;
 
-  @Column({ type: 'varchar', nullable: true })
-  address: string;
+  @Column({ type: 'varchar' })
+  country: string;
 
   @Column({ type: 'varchar', nullable: true })
   user_photo: string;
 
-  @Column({ type: 'varchar', enum: MembershipStatus })
+  @Column({ type: 'varchar', enum: MembershipStatus, nullable: true })
   membership_status: MembershipStatus;
 
   @OneToMany(() => Booking, (booking) => booking.user)

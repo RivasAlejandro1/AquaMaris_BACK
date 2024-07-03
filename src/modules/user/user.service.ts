@@ -9,7 +9,7 @@ import { Role } from 'src/enum/Role.enum';
 
 @Injectable()
 export class UsersService {
-  
+
   constructor(
     @InjectRepository(User) private userDBrepository: Repository<User>,
   ) { }
@@ -29,7 +29,7 @@ export class UsersService {
             password: user.password,
             role: user.role,
             phone: user.phone,
-            address: user.address,
+            country: user.country,
             user_photo: user.user_photo,
             membership_status: MembershipStatus.ACTIVE,
           });
@@ -233,21 +233,26 @@ export class UsersService {
   }
 
   async findOrCreateUser(userData: any): Promise<User> {
-    let user = await this.userDBrepository.findOne({ where: { email: userData.email } });
+    try {
+      let user = await this.userDBrepository.findOne({ where: { email: userData.email } });
 
-    if (!user) {
-      user = this.userDBrepository.create({
-        name: userData.name,
-        email: userData.email,
-        password: '',
-        role: Role.USER,
-        user_photo: userData.user_photo,
-        membership_status: MembershipStatus.DISABLED,
-      });
+      if (!user) {
+        user = this.userDBrepository.create({
+          name: userData.name,
+          email: userData.email,
+          password: '',
+          role: Role.USER,
+          country: '',
+          user_photo: userData.user_photo,
+          membership_status: MembershipStatus.DISABLED,
+        });
 
-      user = await this.userDBrepository.save(user);
+        user = await this.userDBrepository.save(user);
+      }
+      return user;
+    } catch (err) {
+      console.log('Hubo un error al crear el usuario con autenticacion de terceros', err)
+      throw new Error('Hubo un error al crear el usuario con autenticacion de terceros')
     }
-
-    return user;
   }
 }

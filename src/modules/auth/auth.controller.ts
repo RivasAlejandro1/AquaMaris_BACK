@@ -22,10 +22,11 @@ export class AuthController {
     return this.authService.login(loginUserData);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post('auth0login')
   async auth0Login(@Req() req) {
-    const user = await this.userService.findOrCreateUser(req.user)
+    console.log(req.body)
+    const user = await this.userService.findOrCreateUser(req.body)
     return this.authService.auth0login(user)
   }
 
