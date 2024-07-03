@@ -34,12 +34,10 @@ import { MailController } from './modules/mail/mail.controller';
 import { Companion } from './entity/Companion.entity';
 import { Payment } from './entity/Payment.entity';
 import { PaymentModule } from './modules/payment/payment.module';
-import { PaymentService } from './modules/payment/payment.service';
 // import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
 
 @Module({
   imports: [
-
     TypeOrmModule.forFeature([
       User,
       Booking,
@@ -94,9 +92,7 @@ import { PaymentService } from './modules/payment/payment.service';
     UserModule,
     RoomsModule,
   ],
-  controllers: [
-    MailController
-  ]
+  controllers: [MailController],
 })
 export class AppModule {
   constructor(

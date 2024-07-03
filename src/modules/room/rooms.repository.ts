@@ -12,7 +12,6 @@ import { Repository } from 'typeorm';
 import * as data from '../../utils/rooms.data.json';
 import { Image } from '../../entity/Image.entity';
 import { Booking } from '../../entity/Booking.entity';
-import { UUID } from 'crypto';
 
 @Injectable()
 export class RoomsRepository {

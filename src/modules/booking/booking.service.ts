@@ -88,74 +88,83 @@ export class BookingService {
     }
   }
 
-  async makeBooking(infoBooking: any){
+  async makeBooking(infoBooking: any) {
     const {
-      check_in_date, 
-      check_out_date, 
-      userId, 
-      roomId, 
+      check_in_date,
+      check_out_date,
+      userId,
+      roomId,
       companions,
       ...infoCreateBooking
     } = infoBooking;
-    const paymentStatus = PaymentStatus.PENDING
-    
-    const newBooking : Booking = this.bookingRepository.create({check_in_date, check_out_date, paymentStatus});
+    const paymentStatus = PaymentStatus.PENDING;
+
+    const newBooking: Booking = this.bookingRepository.create({
+      check_in_date,
+      check_out_date,
+      paymentStatus,
+    });
     const newBookingID = newBooking.id;
 
     let price: number;
     let typeRoom;
-    try{
-      const roomFinded = await this.roomRepository.findOneByOrFail({ id: roomId })
+    try {
+      const roomFinded = await this.roomRepository.findOneByOrFail({
+        id: roomId,
+      });
       newBooking.room = roomFinded;
       price = Number(roomFinded.price);
-      typeRoom = roomFinded.type
-    }catch(error){
-      if(error.name == "EntityNotFoundError") throw new NotFoundException(`The found the room with id: ${roomId}`)
-      console.log(error)
-      console.log(error.name)
-      throw new InternalServerErrorException("Conection error DB")
+      typeRoom = roomFinded.type;
+    } catch (error) {
+      if (error.name == 'EntityNotFoundError')
+        throw new NotFoundException(`The found the room with id: ${roomId}`);
+      console.log(error);
+      console.log(error.name);
+      throw new InternalServerErrorException('Conection error DB');
     }
 
-  
-    try{
-      const userFinded = await this.userRepository.findOneByOrFail({ id: userId })
+    try {
+      const userFinded = await this.userRepository.findOneByOrFail({
+        id: userId,
+      });
       newBooking.user = userFinded;
-    }catch(error){
-      if(error.name == "EntityNotFoundError") throw new NotFoundException(`The found the user with id: ${userId}`)
-      console.log(error)
-      throw new InternalServerErrorException("Conection error DB")
-    } 
-
-    const result = await this.bookingRepository.save(newBooking)
-    try{
-      if(companions){
-        await Promise.all( 
-          companions.map(
-            async companion => {
-              const {name , identityCard } = companion
-              const newCompanion = this.companionRepository.create({name , identityCard });
-              newCompanion.booking = newBooking;
-              await this.companionRepository.save(newCompanion)
-            }
-          )
-        )
-      }
-    }catch(error){
-      if(error.name == "EntityNotFoundError") throw new NotFoundException(`The found the user with id: ${userId}`)
-      console.log(error)
-      console.log(error.name)
-      throw new InternalServerErrorException("Conection error DB")
+    } catch (error) {
+      if (error.name == 'EntityNotFoundError')
+        throw new NotFoundException(`The found the user with id: ${userId}`);
+      console.log(error);
+      throw new InternalServerErrorException('Conection error DB');
     }
-    console.log(price)
-    if(typeof price != "number") {
-      console.log(price)
-      console.log(typeof price)
-      throw new BadRequestException("Price must be number") 
-    
-    }const infoOrder = { id : 1, title: typeRoom, price, orderId: newBooking.id }
-     await this.paymentService.createOrder(infoOrder)
-    return newBooking;
-    
 
+    const result = await this.bookingRepository.save(newBooking);
+    try {
+      if (companions) {
+        await Promise.all(
+          companions.map(async (companion) => {
+            const { name, identityCard } = companion;
+            const newCompanion = this.companionRepository.create({
+              name,
+              identityCard,
+            });
+            newCompanion.booking = newBooking;
+            await this.companionRepository.save(newCompanion);
+          }),
+        );
+      }
+    } catch (error) {
+      if (error.name == 'EntityNotFoundError')
+        throw new NotFoundException(`The found the user with id: ${userId}`);
+      console.log(error);
+      console.log(error.name);
+      throw new InternalServerErrorException('Conection error DB');
+    }
+    console.log(price);
+    if (typeof price != 'number') {
+      console.log(price);
+      console.log(typeof price);
+      throw new BadRequestException('Price must be number');
+    }
+    const infoOrder = { id: 1, title: typeRoom, price, orderId: newBooking.id };
+    const order = await this.paymentService.createOrder(infoOrder);
+    return { newBooking, order };
   }
 }

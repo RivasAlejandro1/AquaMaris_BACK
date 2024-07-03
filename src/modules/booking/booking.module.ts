@@ -11,7 +11,10 @@ import { Payment } from 'mercadopago';
 import { PaymentModule } from '../payment/payment.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Booking, User, Room, Companion]), PaymentModule],
+  imports: [
+    TypeOrmModule.forFeature([Booking, User, Room, Companion]),
+    PaymentModule,
+  ],
   controllers: [BookingController],
   providers: [BookingService],
 })
