@@ -34,7 +34,7 @@ import { MailController } from './modules/mail/mail.controller';
 import { Companion } from './entity/Companion.entity';
 import { Payment } from './entity/Payment.entity';
 import { PaymentModule } from './modules/payment/payment.module';
-// import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -73,6 +73,7 @@ import { PaymentModule } from './modules/payment/payment.module';
     ServiceModule,
     UserModule,
     PaymentModule,
+    MailModule
   ],
   providers: [
     MailService,
