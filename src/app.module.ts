@@ -38,7 +38,6 @@ import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
-
     TypeOrmModule.forFeature([
       User,
       Booking,
@@ -94,9 +93,7 @@ import { MailModule } from './modules/mail/mail.module';
     UserModule,
     RoomsModule,
   ],
-  controllers: [
-    MailController
-  ]
+  controllers: [MailController],
 })
 export class AppModule {
   constructor(

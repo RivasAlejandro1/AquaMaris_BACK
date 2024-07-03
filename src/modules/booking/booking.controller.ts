@@ -12,9 +12,9 @@ export class BookingController {
   }
 
   @Post()
-  async makeBooking(@Body() infoBooking: MakeBookingDto){
-    console.log(infoBooking)
-    console.log(new Date())
-    return await this.bookingService.makeBooking(infoBooking)
+  async makeBooking(@Body() infoBooking: MakeBookingDto) {
+    console.log(infoBooking);
+    console.log(new Date());
+    return await this.bookingService.makeBooking(infoBooking);
   }
 }
