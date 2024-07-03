@@ -34,19 +34,20 @@ export class CreateUserDto {
   role: Role;
 
   @IsNumberString()
+  @IsOptional()
   @Length(1, 15)
   phone: number;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Length(1, 255)
-  address: string;
+  country: string;
 
   @IsString()
   @IsOptional()
   user_photo: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(MembershipStatus)
   membership_status: MembershipStatus;
 }

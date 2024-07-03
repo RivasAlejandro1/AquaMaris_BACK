@@ -9,5 +9,6 @@ import { Booking } from 'src/entity/Booking.entity';
   imports: [TypeOrmModule.forFeature([Payment, Booking])],
   controllers: [PaymentController],
   providers: [PaymentService],
+  exports: [PaymentService],
 })
 export class PaymentModule {}

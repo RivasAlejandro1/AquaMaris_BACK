@@ -47,5 +47,5 @@ export class Room {
   images: Image[];
 
   @OneToMany(() => Booking, (booking) => booking.room)
-  booking: Booking;
+  bookings: Booking[];
 }

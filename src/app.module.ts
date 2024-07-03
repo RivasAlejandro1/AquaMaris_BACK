@@ -29,12 +29,17 @@ import { ImagesService } from './modules/images/images.service';
 import { UsersService } from './modules/user/user.service';
 import { BookingService } from './modules/booking/booking.service';
 import { RoomsRepository } from './modules/room/rooms.repository';
+import { MailService } from './modules/mail/mail.service';
+import { MailController } from './modules/mail/mail.controller';
+import { Companion } from './entity/Companion.entity';
 import { Payment } from './entity/Payment.entity';
 import { PaymentModule } from './modules/payment/payment.module';
+import { PaymentService } from './modules/payment/payment.service';
 // import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
 
 @Module({
   imports: [
+
     TypeOrmModule.forFeature([
       User,
       Booking,
@@ -43,6 +48,7 @@ import { PaymentModule } from './modules/payment/payment.module';
       Room,
       Service,
       Payment,
+      Companion,
     ]),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -70,6 +76,7 @@ import { PaymentModule } from './modules/payment/payment.module';
     PaymentModule,
   ],
   providers: [
+    MailService,
     HotelController,
     ServiceController,
     RoomsController,
@@ -87,6 +94,9 @@ import { PaymentModule } from './modules/payment/payment.module';
     UserModule,
     RoomsModule,
   ],
+  controllers: [
+    MailController
+  ]
 })
 export class AppModule {
   constructor(
