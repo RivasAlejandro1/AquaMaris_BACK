@@ -14,10 +14,11 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
+
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(createUserData: CreateUserDto) {
     const { email, password } = createUserData;
@@ -75,5 +76,17 @@ export class AuthService {
     const token = this.jwtService.sign(userPayload);
 
     return { message: 'User Logged succesfully', token };
+  }
+
+  async auth0login(user: any) {
+    const payload = { 
+      sub: user.id, 
+      id: user.id,
+      email: user.email, 
+      name: user.name 
+    }
+    return {
+      access_token: this.jwtService.sign(payload)
+    }
   }
 }

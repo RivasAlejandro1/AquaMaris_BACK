@@ -26,10 +26,10 @@ export class User {
   @Column()
   role: string;
 
-  @Column({ type: 'decimal' })
+  @Column({ type: 'decimal', nullable: true})
   phone: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   address: string;
 
   @Column({ type: 'varchar', nullable: true })

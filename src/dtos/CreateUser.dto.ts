@@ -34,11 +34,12 @@ export class CreateUserDto {
   role: Role;
 
   @IsNumberString()
+  @IsOptional()
   @Length(1, 15)
   phone: number;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Length(1, 255)
   address: string;
 
