@@ -30,12 +30,23 @@ import { UsersService } from './modules/user/user.service';
 import { BookingService } from './modules/booking/booking.service';
 import { RoomsRepository } from './modules/room/rooms.repository';
 import { Companion } from './entity/Companion.entity';
+import { Payment } from './entity/Payment.entity';
+import { PaymentModule } from './modules/payment/payment.module';
 // import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
-
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Booking, Hotel, Image, Room, Service, Companion]),
+
+    TypeOrmModule.forFeature([
+      User,
+      Booking,
+      Hotel,
+      Image,
+      Room,
+      Service,
+      Payment,
+      Companion,
+    ]),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeOrmConfig],
@@ -59,6 +70,7 @@ import { Companion } from './entity/Companion.entity';
     RoomsModule,
     ServiceModule,
     UserModule,
+    PaymentModule,
   ],
   providers: [
     HotelController,

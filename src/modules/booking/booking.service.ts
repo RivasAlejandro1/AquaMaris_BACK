@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InsertResult, Repository } from 'typeorm';
 import { Booking } from '../../entity/Booking.entity';
@@ -22,7 +26,7 @@ export class BookingService {
   ) {}
 
   async bookingSeeder() {
-      try {
+    try {
       for (const book of bookingData) {
         const existingUser = await this.userRepository
           .createQueryBuilder('user')
@@ -133,10 +137,8 @@ export class BookingService {
       console.log(error.name)
       throw new InternalServerErrorException("Conection error DB")
     } 
-
-
-    
     return result;
     
+
   }
 }
