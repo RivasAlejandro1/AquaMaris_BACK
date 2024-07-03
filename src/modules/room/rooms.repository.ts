@@ -25,7 +25,6 @@ export class RoomsRepository {
     private bookingsRepository: Repository<Booking>,
   ) {}
 
-  
   async getAllRooms(page, limit) {
     const offset = (page - 1) * limit;
     const allRooms = await this.roomsRepository
@@ -56,7 +55,7 @@ export class RoomsRepository {
       .take(limit)
       .getMany();
 
-      return allRooms;
+    return allRooms;
   }
 
   async filterRoom(filters) {
@@ -165,16 +164,9 @@ export class RoomsRepository {
   }
   //! CURRENT
   async createRoom(infoRoom) {
-    const {
-      type,
-      price,
-      description,
-      state,
-      roomNumber,
-      services,
-      images,
-    } = infoRoom;
-    
+    const { type, price, description, state, roomNumber, services, images } =
+      infoRoom;
+
     const newRoom = this.roomsRepository.create({
       type,
       price,
@@ -183,80 +175,81 @@ export class RoomsRepository {
       roomNumber,
     });
 
-    let hotelFound :any
+    let hotelFound: any;
     try {
-      hotelFound = infoRoom.hotel ? 
-          { id : infoRoom.hotel} 
-        : 
-          await this.hotelRepository.findOne({
-          where: {
-            name: "AquaMaris Hotel's Beach"
-          },
-          select: [ "id"]
-        })
-        
-      }catch(Error){
-        throw new NotFoundException()
+      hotelFound = infoRoom.hotel
+        ? { id: infoRoom.hotel }
+        : await this.hotelRepository.findOne({
+            where: {
+              name: "AquaMaris Hotel's Beach",
+            },
+            select: ['id'],
+          });
+    } catch (Error) {
+      throw new NotFoundException();
     }
-    const hotelID = hotelFound.id
-    
-    
-    try{
+    const hotelID = hotelFound.id;
+
+    try {
       const findedHotel = await this.hotelRepository.findOneOrFail({
-        where:{
-          id: hotelID
-        }
+        where: {
+          id: hotelID,
+        },
       });
       newRoom.hotel = findedHotel;
-    } catch(error) {
-      if(error.name === "EntityNotFoundError"){
-        throw new NotFoundException(`Hotel with name ${hotelID} not exist in DB`)
-      }else{
-        console.log(error)
-        throw new InternalServerErrorException("")
+    } catch (error) {
+      if (error.name === 'EntityNotFoundError') {
+        throw new NotFoundException(
+          `Hotel with name ${hotelID} not exist in DB`,
+        );
+      } else {
+        console.log(error);
+        throw new InternalServerErrorException('');
       }
     }
-
 
     let currentName: string;
     try {
-      const allServicesFinded = !services ? [] : await Promise.all(
-        services.map(async (name) => {
-            currentName = name;
-            const service = await this.serviceRepository.findOneOrFail({ 
-              where : {
-                  name 
-                } 
-            });
-            return service
-          }),
+      const allServicesFinded = !services
+        ? []
+        : await Promise.all(
+            services.map(async (name) => {
+              currentName = name;
+              const service = await this.serviceRepository.findOneOrFail({
+                where: {
+                  name,
+                },
+              });
+              return service;
+            }),
+          );
+      newRoom.services = allServicesFinded;
+    } catch (error) {
+      if (error.name === 'EntityNotFoundError') {
+        throw new NotFoundException(
+          `Service with name ${currentName} not exist in DB`,
         );
-        newRoom.services = allServicesFinded;
-      }catch(error){
-        if(error.name === "EntityNotFoundError"){
-          throw new NotFoundException(`Service with name ${currentName} not exist in DB`)
-        }else{
-          throw new InternalServerErrorException(`Database connection error`);
+      } else {
+        throw new InternalServerErrorException(`Database connection error`);
       }
     }
 
-    
-    try{
-      const allImageMaked = !images ? [] : await Promise.all(
-      images.map(async (url) => {
-        const newImage = this.imagesRepository.create({ url });
-        newImage.date = new Date();
-          return await this.imagesRepository.save(newImage);;
-        }),
-      );
+    try {
+      const allImageMaked = !images
+        ? []
+        : await Promise.all(
+            images.map(async (url) => {
+              const newImage = this.imagesRepository.create({ url });
+              newImage.date = new Date();
+              return await this.imagesRepository.save(newImage);
+            }),
+          );
       newRoom.images = allImageMaked;
       return await this.roomsRepository.save(newRoom);
-    }catch(error){
-      throw new InternalServerErrorException("Database connection error")
+    } catch (error) {
+      throw new InternalServerErrorException('Database connection error');
     }
-
   }
-  
 
   async roomSeeder() {
     try {
