@@ -12,6 +12,11 @@ export class CommentsController {
     }
 
     @Get()
+    getAllowedComments(){
+        return this.commentsService.getAllowedComments()
+    }
+
+    @Get('admin')
     getAllComments(){
         return this.commentsService.getAllComments()
     }

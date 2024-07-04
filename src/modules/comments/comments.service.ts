@@ -24,6 +24,15 @@ export class CommentsService {
         }
     }
 
+    async getAllowedComments(){
+        try{
+            return await this.commentRepository.find({where: {comment_status: CommentStatus.APPROVED}})
+        }catch(err){
+            console.log(`Error getting all the allowed comments`, err)
+            throw new InternalServerErrorException(`Error getting all the allowed comments`)
+        }
+    }
+
     async getCommentsById(id: string) {
         try {
             const user = await this.userRepository.findOne({
@@ -43,7 +52,7 @@ export class CommentsService {
     async createComment(commentData: CommentDto) {
         const { userId, roomId, comment, rating } = commentData
         try {
-            const existingUser = await this.userRepository.findOneBy({ id: userId } );
+            const existingUser = await this.userRepository.findOneBy({ id: userId });
             if (!existingUser) {
                 throw new NotFoundException(`User with id ${userId} was not found`);
             }
@@ -53,11 +62,17 @@ export class CommentsService {
                 throw new NotFoundException(`Room with id ${roomId} was not found`);
             }
 
+            const regex = /\b(?:fuck|shit|bitch|asshole|damn|cunt|faggot|pussy|dick|bastard|crap|slut|whore|mierda|puta|pendejo|coño|gilipollas|cabrón|joder|maricón|chingar|hijo\s?de\s?puta)\b/i;
+
+            function containsOffensiveWords(comment): boolean{
+                return regex.test(comment)
+            }
+
             const newComment = await this.commentRepository.create({
                 comment,
-                rating, 
+                rating,
                 comment_date: new Date(),
-                comment_status: CommentStatus.IN_REVISION,
+                comment_status: containsOffensiveWords(comment) ? CommentStatus.DENIED : CommentStatus.APPROVED,
                 user: existingUser,
                 room: existingRoom,
             });
@@ -65,9 +80,9 @@ export class CommentsService {
             await this.commentRepository.save(newComment);
 
             return newComment
-        }catch(err) {
-        console.log(`Could create and commeto to user with id ${userId} and reservation room ${roomId}`, err)
-        throw new InternalServerErrorException(`Could create and commeto to user with id ${userId} and reservation room ${roomId}`)
+        } catch (err) {
+            console.log(`Could create and commeto to user with id ${userId} and reservation room ${roomId}`, err)
+            throw new InternalServerErrorException(`Could create and commeto to user with id ${userId} and reservation room ${roomId}`)
+        }
     }
-}
 }

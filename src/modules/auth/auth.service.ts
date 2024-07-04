@@ -50,7 +50,7 @@ export class AuthService {
       ...userWithoutPassword
     } = createUserData;
 
-    return createUserData;
+    return userWithoutPassword;
   }
 
   async login(loginUserData: LoginUserDto) {
@@ -76,7 +76,9 @@ export class AuthService {
 
     const token = this.jwtService.sign(userPayload);
 
-    return { message: 'User Logged succesfully', token , userId: user.id};
+    const {password: _, ...userWithoutPassword} = user
+
+    return { message: 'User Logged succesfully', token , userWithoutPassword};
   }
 
   async auth0login(user: any) {
@@ -88,7 +90,7 @@ export class AuthService {
     }
     return {
       access_token: this.jwtService.sign(payload), 
-      userId: user.id,
+      user,
     }
   }
 }

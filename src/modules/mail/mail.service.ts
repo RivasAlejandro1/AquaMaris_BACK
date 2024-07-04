@@ -1,16 +1,15 @@
-import * as handlebars from 'handlebars';
-import * as fs from 'fs';
-import * as path from 'path';
-import { transporter } from 'src/config/mailer';
-import { MailDto } from 'src/dtos/Mail.dto';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import * as handlebars from 'handlebars'; // Importa Handlebars para la plantilla HTML dinámica
+import { transporter } from 'src/config/mailer'; // Importa el transporter de nodemailer
+import { MailDto } from 'src/dtos/Mail.dto'; // Importa el DTO de correo
+import { Injectable, InternalServerErrorException } from '@nestjs/common'; // Importa Injectable y InternalServerErrorException de NestJS
 
 @Injectable()
 export class MailService {
   async sendMail(sendMailData: MailDto) {
-    const { to, subject, name } = sendMailData;
+    const { to, subject, name, type, message, reservationDate, roomNumber } = sendMailData; // Extrae los datos del DTO
+
     try {
-      const htmlTemplate = `
+        let htmlTemplate = `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -50,22 +49,52 @@ export class MailService {
         <body>
           <div class="container">
             <div class="header">
-              <h1>Bienvenido a AquaMaris Hotel\'s, {{name}}!</h1>
+              <h1>{{header}}</h1>
             </div>
             <div class="content">
-              <p>Estamos encantados de tenerte con nosotros. Esperamos que disfrutes de tu estadía.</p>
+              <p>{{message}}</p>
+              {{#if reservationDate}}
+                <p>Tu reservación es el {{reservationDate}} en la habitación número {{roomNumber}}.</p>
+              {{/if}}
               <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
             </div>
             <div class="footer">
-              <p>&copy; 2024 AquaMaris Hotel\'s. Todos los derechos reservados.</p>
+              <p>&copy; 2024 AquaMaris Hotel's. Todos los derechos reservados.</p>
             </div>
           </div>
         </body>
         </html>
       `;
 
+      let header, defaultMessage;
+
+      switch (type) {
+        case 'register':
+          header = `Bienvenido a AquaMaris, ${name}!`; 
+          defaultMessage = 'Estamos encantados de que hayas tomado esta gran decisión. Esperamos verte en nuestros hoteles pronto.'; 
+          break;
+        case 'reservation':
+          header = `Bienvenido a AquaMaris Hotel's, ${name}!`; 
+          defaultMessage = 'Estamos encantados de tenerte con nosotros. Esperamos que disfrutes de tu estadía.'; 
+          break;
+        case 'cancellation':
+          header = `Reservación Cancelada, ${name}`;
+          defaultMessage = 'Lamentamos informarte que tu reservación ha sido cancelada. Si tienes alguna pregunta, no dudes en contactarnos.'; 
+          break;
+        case 'membership_subscription':
+          header = `¡Gracias por unirte a nuestra membresía, ${name}!`;
+          defaultMessage = 'Estamos encantados de tenerte como miembro. Esperamos que disfrutes de los beneficios de tu membresía.'; 
+          break;
+        case 'membership_cancellation':
+          header = `Membresía Cancelada, ${name}`;
+          defaultMessage = 'Lamentamos informarte que tu membresía ha sido cancelada. Si tienes alguna pregunta, no dudes en contactarnos.';
+          break;
+        default:
+          throw new Error('Tipo de correo no soportado');
+      }
+
       const template = handlebars.compile(htmlTemplate);
-      const htmlToSend = template({ name });
+      const htmlToSend = template({ header, message: message || defaultMessage, reservationDate, roomNumber });
 
       const info = await transporter.sendMail({
         from: '"AquaMaris Hotels" <aquamarishotelz@gmail.com>',
@@ -74,10 +103,10 @@ export class MailService {
         html: htmlToSend,
       });
 
-      console.log('Email sent:', info.messageId);
+      console.log('Email sent:', info.messageId); 
     } catch (err) {
       console.error('Error sending email:', err);
-      throw new InternalServerErrorException('Error sending email');
+      throw new InternalServerErrorException('Error sending email'); // Lanza una excepción interna si hay un error
     }
   }
 }
