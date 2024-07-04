@@ -35,6 +35,8 @@ import { Companion } from './entity/Companion.entity';
 import { Payment } from './entity/Payment.entity';
 import { PaymentModule } from './modules/payment/payment.module';
 import { MailModule } from './modules/mail/mail.module';
+import { CommentsController } from './modules/comments/comments.controller';
+import { CommentsModule } from './modules/comments/comments.module';
 
 @Module({
   imports: [
@@ -72,7 +74,8 @@ import { MailModule } from './modules/mail/mail.module';
     ServiceModule,
     UserModule,
     PaymentModule,
-    MailModule
+    MailModule,
+    CommentsModule
   ],
   providers: [
     MailService,
