@@ -6,6 +6,11 @@ import { CommentDto } from "src/dtos/Comment.dto";
 export class CommentsController {
     constructor(private readonly commentsService: CommentsService) { }
 
+    @Get('seeder')
+    commentSeeder(success: boolean){
+        return this.commentsService.commentsSeeder()
+    }
+
     @Post('')
     createNewComment(@Body() commentData: CommentDto) {
         return this.commentsService.createComment(commentData)
