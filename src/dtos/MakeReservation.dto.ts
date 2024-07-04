@@ -1,19 +1,25 @@
-import { Type } from "class-transformer";
-import { IsArray, IsDate, IsInt, IsNotEmpty, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
-import { Companion } from "src/entity/Companion.entity";
+import { Type } from 'class-transformer';
+import {
+  IsArray,
+  IsDate,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+  ValidateNested,
+} from 'class-validator';
+import { Companion } from 'src/entity/Companion.entity';
 
-export class CompanionDto{
-    @IsString()
-    name: string;
+export class CompanionDto {
+  @IsString()
+  name: string;
 
-    @IsInt()
-    @IsNotEmpty()
-    identityCard: number;
+  @IsInt()
+  @IsNotEmpty()
+  identityCard: number;
 }
 
-
 export class MakeBookingDto {
-
     @IsDate()
     @IsNotEmpty()
     check_in_date: Date;

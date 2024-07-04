@@ -1,4 +1,3 @@
-
 import {
   Column,
   Entity,
@@ -28,8 +27,8 @@ export class Booking {
   @Column({ type: 'date', nullable: false })
   check_out_date: Date;
 
-  @Column({ type: 'enum', enum: PaymentStatus })
-  paymentStatus: PaymentStatus;
+  @Column({ type: 'varchar', enum: PaymentStatus })
+  paymentStatus: string;
 
   @OneToMany(() => Companion, (companion) => companion.booking)
   companions: Companion[];

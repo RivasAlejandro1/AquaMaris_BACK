@@ -21,7 +21,7 @@ export class Payment {
   paymentMethod: string;
   @Column({ type: 'varchar', length: 50, nullable: false })
   paymentState: string;
-  /* @OneToOne(() => Booking)
+  @OneToOne(() => Booking)
   @JoinColumn()
-  booking: Booking; */
+  booking: Booking;
 }
