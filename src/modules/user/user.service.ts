@@ -61,7 +61,7 @@ export class UsersService {
 
   async getUserByID(id: string) {
     try {
-      const user = await this.userDBrepository.findOne({ where: { id: id } });
+      const user = await this.userDBrepository.findOne({ where: { id: id }, relations: ['booking'] });
       if (!user) throw new NotFoundException(`User with id ${id} not found`);
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;

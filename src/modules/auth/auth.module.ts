@@ -8,6 +8,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/strategy/jwt.strategy';
 import { JwtAuthGuard } from 'src/guardiane/jwt-auth.guard';
+import { MailService } from '../mail/mail.service';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { JwtAuthGuard } from 'src/guardiane/jwt-auth.guard';
       signOptions: { expiresIn: '1hr' },
     }),
   ],
-  providers: [AuthService, UsersService, JwtStrategy, JwtAuthGuard],
+  providers: [AuthService, UsersService, JwtStrategy, JwtAuthGuard, MailService],
   controllers: [AuthController],
   exports: [JwtAuthGuard],
 })

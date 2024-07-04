@@ -15,6 +15,10 @@ export class CommentsService {
         @InjectRepository(Room) private roomRepository: Repository<Room>
     ) { }
 
+    async commentsSeeder() {
+        const user = await this.userRepository.find()
+    }
+
     async getAllComments() {
         try {
             return await this.commentRepository.find()
