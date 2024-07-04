@@ -104,17 +104,15 @@ export class BookingService {
       check_out_date,
       paymentStatus,
     });
-    const newBookingID = newBooking.id;
-
     let price: number;
-    let typeRoom;
+    let numberRoom;
     try {
       const roomFinded = await this.roomRepository.findOneByOrFail({
         id: roomId,
       });
       newBooking.room = roomFinded;
       price = Number(roomFinded.price);
-      typeRoom = roomFinded.type;
+      numberRoom = roomFinded.roomNumber;
     } catch (error) {
       if (error.name == 'EntityNotFoundError')
         throw new NotFoundException(`The found the room with id: ${roomId}`);
@@ -163,7 +161,7 @@ export class BookingService {
       console.log(typeof price);
       throw new BadRequestException('Price must be number');
     }
-    const infoOrder = { id: 1, title: typeRoom, price, orderId: newBooking.id };
+    const infoOrder = { id: 1, title: numberRoom, price, orderId: newBooking.id };
     const order = await this.paymentService.createOrder(infoOrder);
     return { newBooking, order };
   }
