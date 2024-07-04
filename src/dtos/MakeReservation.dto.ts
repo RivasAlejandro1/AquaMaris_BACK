@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsArray, IsDate, IsInt, IsNotEmpty, IsString, IsUUID, ValidateNested } from "class-validator";
+import { IsArray, IsDate, IsInt, IsNotEmpty, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
 import { Companion } from "src/entity/Companion.entity";
 
 export class CompanionDto{
@@ -14,9 +14,11 @@ export class CompanionDto{
 
 export class MakeBookingDto {
 
+    @IsDate()
     @IsNotEmpty()
     check_in_date: Date;
     
+    @IsDate()
     @IsNotEmpty()
     check_out_date: Date;
 
@@ -28,6 +30,7 @@ export class MakeBookingDto {
     @IsNotEmpty()
     roomId: string;
      
+    @IsOptional()
     @IsArray()
     @ValidateNested()
     @Type(() => CompanionDto)

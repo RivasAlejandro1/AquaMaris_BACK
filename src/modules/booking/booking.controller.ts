@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { MakeBookingDto } from 'src/dtos/MakeReservation.dto';
+import {  dataBookingDatesInterceptor } from 'src/interceptors/dataBookingDates.interceptor';
 
 @Controller('booking')
 export class BookingController {
@@ -12,9 +13,8 @@ export class BookingController {
   }
 
   @Post()
+  @UseInterceptors(dataBookingDatesInterceptor)
   async makeBooking(@Body() infoBooking: MakeBookingDto){
-    console.log(infoBooking)
-    console.log(new Date())
     return await this.bookingService.makeBooking(infoBooking)
   }
 }
