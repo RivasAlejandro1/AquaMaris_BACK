@@ -1,14 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import {
-  MercadoPagoConfig,
-  Preference,
-  Payment,
-  PreApproval,
-  PreApprovalPlan,
-  CardToken,
-  Customer,
-  CustomerCard,
-} from 'mercadopago';
+import { MercadoPagoConfig, Preference, Payment } from 'mercadopago';
 import { config as dotenvConfig } from 'dotenv';
 import { InjectRepository } from '@nestjs/typeorm';
 dotenvConfig({ path: '.env.development' });
@@ -28,7 +19,6 @@ export class PaymentService {
 
   async createOrder(newOrderData) {
     const webhook = process.env.MERCADO_PAGO_WEBHOOK;
-    console.log(webhook);
     const { title, price, orderId } = newOrderData;
     try {
       const client = new MercadoPagoConfig({
@@ -93,76 +83,6 @@ export class PaymentService {
         throw new NotFoundException('orden no encontrada');
       }
       return { succes: true };
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async createPreApprobalPlan(cardFormData) {
-    try {
-      console.log(cardFormData);
-      const client = new MercadoPagoConfig({
-        accessToken:
-          'APP_USR-6809484250029114-070323-4ca5da7b5d7eaeabbbc11ebccf069776-1883578160',
-      });
-      const preApprovalPlan = new PreApprovalPlan(client);
-
-      const newPreApprobalPlan = await preApprovalPlan.create({
-        body: {
-          reason: 'premium suscription',
-          auto_recurring: {
-            frequency: 1,
-            frequency_type: 'months',
-            transaction_amount: 20000,
-            currency_id: 'COP',
-            billing_day: 3,
-          },
-          back_url:
-            'https://dd98-2806-103e-16-8bba-b495-b48e-b1c-13ef.ngrok-free.app/payment/subswebhook',
-        },
-      });
-      console.log(newPreApprobalPlan);
-      const subscripcion = await this.createPreApprobal(
-        newPreApprobalPlan.id,
-        cardFormData.token,
-        cardFormData.payer.email,
-      );
-      return subscripcion;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async createPreApprobal(id, cardTokenId, email) {
-    try {
-      console.log(cardTokenId + 'console log de cardid');
-      const client = new MercadoPagoConfig({
-        accessToken:
-          'APP_USR-6809484250029114-070323-4ca5da7b5d7eaeabbbc11ebccf069776-1883578160',
-      });
-
-      const preApprobal = new PreApproval(client);
-
-      const newPreApprobal = await preApprobal.create({
-        body: {
-          reason: 'premium suscription',
-          auto_recurring: {
-            frequency: 1,
-            frequency_type: 'months',
-            transaction_amount: 20000,
-            currency_id: 'COP',
-          },
-          back_url:
-            'https://dd98-2806-103e-16-8bba-b495-b48e-b1c-13ef.ngrok-free.app/payment/subswebhook',
-          status: 'authorized',
-          payer_email: email,
-          preapproval_plan_id: id,
-          card_token_id: `${cardTokenId}`,
-        },
-      });
-      console.log(newPreApprobal);
-
-      return newPreApprobal;
     } catch (error) {
       console.log(error);
     }
