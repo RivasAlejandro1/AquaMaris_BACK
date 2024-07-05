@@ -212,15 +212,11 @@ export class BookingService {
   }
 
   async getAllBookingsById(userId){
-    return await this.userRepository.findOne({
-      where: {
-        id: userId
-      },
-      select:{
-        booking: true
-      },
-      relations:{
-        booking: true
+    return await this.bookingRepository.find({
+      where:{
+        user: {
+          id: userId
+        }
       }
     })
   }
