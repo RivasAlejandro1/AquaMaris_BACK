@@ -48,7 +48,12 @@ export class UsersService {
     const start = (page - 1) * limit;
     const end = start + limit;
     const user = await this.userDBrepository.find({
-      relations: ['booking'],
+      relations: {
+        booking: {
+          user: true,
+          room: true
+        }
+      },
     });
 
     if (user.length > 0) {
