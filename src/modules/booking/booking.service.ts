@@ -14,6 +14,8 @@ import * as bookingData from '../../utils/booking.data.json';
 import { Companion } from 'src/entity/Companion.entity';
 import { PaymentService } from '../payment/payment.service';
 import { Payment } from 'mercadopago';
+import { areIntervalsOverlapping, interval } from 'date-fns';
+import { Exception } from 'handlebars';
 
 @Injectable()
 export class BookingService {
@@ -99,6 +101,10 @@ export class BookingService {
     } = infoBooking;
     const paymentStatus = PaymentStatus.PENDING;
 
+
+    
+
+    
     const newBooking: Booking = this.bookingRepository.create({
       check_in_date,
       check_out_date,
@@ -106,13 +112,24 @@ export class BookingService {
     });
     let price: number;
     let numberRoom;
+    let allBookings;
     try {
-      const roomFinded = await this.roomRepository.findOneByOrFail({
-        id: roomId,
+      const exist = await this.roomRepository.existsBy({id: roomId})
+      if(!exist) throw new NotFoundException(`The found the room with id: ${roomId}`);
+      const roomFinded = await this.roomRepository.findOne({
+        where:{
+          id: roomId,
+        },
+        relations:{
+          bookings: true
+        }
       });
+
+      allBookings =  roomFinded.bookings;
       newBooking.room = roomFinded;
       price = Number(roomFinded.price);
       numberRoom = roomFinded.roomNumber;
+
     } catch (error) {
       if (error.name == 'EntityNotFoundError')
         throw new NotFoundException(`The found the room with id: ${roomId}`);
@@ -120,6 +137,28 @@ export class BookingService {
       console.log(error.name);
       throw new InternalServerErrorException('Conection error DB');
     }
+
+/* 
+    try {
+      const currentInterval = interval(check_in_date, check_out_date)
+      console.log(allBookings)
+      console.log("message:", currentInterval)
+      allBookings.forEach(Booking => {
+        const start = Booking.check_in_date;
+        const out = Booking.check_out_date;
+        console.log("message:", start, out)
+        
+        const newInterval = interval(start, out);
+        console.log("message:", newInterval)
+        
+        console.log("message:", !areIntervalsOverlapping(currentInterval, newInterval))
+        if( !areIntervalsOverlapping(currentInterval, newInterval)) throw new BadRequestException()
+          
+        });
+      }catch(error){
+      throw new NotFoundException("This interval is occuped, plis retry with anothers dates");
+    }
+     */
 
     try {
       const userFinded = await this.userRepository.findOneByOrFail({
@@ -133,7 +172,7 @@ export class BookingService {
       throw new InternalServerErrorException('Conection error DB');
     }
 
-    const result = await this.bookingRepository.save(newBooking);
+    await this.bookingRepository.save(newBooking);
     try {
       if (companions) {
         await Promise.all(
@@ -164,5 +203,8 @@ export class BookingService {
     const infoOrder = { id: 1, title: numberRoom, price, orderId: newBooking.id };
     const order = await this.paymentService.createOrder(infoOrder);
     return { newBooking, order };
+  }
+  
+  async BookingAvailable(check_in_date: Date, check_out_date :Date){
   }
 }

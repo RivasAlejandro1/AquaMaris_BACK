@@ -27,7 +27,7 @@ export class Booking {
   @Column({ type: 'date', nullable: false })
   check_out_date: Date;
 
-  @Column({ type: 'varchar', enum: PaymentStatus })
+  @Column({ type: 'text' })
   paymentStatus: string;
 
   @OneToMany(() => Companion, (companion) => companion.booking)
