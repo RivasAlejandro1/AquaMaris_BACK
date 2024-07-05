@@ -4,6 +4,7 @@ import {
   IsDate,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
   ValidateNested,
@@ -20,22 +21,25 @@ export class CompanionDto {
 }
 
 export class MakeBookingDto {
-  @IsNotEmpty()
-  check_in_date: Date;
+    @IsDate()
+    @IsNotEmpty()
+    check_in_date: Date;
+    
+    @IsDate()
+    @IsNotEmpty()
+    check_out_date: Date;
 
-  @IsNotEmpty()
-  check_out_date: Date;
+    @IsUUID()
+    @IsNotEmpty()
+    userId: string;
 
-  @IsUUID()
-  @IsNotEmpty()
-  userId: string;
-
-  @IsUUID()
-  @IsNotEmpty()
-  roomId: string;
-
-  @IsArray()
-  @ValidateNested()
-  @Type(() => CompanionDto)
-  companions: CompanionDto[];
+    @IsUUID()
+    @IsNotEmpty()
+    roomId: string;
+     
+    @IsOptional()
+    @IsArray()
+    @ValidateNested()
+    @Type(() => CompanionDto)
+    companions: CompanionDto[]
 }

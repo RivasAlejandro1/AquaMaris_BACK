@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { MembershipStatus } from '../enum/MembershipStatus.enum';
 import { Booking } from './Booking.entity';
+import { Comment } from './Comment.entity';
 
 @Entity({ name: 'users' })
 @Unique(['email'])
@@ -49,4 +50,7 @@ export class User {
 
   @Column({ default: '' })
   date_end: string;
+
+  @OneToMany(()=> Comment, (comment) => comment.user)
+  comments: Comment[]
 }

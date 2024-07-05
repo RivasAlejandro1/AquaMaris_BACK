@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InsertResult, Repository } from 'typeorm';
+import {  Repository } from 'typeorm';
 import { Booking } from '../../entity/Booking.entity';
 import { User } from '../../entity/User.entity';
 import { Room } from '../../entity/Room.entity';
@@ -14,6 +14,8 @@ import * as bookingData from '../../utils/booking.data.json';
 import { Companion } from 'src/entity/Companion.entity';
 import { PaymentService } from '../payment/payment.service';
 import { Payment } from 'mercadopago';
+import { areIntervalsOverlapping, formatISO, interval } from 'date-fns';
+import { Exception } from 'handlebars';
 
 @Injectable()
 export class BookingService {
@@ -95,26 +97,38 @@ export class BookingService {
       userId,
       roomId,
       companions,
-      ...infoCreateBooking
     } = infoBooking;
     const paymentStatus = PaymentStatus.PENDING;
 
+
+    
+
+    
     const newBooking: Booking = this.bookingRepository.create({
       check_in_date,
       check_out_date,
       paymentStatus,
     });
-    const newBookingID = newBooking.id;
-
     let price: number;
-    let typeRoom;
+    let numberRoom;
+    let allBookings;
     try {
-      const roomFinded = await this.roomRepository.findOneByOrFail({
-        id: roomId,
+      const exist = await this.roomRepository.existsBy({id: roomId})
+      if(!exist) throw new NotFoundException(`The found the room with id: ${roomId}`);
+      const roomFinded = await this.roomRepository.findOne({
+        where:{
+          id: roomId,
+        },
+        relations:{
+          bookings: true
+        }
       });
+
+      allBookings =  roomFinded.bookings;
       newBooking.room = roomFinded;
       price = Number(roomFinded.price);
-      typeRoom = roomFinded.type;
+      numberRoom = roomFinded.roomNumber;
+
     } catch (error) {
       if (error.name == 'EntityNotFoundError')
         throw new NotFoundException(`The found the room with id: ${roomId}`);
@@ -122,6 +136,32 @@ export class BookingService {
       console.log(error.name);
       throw new InternalServerErrorException('Conection error DB');
     }
+
+
+    try {
+     
+      const currentInterval =  interval( check_in_date , check_out_date )
+      console.log("Interval Are Trying to register:", currentInterval)
+      allBookings.forEach(booking => {
+        const infoStart = booking.check_in_date.split("-").map(e => Number(e));
+        const start = new Date(infoStart[0],infoStart[1]-1, infoStart[2]);
+        const infoEnd = booking.check_out_date.split("-").map(e => Number(e));
+        const end =  new Date(infoEnd[0],infoEnd[1]-1, infoEnd[2]);
+        
+
+        console.log("check_out_date: ", check_out_date)
+        console.log("infoEnd: ", infoEnd)
+        console.log("end: ", end)
+        const newInterval = interval(start, end);
+        
+        console.log("Any Try Interval:", currentInterval)
+      if(areIntervalsOverlapping(currentInterval, newInterval)) throw new BadRequestException("hola")
+          
+        });
+      }catch(error){
+      throw new NotFoundException("This interval is occuped, plis retry with anothers dates");
+    }
+    
 
     try {
       const userFinded = await this.userRepository.findOneByOrFail({
@@ -135,7 +175,7 @@ export class BookingService {
       throw new InternalServerErrorException('Conection error DB');
     }
 
-    const result = await this.bookingRepository.save(newBooking);
+    await this.bookingRepository.save(newBooking);
     try {
       if (companions) {
         await Promise.all(
@@ -163,8 +203,21 @@ export class BookingService {
       console.log(typeof price);
       throw new BadRequestException('Price must be number');
     }
-    const infoOrder = { id: 1, title: typeRoom, price, orderId: newBooking.id };
+    const infoOrder = { id: 1, title: numberRoom, price, orderId: newBooking.id };
     const order = await this.paymentService.createOrder(infoOrder);
     return { newBooking, order };
+  }
+  
+  async BookingAvailable(check_in_date: Date, check_out_date :Date){
+  }
+
+  async getAllBookingsById(userId){
+    return await this.bookingRepository.find({
+      where:{
+        user: {
+          id: userId
+        }
+      }
+    })
   }
 }

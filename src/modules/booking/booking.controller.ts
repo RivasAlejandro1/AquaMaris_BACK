@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
 import { BookingService } from './booking.service';
-import { MakeBookingDto } from 'src/dtos/MakeReservation.dto';
+import { MakeBookingDto } from 'src/dtos/MakeBooking.dto';
+import {  dataBookingDatesInterceptor } from 'src/interceptors/dataBookingDates.interceptor';
+import { areIntervalsOverlapping, interval, parseISO } from 'date-fns';
 
 @Controller('booking')
 export class BookingController {
@@ -12,9 +14,13 @@ export class BookingController {
   }
 
   @Post()
-  async makeBooking(@Body() infoBooking: MakeBookingDto) {
-    console.log(infoBooking);
-    console.log(new Date());
-    return await this.bookingService.makeBooking(infoBooking);
+  @UseInterceptors(dataBookingDatesInterceptor)
+  async makeBooking(@Body() infoBooking: MakeBookingDto){
+    return await this.bookingService.makeBooking(infoBooking)
+  }
+
+  @Get(":id")
+  async getAllBookingsById(@Param("id") id: string){
+    return await this.bookingService.getAllBookingsById(id)
   }
 }

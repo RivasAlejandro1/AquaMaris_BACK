@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -13,6 +12,7 @@ import { Hotel } from './Hotel.entity';
 import { Service } from './Service.entity';
 import { Image } from './Image.entity';
 import { Booking } from './Booking.entity';
+import { Comment } from './Comment.entity'
 
 @Entity({ name: 'room' })
 export class Room {
@@ -48,4 +48,7 @@ export class Room {
 
   @OneToMany(() => Booking, (booking) => booking.room)
   bookings: Booking[];
+
+  @OneToMany(() => Comment, (comment) => comment.room)
+  comment: Comment[]
 }

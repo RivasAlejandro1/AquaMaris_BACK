@@ -1,0 +1,73 @@
+[
+    {
+        "comments": "Este es un comentario referente a nuestra habitacion numero 12 de nuestro hotel hecho por John Doe",
+        "rating": 3,
+        "name": "John Doe",
+        "comment_date": "2024-07-04",
+        "roomId": 12
+
+    },
+    {
+        "comments": "La habitación 8 fue excelente, muy limpia y con una vista espectacular.",
+        "rating": 5,
+        "name": "Jane Smith",
+        "comment_date": "2024-07-02",
+        "roomId": 8
+    },
+    {
+        "comments": "El servicio en la habitación 15 fue deficiente, no había agua caliente.",
+        "rating": 2,
+        "name": "Alice Johnson",
+        "comment_date": "2024-06-30",
+        "roomId": 15
+    },
+    {
+        "comments": "Habitación 20 es espaciosa y cómoda, perfecta para una estancia en familia.",
+        "rating": 4,
+        "name": "Bob Brown",
+        "comment_date": "2024-07-01", 
+        "roomId":20
+    },
+    {
+        "comments": "La habitación 5 estaba bien, pero el aire acondicionado hacía mucho ruido.",
+        "rating": 3,
+        "name": "Carol White",
+        "comment_date": "2024-07-03",
+        "roomId":5
+    },
+    {
+        "comments": "Habitación 10 tenía un olor extraño y las sábanas no parecían limpias.",
+        "rating": 1,
+        "name": "Bob Brown",
+        "comment_date": "2024-06-29",
+        "roomId":10
+    },
+    {
+        "comments": "Me encantó la decoración de la habitación 25, muy moderna y acogedora.",
+        "rating": 5,
+        "name": "Carol White",
+        "comment_date": "2024-07-04",
+        "roomId":25
+    },
+    {
+        "comments": "La habitación 18 es bastante básica, pero cumple con lo necesario para una noche.",
+        "rating": 3,
+        "name": "Carol White",
+        "comment_date": "2024-06-28",
+        "roomId":18
+    },
+    {
+        "comments": "La habitación 30 es fantástica, pero el personal de limpieza fue un poco ruidoso en la mañana.",
+        "rating": 4,
+        "name": "Jane Smith",
+        "comment_date": "2024-07-02",
+        "roomId":30
+    },
+    {
+        "comments": "Habitación 14 tenía un televisor que no funcionaba, lo reportamos y no fue solucionado.",
+        "rating": 2,
+        "name": "John Doe",
+        "comment_date": "2024-07-03",
+        "roomId":14
+    }
+]
