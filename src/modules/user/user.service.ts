@@ -73,7 +73,8 @@ export class UsersService {
           booking: {
             user: true,
             room: {
-              images: true
+              images: true,
+              services: true
             }
           },
           comments: true
