@@ -72,7 +72,9 @@ export class UsersService {
         relations: {
           booking: {
             user: true,
-            room: true
+            room: {
+              images: true
+            }
           },
           comments: true
         },
