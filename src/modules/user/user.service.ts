@@ -48,7 +48,7 @@ export class UsersService {
     const start = (page - 1) * limit;
     const end = start + limit;
     const user = await this.userDBrepository.find({
-      relations: ['reservations'],
+      relations: ['booking'],
     });
 
     if (user.length > 0) {
@@ -61,7 +61,7 @@ export class UsersService {
 
   async getUserByID(id: string) {
     try {
-      const user = await this.userDBrepository.findOne({ where: { id: id } });
+      const user = await this.userDBrepository.findOne({ where: { id: id }, relations: ['booking'] });
       if (!user) throw new NotFoundException(`User with id ${id} not found`);
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
