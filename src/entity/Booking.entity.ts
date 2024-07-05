@@ -18,7 +18,7 @@ export class Booking {
   @ManyToOne(() => User, (user) => user.booking)
   user: User;
 
-  @ManyToOne(() => Room, (room) => room.booking)
+  @ManyToOne(() => Room, (room) => room.bookings)
   room: Room;
 
   @Column({ type: 'date', nullable: false })

@@ -316,7 +316,7 @@ export class RoomsRepository {
     return await this.roomsRepository.findOne({
       where: { id: id },
       relations: {
-        booking: true,
+        bookings: true,
         services: true,
         images: true,
       },
