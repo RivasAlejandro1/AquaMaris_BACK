@@ -1,3 +1,4 @@
+import { CommentsController } from './modules/comments/comments.controller';
 import { ImagesController } from './modules/images/images.controller';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -35,8 +36,10 @@ import { Companion } from './entity/Companion.entity';
 import { Payment } from './entity/Payment.entity';
 import { PaymentModule } from './modules/payment/payment.module';
 import { MailModule } from './modules/mail/mail.module';
-import { CommentsController } from './modules/comments/comments.controller';
 import { CommentsModule } from './modules/comments/comments.module';
+import { CommentsService } from './modules/comments/comments.service';
+import { Comment } from './entity/Comment.entity';
+
 
 @Module({
   imports: [
@@ -49,6 +52,7 @@ import { CommentsModule } from './modules/comments/comments.module';
       Service,
       Payment,
       Companion,
+      Comment
     ]),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -75,7 +79,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     UserModule,
     PaymentModule,
     MailModule,
-    CommentsModule
+    CommentsModule,
   ],
   providers: [
     MailService,
@@ -87,6 +91,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     BookingController,
     HotelService,
     ServiceService,
+    CommentsService,
     // CloudinaryService,
     RoomsService,
     ImagesService,
@@ -95,6 +100,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     RoomsRepository,
     UserModule,
     RoomsModule,
+    CommentsController
   ],
   controllers: [MailController],
 })
@@ -106,14 +112,14 @@ export class AppModule {
     private readonly ImagesController: ImagesController,
     private readonly userController: UserController,
     private readonly bookingController: BookingController,
+    private readonly commentsController: CommentsController
   ) {}
 
   async onApplicationBootstrap() {
     console.log('RUN HOTEL SEEDER');
     const successHotel = await this.hotelController.hotelSeeder(true);
     console.log('RUN SERVICE SEEDER');
-    const successService =
-      await this.serviceController.serviceSeeder(successHotel);
+    const successService =await this.serviceController.serviceSeeder(successHotel);
     console.log('RUN USERS SEEDER');
     const successUser = await this.userController.seeder(successService);
     console.log('RUN IMAGES SEEDER');
@@ -121,6 +127,7 @@ export class AppModule {
     console.log('RUN ROOMS SEEDER');
     const successRooms = await this.roomsController.roomsSeeder(successImages);
     console.log('RUN BOOKING SEEDER');
-    await this.bookingController.bookingSeeder(successService);
+    const successComments = await this.commentsController.commentSeeder(successImages)
+    await this.bookingController.bookingSeeder(successComments);
   }
 }
