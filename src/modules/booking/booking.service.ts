@@ -210,4 +210,18 @@ export class BookingService {
   
   async BookingAvailable(check_in_date: Date, check_out_date :Date){
   }
+
+  async getAllBookingsById(userId){
+    return await this.userRepository.findOne({
+      where: {
+        id: userId
+      },
+      select:{
+        booking: true
+      },
+      relations:{
+        booking: true
+      }
+    })
+  }
 }

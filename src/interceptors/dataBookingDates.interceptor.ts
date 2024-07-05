@@ -24,7 +24,6 @@ export class dataBookingDatesInterceptor implements NestInterceptor{
         }
 
 
-        
-        return next.handle()    
+        return next.handle();
     }
 }
