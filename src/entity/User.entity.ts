@@ -26,7 +26,7 @@ export class User {
   @Column()
   role: string;
 
-  @Column({ type: 'decimal', nullable: true})
+  @Column({ type: 'decimal', nullable: true })
   phone: number;
 
   @Column({ type: 'varchar' })
