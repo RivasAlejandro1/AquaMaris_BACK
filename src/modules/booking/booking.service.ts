@@ -134,7 +134,7 @@ export class BookingService {
         throw new NotFoundException(`The found the room with id: ${roomId}`);
       console.log(error);
       console.log(error.name);
-      throw new InternalServerErrorException('Conection error DB');
+      throw new InternalServerErrorException('Conection error DB')
     }
 
 
