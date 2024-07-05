@@ -26,14 +26,14 @@ export class RoomsRepository {
 
   async getAllRooms(page, limit) {
     const offset = (page - 1) * limit;
-    const allRooms = await this.roomsRepository
+    const allRoomsQuery = await this.roomsRepository
       .createQueryBuilder('room')
       .leftJoinAndSelect('room.services', 'services')
       .leftJoinAndSelect('room.images', 'images')
       .leftJoinAndSelect(
-        'room.booking',
-        'booking',
-        'booking.check_in_date >= :today',
+        'room.bookings',
+        'bookings',
+        'bookings.check_in_date >= :today',
         {
           today: new Date().toISOString().split('T')[0],
         },
@@ -47,14 +47,18 @@ export class RoomsRepository {
         'room.roomNumber',
         'services',
         'images',
-        'booking.check_in_date',
-        'booking.check_out_date',
-      ])
-      .skip(offset)
-      .take(limit)
-      .getMany();
+        'bookings.check_in_date',
+        'bookings.check_out_date',
+      ]);
+    const totalCount = await allRoomsQuery.getCount();
 
-    return allRooms;
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(totalCount / limit);
+
+    // Get the paginated results
+    const allRooms = await allRoomsQuery.skip(offset).take(limit).getMany();
+    console.log({ allRooms, totalPages });
+    return { totalPages, allRooms };
   }
 
   async filterRoom(filters) {
@@ -75,12 +79,9 @@ export class RoomsRepository {
     if (types) availableRooms = this.getByType(types, availableRooms);
 
     if (services) availableRooms = this.getByServices(services, availableRooms);
-    console.log('sin paginado');
-    console.log(availableRooms);
-    const paginatedRooms = availableRooms.slice(startIndex, endIndex);
-    console.log('con paginado');
-    console.log(paginatedRooms);
-    return paginatedRooms;
+    const totalPages = Math.ceil(availableRooms.length / pageSize);
+    const allRooms = availableRooms.slice(startIndex, endIndex);
+    return { totalPages, allRooms };
   }
 
   async reserveredRooms(arrive: Date, depart?: Date, orderBy?) {

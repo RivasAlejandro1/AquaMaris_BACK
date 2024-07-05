@@ -24,20 +24,20 @@ export class RoomsController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 3,
   ) {
+    console.log("hola");
+
     return this.roomsService.getAllRooms(page, limit);
   }
 
   @Post()
-  async createRoom(@Body() infoRoom: CreateRoomDto){
+  async createRoom(@Body() infoRoom: CreateRoomDto) {
     return await this.roomsService.createRoom(infoRoom);
   }
 
-  
   @Get()
   async roomsSeeder(success: boolean) {
     return await this.roomsService.roomSeeder();
   }
-
 
   @Get('filter')
   @UseInterceptors(filtersInterceptor)
@@ -45,10 +45,8 @@ export class RoomsController {
     return this.roomsService.filterRoom(query);
   }
 
-
   @Get(':id')
   async getById(@Param('id', ParseUUIDPipe) id: string) {
     return await this.roomsService.getById(id);
   }
-  
 }
