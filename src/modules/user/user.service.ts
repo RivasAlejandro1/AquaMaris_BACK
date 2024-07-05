@@ -53,7 +53,7 @@ export class UsersService {
           user: true,
           room: true
         },
-        comments:true
+        comments: true
       },
     });
 
@@ -67,7 +67,16 @@ export class UsersService {
 
   async getUserByID(id: string) {
     try {
-      const user = await this.userDBrepository.findOne({ where: { id: id }, relations: ['booking', "comments"] });
+      const user = await this.userDBrepository.findOne({
+        where: { id: id }, 
+        relations: {
+          booking: {
+            user: true,
+            room: true
+          },
+          comments: true
+        },
+      });
       if (!user) throw new NotFoundException(`User with id ${id} not found`);
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
