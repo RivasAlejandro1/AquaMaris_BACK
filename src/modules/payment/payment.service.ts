@@ -6,6 +6,9 @@ dotenvConfig({ path: '.env.development' });
 import { Payment as Pay } from 'src/entity/Payment.entity';
 import { Repository } from 'typeorm';
 import { Booking } from 'src/entity/Booking.entity';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Injectable()
 export class PaymentService {
@@ -15,6 +18,7 @@ export class PaymentService {
   ) {}
 
   async createOrder(newOrderData) {
+    const webhook = process.env.MERCADO_PAGO_WEBHOOK;
     const { title, price, orderId } = newOrderData;
     try {
       const client = new MercadoPagoConfig({
@@ -26,18 +30,19 @@ export class PaymentService {
           items: [
             {
               id: null,
-              title: title,
+              title: `Reservación para la habitacion ${title}`,
               quantity: 1,
               unit_price: price,
               currency_id: 'COP',
             },
           ],
           payment_methods: {
-            //default_payment_method_id: 'master',
             installments: 1,
           },
-          notification_url:
-            'https://dd98-2806-103e-16-8bba-b495-b48e-b1c-13ef.ngrok-free.app/payment/webhook',
+          back_urls: {
+            success: 'https://aqua-maris-hotel.vercel.app/',
+          },
+          notification_url: `${webhook}/payment/webhook`,
           external_reference: orderId,
         },
       });
