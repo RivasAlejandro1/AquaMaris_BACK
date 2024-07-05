@@ -14,7 +14,7 @@ import * as bookingData from '../../utils/booking.data.json';
 import { Companion } from 'src/entity/Companion.entity';
 import { PaymentService } from '../payment/payment.service';
 import { Payment } from 'mercadopago';
-import { areIntervalsOverlapping, interval } from 'date-fns';
+import { areIntervalsOverlapping, formatISO, interval } from 'date-fns';
 import { Exception } from 'handlebars';
 
 @Injectable()
@@ -97,7 +97,6 @@ export class BookingService {
       userId,
       roomId,
       companions,
-      ...infoCreateBooking
     } = infoBooking;
     const paymentStatus = PaymentStatus.PENDING;
 
@@ -138,27 +137,31 @@ export class BookingService {
       throw new InternalServerErrorException('Conection error DB');
     }
 
-/* 
+
     try {
-      const currentInterval = interval(check_in_date, check_out_date)
-      console.log(allBookings)
-      console.log("message:", currentInterval)
-      allBookings.forEach(Booking => {
-        const start = Booking.check_in_date;
-        const out = Booking.check_out_date;
-        console.log("message:", start, out)
+     
+      const currentInterval =  interval( check_in_date , check_out_date )
+      console.log("Interval Are Trying to register:", currentInterval)
+      allBookings.forEach(booking => {
+        const infoStart = booking.check_in_date.split("-").map(e => Number(e));
+        const start = new Date(infoStart[0],infoStart[1]-1, infoStart[2]);
+        const infoEnd = booking.check_out_date.split("-").map(e => Number(e));
+        const end =  new Date(infoEnd[0],infoEnd[1]-1, infoEnd[2]);
         
-        const newInterval = interval(start, out);
-        console.log("message:", newInterval)
+
+        console.log("check_out_date: ", check_out_date)
+        console.log("infoEnd: ", infoEnd)
+        console.log("end: ", end)
+        const newInterval = interval(start, end);
         
-        console.log("message:", !areIntervalsOverlapping(currentInterval, newInterval))
-        if( !areIntervalsOverlapping(currentInterval, newInterval)) throw new BadRequestException()
+        console.log("Any Try Interval:", currentInterval)
+      if(areIntervalsOverlapping(currentInterval, newInterval)) throw new BadRequestException("hola")
           
         });
       }catch(error){
       throw new NotFoundException("This interval is occuped, plis retry with anothers dates");
     }
-     */
+    
 
     try {
       const userFinded = await this.userRepository.findOneByOrFail({
