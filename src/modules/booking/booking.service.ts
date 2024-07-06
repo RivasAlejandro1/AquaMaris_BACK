@@ -180,7 +180,6 @@ export class BookingService {
     }
 
     await this.bookingRepository.save(newBooking);
-    console.log(newEmail);
     await this.mailService.sendMail(newEmail);
     try {
       if (companions) {
