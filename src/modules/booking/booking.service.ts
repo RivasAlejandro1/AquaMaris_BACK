@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {  Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Booking } from '../../entity/Booking.entity';
 import { User } from '../../entity/User.entity';
 import { Room } from '../../entity/Room.entity';
@@ -16,6 +16,9 @@ import { PaymentService } from '../payment/payment.service';
 import { Payment } from 'mercadopago';
 import { areIntervalsOverlapping, formatISO, interval } from 'date-fns';
 import { Exception } from 'handlebars';
+import { MailService } from '../mail/mail.service';
+import { MailDto } from 'src/dtos/Mail.dto';
+import { MailType } from 'src/enum/MailType.dto';
 
 @Injectable()
 export class BookingService {
@@ -29,6 +32,7 @@ export class BookingService {
     private roomRepository: Repository<Room>,
     @InjectRepository(Companion)
     private companionRepository: Repository<Companion>,
+    private mailService: MailService,
   ) {}
 
   async bookingSeeder() {
@@ -91,44 +95,42 @@ export class BookingService {
   }
 
   async makeBooking(infoBooking: any) {
-    const {
-      check_in_date,
-      check_out_date,
-      userId,
-      roomId,
-      companions,
-    } = infoBooking;
+    const { check_in_date, check_out_date, userId, roomId, companions } =
+      infoBooking;
     const paymentStatus = PaymentStatus.PENDING;
 
-
-    
-
-    
     const newBooking: Booking = this.bookingRepository.create({
       check_in_date,
       check_out_date,
       paymentStatus,
     });
+    const newEmail: MailDto = {
+      to: 'null',
+      name: 'null',
+      subject: 'Confirmacion de reserva',
+      type: MailType.RESERVATION,
+    };
     let price: number;
     let numberRoom;
     let allBookings;
     try {
-      const exist = await this.roomRepository.existsBy({id: roomId})
-      if(!exist) throw new NotFoundException(`The found the room with id: ${roomId}`);
+      const exist = await this.roomRepository.existsBy({ id: roomId });
+      if (!exist)
+        throw new NotFoundException(`The found the room with id: ${roomId}`);
       const roomFinded = await this.roomRepository.findOne({
-        where:{
+        where: {
           id: roomId,
         },
-        relations:{
-          bookings: true
-        }
+        relations: {
+          bookings: true,
+        },
       });
 
-      allBookings =  roomFinded.bookings;
+      allBookings = roomFinded.bookings;
       newBooking.room = roomFinded;
       price = Number(roomFinded.price);
       numberRoom = roomFinded.roomNumber;
-
+      newEmail.roomNumber = roomFinded.roomNumber.toString();
     } catch (error) {
       if (error.name == 'EntityNotFoundError')
         throw new NotFoundException(`The found the room with id: ${roomId}`);
@@ -137,37 +139,39 @@ export class BookingService {
       throw new InternalServerErrorException('Conection error DB');
     }
 
-
     try {
-     
-      const currentInterval =  interval( check_in_date , check_out_date )
-      console.log("Interval Are Trying to register:", currentInterval)
-      allBookings.forEach(booking => {
-        const infoStart = booking.check_in_date.split("-").map(e => Number(e));
-        const start = new Date(infoStart[0],infoStart[1]-1, infoStart[2]);
-        const infoEnd = booking.check_out_date.split("-").map(e => Number(e));
-        const end =  new Date(infoEnd[0],infoEnd[1]-1, infoEnd[2]);
-        
+      const currentInterval = interval(check_in_date, check_out_date);
+      console.log('Interval Are Trying to register:', currentInterval);
+      allBookings.forEach((booking) => {
+        const infoStart = booking.check_in_date
+          .split('-')
+          .map((e) => Number(e));
+        const start = new Date(infoStart[0], infoStart[1] - 1, infoStart[2]);
+        const infoEnd = booking.check_out_date.split('-').map((e) => Number(e));
+        const end = new Date(infoEnd[0], infoEnd[1] - 1, infoEnd[2]);
 
-        console.log("check_out_date: ", check_out_date)
-        console.log("infoEnd: ", infoEnd)
-        console.log("end: ", end)
+        console.log('check_out_date: ', check_out_date);
+        console.log('infoEnd: ', infoEnd);
+        console.log('end: ', end);
         const newInterval = interval(start, end);
-        
-        console.log("Any Try Interval:", currentInterval)
-      if(areIntervalsOverlapping(currentInterval, newInterval)) throw new BadRequestException("hola")
-          
-        });
-      }catch(error){
-      throw new NotFoundException("This interval is occuped, plis retry with anothers dates");
+        newEmail.reservationDate = check_in_date.toDateString().split('T')[0];
+        console.log('Any Try Interval:', currentInterval);
+        if (areIntervalsOverlapping(currentInterval, newInterval))
+          throw new BadRequestException('hola');
+      });
+    } catch (error) {
+      throw new NotFoundException(
+        'This interval is occuped, plis retry with anothers dates',
+      );
     }
-    
 
     try {
       const userFinded = await this.userRepository.findOneByOrFail({
         id: userId,
       });
       newBooking.user = userFinded;
+      newEmail.to = userFinded.email;
+      newEmail.name = userFinded.name;
     } catch (error) {
       if (error.name == 'EntityNotFoundError')
         throw new NotFoundException(`The found the user with id: ${userId}`);
@@ -176,6 +180,7 @@ export class BookingService {
     }
 
     await this.bookingRepository.save(newBooking);
+    await this.mailService.sendMail(newEmail);
     try {
       if (companions) {
         await Promise.all(
@@ -203,21 +208,25 @@ export class BookingService {
       console.log(typeof price);
       throw new BadRequestException('Price must be number');
     }
-    const infoOrder = { id: 1, title: numberRoom, price, orderId: newBooking.id };
+    const infoOrder = {
+      id: 1,
+      title: numberRoom,
+      price,
+      orderId: newBooking.id,
+    };
     const order = await this.paymentService.createOrder(infoOrder);
     return { newBooking, order };
   }
-  
-  async BookingAvailable(check_in_date: Date, check_out_date :Date){
-  }
 
-  async getAllBookingsById(userId){
+  async BookingAvailable(check_in_date: Date, check_out_date: Date) {}
+
+  async getAllBookingsById(userId) {
     return await this.bookingRepository.find({
-      where:{
+      where: {
         user: {
-          id: userId
-        }
-      }
-    })
+          id: userId,
+        },
+      },
+    });
   }
 }
