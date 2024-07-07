@@ -39,6 +39,7 @@ import { MailModule } from './modules/mail/mail.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { CommentsService } from './modules/comments/comments.service';
 import { Comment } from './entity/Comment.entity';
+import { RegisterCode } from './entity/RegisterCodes';
 
 
 @Module({
@@ -52,7 +53,8 @@ import { Comment } from './entity/Comment.entity';
       Service,
       Payment,
       Companion,
-      Comment
+      Comment,
+      RegisterCode
     ]),
     ConfigModule.forRoot({
       isGlobal: true,

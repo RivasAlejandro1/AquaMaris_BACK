@@ -109,7 +109,9 @@ export class BookingService {
       name: 'null',
       subject: 'Confirmacion de reserva',
       type: MailType.RESERVATION,
+      userId: ''
     };
+    
     let price: number;
     let numberRoom;
     let allBookings;

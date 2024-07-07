@@ -11,10 +11,11 @@ import { Payment } from 'mercadopago';
 import { PaymentModule } from '../payment/payment.module';
 import { MailService } from '../mail/mail.service';
 import { MailController } from '../mail/mail.controller';
+import { RegisterCode } from 'src/entity/RegisterCodes';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Booking, User, Room, Companion]),
+    TypeOrmModule.forFeature([Booking, User, Room, Companion, RegisterCode]),
     PaymentModule,
   ],
   controllers: [BookingController, MailController],
