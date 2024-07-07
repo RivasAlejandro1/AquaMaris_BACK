@@ -12,7 +12,7 @@ export class MailController {
         return this.mailService.sendMail(mailData)
     }
 
-    @Get('register/code')
+    @Post('register/code')
     checkRegisterCode(@Body() registerUserData: RegisterUserDto) {
         return this.mailService.checkRegisterCode(registerUserData)
     }
