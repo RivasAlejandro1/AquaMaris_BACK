@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, IsOptional, IsEnum, IsUUID } from 'class-validator';
 import { MailType } from 'src/enum/MailType.dto';
 
 export class MailDto {
@@ -28,4 +28,8 @@ export class MailDto {
   @IsString()
   @IsOptional()
   roomNumber?: string;
+  
+  @IsUUID()
+  @IsOptional()
+  userId: string
 }

@@ -1,13 +1,19 @@
 import { MailDto } from 'src/dtos/Mail.dto';
 import { MailService } from './mail.service';
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
+import { RegisterUserDto } from 'src/dtos/RegisterCode.dto';
 
 @Controller('mail')
-export class MailController{
-    constructor(private readonly mailService: MailService){}
+export class MailController {
+    constructor(private readonly mailService: MailService) { }
 
     @Post('send')
-    async sendMail(@Body() mailData: MailDto){
+    sendMail(@Body() mailData: MailDto) {
         return this.mailService.sendMail(mailData)
+    }
+
+    @Post('register/code')
+    checkRegisterCode(@Body() registerUserData: RegisterUserDto) {
+        return this.mailService.checkRegisterCode(registerUserData)
     }
 }
