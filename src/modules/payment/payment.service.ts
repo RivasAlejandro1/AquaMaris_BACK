@@ -7,6 +7,7 @@ import { Payment as Pay } from 'src/entity/Payment.entity';
 import { Repository } from 'typeorm';
 import { Booking } from 'src/entity/Booking.entity';
 import * as dotenv from 'dotenv';
+import { MailService } from '../mail/mail.service';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ export class PaymentService {
   constructor(
     @InjectRepository(Pay) private paymentReposotory: Repository<Pay>,
     @InjectRepository(Booking) private bookingRepository: Repository<Booking>,
+    @InjectRepository(MailService) private mailService: MailService,
   ) {}
 
   async createOrder(newOrderData) {
@@ -40,7 +42,7 @@ export class PaymentService {
             installments: 1,
           },
           back_urls: {
-            success: 'https://aqua-maris-hotel.vercel.app/',
+            success: 'https://front-pfg-6.vercel.app/',
           },
           notification_url: `https://aquamaris-v1-0.onrender.com/payment/webhook`,
           external_reference: orderId,
@@ -79,6 +81,8 @@ export class PaymentService {
         await this.paymentReposotory.save(newPayment);
         order.paymentStatus = pay.status;
         await this.bookingRepository.save(order);
+
+        await this.mailService.sendMail()
       } else {
         throw new NotFoundException('orden no encontrada');
       }
