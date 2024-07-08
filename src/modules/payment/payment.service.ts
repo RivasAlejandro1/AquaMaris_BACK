@@ -7,7 +7,7 @@ import { Payment as Pay } from 'src/entity/Payment.entity';
 import { Repository } from 'typeorm';
 import { Booking } from 'src/entity/Booking.entity';
 import * as dotenv from 'dotenv';
-import { MailService } from '../mail/mail.service';
+//import { MailService } from '../mail/mail.service';
 
 dotenv.config();
 
@@ -16,7 +16,7 @@ export class PaymentService {
   constructor(
     @InjectRepository(Pay) private paymentReposotory: Repository<Pay>,
     @InjectRepository(Booking) private bookingRepository: Repository<Booking>,
-    @InjectRepository(MailService) private mailService: MailService,
+    //@InjectRepository(MailService) private mailService: MailService,
   ) {}
 
   async createOrder(newOrderData) {
