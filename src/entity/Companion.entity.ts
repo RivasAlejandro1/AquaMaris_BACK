@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Booking } from './Booking.entity';
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid'
 
 @Entity('companion')
 export class Companion {
