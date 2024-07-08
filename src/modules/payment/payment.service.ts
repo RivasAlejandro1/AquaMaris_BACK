@@ -82,7 +82,7 @@ export class PaymentService {
         order.paymentStatus = pay.status;
         await this.bookingRepository.save(order);
 
-        await this.mailService.sendMail()
+        //await this.mailService.sendMail()
       } else {
         throw new NotFoundException('orden no encontrada');
       }
