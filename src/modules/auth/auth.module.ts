@@ -9,10 +9,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/strategy/jwt.strategy';
 import { JwtAuthGuard } from 'src/guardiane/jwt-auth.guard';
 import { MailService } from '../mail/mail.service';
+import { RegisterCode } from 'src/entity/RegisterCodes';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, RegisterCode]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,

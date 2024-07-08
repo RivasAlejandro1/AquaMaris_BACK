@@ -8,6 +8,7 @@ import {
 import { MembershipStatus } from '../enum/MembershipStatus.enum';
 import { Booking } from './Booking.entity';
 import { Comment } from './Comment.entity';
+import { RegisterCode } from './RegisterCodes';
 
 @Entity({ name: 'users' })
 @Unique(['email'])
@@ -53,4 +54,7 @@ export class User {
 
   @OneToMany(()=> Comment, (comment) => comment.user)
   comments: Comment[]
+
+  @OneToMany(()=> RegisterCode, (code) => code.user)
+  registerCode: RegisterCode
 }

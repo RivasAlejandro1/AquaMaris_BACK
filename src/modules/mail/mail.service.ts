@@ -1,15 +1,26 @@
 import * as handlebars from 'handlebars'; // Importa Handlebars para la plantilla HTML dinámica
 import { transporter } from 'src/config/mailer'; // Importa el transporter de nodemailer
 import { MailDto } from 'src/dtos/Mail.dto'; // Importa el DTO de correo
-import { Injectable, InternalServerErrorException } from '@nestjs/common'; // Importa Injectable y InternalServerErrorException de NestJS
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { getRegisterCode } from 'src/helpers/getRegisterCode';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from 'src/entity/User.entity';
+import { RegisterCode } from 'src/entity/RegisterCodes';
+import { RegisterUserDto } from 'src/dtos/RegisterCode.dto';
 
 @Injectable()
 export class MailService {
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(RegisterCode) private registerCodeRepository: Repository<RegisterCode>
+  ) { }
+
   async sendMail(sendMailData: MailDto) {
-    const { to, subject, name, type, message, reservationDate, roomNumber } = sendMailData; // Extrae los datos del DTO
+    const { to, subject, name, type, message, reservationDate, roomNumber, userId } = sendMailData;
 
     try {
-        let htmlTemplate = `
+      let htmlTemplate = `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -70,20 +81,34 @@ export class MailService {
 
       switch (type) {
         case 'register':
-          header = `Bienvenido a AquaMaris, ${name}!`; 
-          defaultMessage = 'Estamos encantados de que hayas tomado esta gran decisión. Esperamos verte en nuestros hoteles pronto.'; 
-          break;
+          try {
+            const registerCode = getRegisterCode()
+            const user = await this.userRepository.findOne({ where: { id: userId } })
+            if (!user) throw new NotFoundException(`User with id ${user} not found`)
+
+            await this.registerCodeRepository.save({
+              code: registerCode,
+              user: user
+            })
+
+            header = `Bienvenido a AquaMaris, ${name}!`;
+            defaultMessage = `Estamos encantados de que hayas tomado esta gran decisión. Para completar tu proceso de registro necesitamos que te ingreses el codigo de suscripcion en nuestra plataforma ${registerCode}, Esperamos verte en nuestros hoteles pronto.`;
+            break;
+          } catch (err) {
+            console.log(`Error sending email to user with id ${userId}`, err)
+            throw new InternalServerErrorException(`Error sending email to user with id ${userId}`)
+          }
         case 'reservation':
-          header = `Bienvenido a AquaMaris Hotel's, ${name}!`; 
-          defaultMessage = 'Estamos encantados de tenerte con nosotros. Esperamos que disfrutes de tu estadía.'; 
+          header = `Bienvenido a AquaMaris Hotel's, ${name}!`;
+          defaultMessage = 'Estamos encantados de tenerte con nosotros. Esperamos que disfrutes de tu estadía.';
           break;
         case 'cancellation':
           header = `Reservación Cancelada, ${name}`;
-          defaultMessage = 'Lamentamos informarte que tu reservación ha sido cancelada. Si tienes alguna pregunta, no dudes en contactarnos.'; 
+          defaultMessage = 'Lamentamos informarte que tu reservación ha sido cancelada. Si tienes alguna pregunta, no dudes en contactarnos.';
           break;
         case 'membership_subscription':
           header = `¡Gracias por unirte a nuestra membresía, ${name}!`;
-          defaultMessage = 'Estamos encantados de tenerte como miembro. Esperamos que disfrutes de los beneficios de tu membresía.'; 
+          defaultMessage = 'Estamos encantados de tenerte como miembro. Esperamos que disfrutes de los beneficios de tu membresía.';
           break;
         case 'membership_cancellation':
           header = `Membresía Cancelada, ${name}`;
@@ -103,10 +128,29 @@ export class MailService {
         html: htmlToSend,
       });
 
-      console.log('Email sent:', info.messageId); 
+      console.log('Email sent:', info.messageId);
     } catch (err) {
       console.error('Error sending email:', err);
-      throw new InternalServerErrorException('Error sending email'); // Lanza una excepción interna si hay un error
+      throw new InternalServerErrorException('Error sending email');
     }
+  }
+
+  async checkRegisterCode(registerUserData: RegisterUserDto) {
+    const { userId, code } = registerUserData
+    const user = await this.userRepository.findOne({ where: { id: userId } })
+
+    if (!user) throw new NotFoundException(`Could get user with id ${userId} `)
+
+    const codeUser = await this.registerCodeRepository.findOne({ where: { user: user } })
+    if (!codeUser) throw new NotFoundException(`Could get a code for the user with id ${userId}`)
+
+    const codeCode = await this.registerCodeRepository.findOne({ where: { code: code } })
+    if(!codeCode) throw new NotFoundException(`The code ${code} does not exist for user with id ${userId}`)
+
+    codeUser.checked = true
+
+    await this.registerCodeRepository.save(codeUser)
+
+    return {message: `The code was succesfully verified`}
   }
 }
