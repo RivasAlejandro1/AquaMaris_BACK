@@ -2,10 +2,12 @@ import { BadRequestException, Injectable, InternalServerErrorException, NotFound
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../entity/User.entity';
 import { MembershipStatus } from '../../enum/MembershipStatus.enum';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import * as users from '../../utils/users.data.json';
 import * as bcrypt from 'bcrypt'
 import { Role } from 'src/enum/Role.enum';
+import { RegisterDateDto } from 'src/dtos/RegisterRange.dto';
+import { endOfMonth, format, startOfMonth, subMonths } from 'date-fns';
 
 @Injectable()
 export class UsersService {
@@ -189,6 +191,22 @@ export class UsersService {
       console.log(`Error removing the user with id: ${id}`, err)
       throw new InternalServerErrorException(`Error removing user with id ${id}`)
     }
+  }
+
+  async userRegisteredPerMonth(dateRange: RegisterDateDto){
+    const { months } = dateRange
+    const endDate = new Date()
+    const startDate = subMonths(endDate, months - 1)
+
+    const count = await this.userDBrepository.count({
+      where: {
+        date_start: Between(startOfMonth(startDate), endOfMonth(endDate))
+      }
+    })
+
+    const currentMonth = format(endDate, 'MMMM')
+
+    return { count, currentMonth }
   }
 
   async updatePassword(id: string, newPassword: string) {
