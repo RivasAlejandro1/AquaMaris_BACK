@@ -135,4 +135,14 @@ export class UserController {
   ){
     return this.userService.getUsersByStatus(status)
   }
+
+  @Get('membership/percentage')
+  getUsersByMemberShip(){
+    return this.userService.checkMembership()
+  }
+
+  @Get('booking/percentage')
+  getUsersByBookings(){
+    return this.userService.checkUsersBookings()
+  }
 }

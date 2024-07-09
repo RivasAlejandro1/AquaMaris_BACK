@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException, NotFound
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../entity/User.entity';
 import { MembershipStatus } from '../../enum/MembershipStatus.enum';
-import { Between, Repository } from 'typeorm';
+import { Between, In, IsNull, Not, Repository } from 'typeorm';
 import * as users from '../../utils/users.data.json';
 import * as bcrypt from 'bcrypt'
 import { Role } from 'src/enum/Role.enum';
@@ -70,7 +70,7 @@ export class UsersService {
   async getUserByID(id: string) {
     try {
       const user = await this.userDBrepository.findOne({
-        where: { id: id }, 
+        where: { id: id },
         relations: {
           booking: {
             user: true,
@@ -193,7 +193,7 @@ export class UsersService {
     }
   }
 
-  async userRegisteredPerMonth(dateRange: RegisterDateDto){
+  async userRegisteredPerMonth(dateRange: RegisterDateDto) {
     const { months } = dateRange
     const endDate = new Date()
     const startDate = subMonths(endDate, months - 1)
@@ -289,6 +289,60 @@ export class UsersService {
     } catch (err) {
       console.log('Hubo un error al crear el usuario con autenticacion de terceros', err)
       throw new Error('Hubo un error al crear el usuario con autenticacion de terceros')
+    }
+  }
+
+  async checkMembership() {
+    try {
+      const totalUsers = await this.userDBrepository.count()
+      const userWithMembership = await this.userDBrepository.count({ where: { membership_status: MembershipStatus.ACTIVE } })
+      const userWithoutMembership = await this.userDBrepository.count({ where: { membership_status: Not(In([MembershipStatus.ACTIVE])) } })
+
+      const percentageWithMembership = (userWithMembership / totalUsers) * 100
+      const percentageWithoutMembership = 100 - percentageWithMembership
+
+      return {
+        premium: {
+          percentage: Math.round(percentageWithMembership),
+          value: userWithMembership
+        },
+        normal: {
+          percentage: Math.round(percentageWithoutMembership),
+          value: userWithoutMembership
+        }
+      }
+    } catch (err) {
+      console.log(`Error getting users by Membership`, err)
+      throw new InternalServerErrorException(`Error getting user by Membership`)
+    }
+  }
+
+  async checkUsersBookings() {
+    try {
+      const users = await this.userDBrepository.count()
+      const usersWithBookings = await this.userDBrepository
+        .createQueryBuilder('user')
+        .leftJoinAndSelect('user.booking', 'booking')
+        .where('booking.id IS NOT NULL')
+        .getCount();
+
+      const usersWithoutBookings = users - usersWithBookings
+      const percentageWithBookings = (usersWithBookings / users) * 100
+      const percertageWithoutBookings = 100 - percentageWithBookings
+
+      return {
+        withBookings: {
+          value: usersWithBookings,
+          percentage: percentageWithBookings
+        }, 
+        withoutBookings: {
+          value: usersWithoutBookings,
+          percentage: percertageWithoutBookings
+        }
+      };
+    } catch (err) {
+      console.log(`Error getting users by Bookings`, err)
+      throw new InternalServerErrorException(`Error getting users by Bookings`)
     }
   }
 }
