@@ -87,6 +87,7 @@ export class MailService {
 
             if (!user) throw new NotFoundException(`User with id ${user} not found`)
 
+
             await this.registerCodeRepository.save({
               code: registerCode,
               user: user
@@ -140,7 +141,9 @@ export class MailService {
     const { email, code } = registerUserData
 
     const codeToNumber = Number(code)
-    const user = await this.userRepository.findOne({ where: { id: email } })
+    const user = await this.userRepository.findOne({ where: { email: email } })
+
+    console.log(codeToNumber)
 
     if (!user) throw new NotFoundException(`Could get user with email ${email} `)
 
