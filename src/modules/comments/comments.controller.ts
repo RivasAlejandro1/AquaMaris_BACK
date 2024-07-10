@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Put } from "@nestjs/common";
 import { CommentsService } from "./comments.service";
 import { CommentDto } from "src/dtos/Comment.dto";
+import { ChangeCommentStatusDto } from "src/dtos/ChangeCommentStatus.dto";
 
 @Controller('comment')
 export class CommentsController {
@@ -29,5 +30,16 @@ export class CommentsController {
     @Get(":id")
     getCommentById(@Param('id', ParseUUIDPipe) id: string){
         return this.commentsService.getCommentsById(id)
+    }
+
+    @Put('')
+    changeCommentStatus(@Body() commentData: ChangeCommentStatusDto){
+        return this.commentsService.changeCommentStatus(commentData)
+    }
+
+    @Get('room/:roomId')
+    getCommentsByRoomId(@Param('roomId') roomId: string){
+        console.log(roomId)
+        return this.commentsService.getCommentsByRoomId(roomId)
     }
 }
