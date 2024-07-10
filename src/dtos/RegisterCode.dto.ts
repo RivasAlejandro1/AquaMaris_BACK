@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsNumber, IsUUID } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber } from "class-validator";
 
 export class RegisterUserDto{
-    @IsUUID()
+    @IsEmail()
     @IsNotEmpty()
-    userId: string
+    email: string
 
     @IsNumber()
     @IsNotEmpty()

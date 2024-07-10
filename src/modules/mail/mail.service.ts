@@ -1,7 +1,7 @@
 import * as handlebars from 'handlebars'; // Importa Handlebars para la plantilla HTML dinámica
 import { transporter } from 'src/config/mailer'; // Importa el transporter de nodemailer
 import { MailDto } from 'src/dtos/Mail.dto'; // Importa el DTO de correo
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { getRegisterCode } from 'src/helpers/getRegisterCode';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -17,7 +17,7 @@ export class MailService {
   ) { }
 
   async sendMail(sendMailData: MailDto) {
-    const { to, subject, name, type, message, reservationDate, roomNumber, userId } = sendMailData;
+    const { to, subject, name, type, message, reservationDate, roomNumber, email } = sendMailData;
 
     try {
       let htmlTemplate = `
@@ -83,7 +83,8 @@ export class MailService {
         case 'register':
           try {
             const registerCode = getRegisterCode()
-            const user = await this.userRepository.findOne({ where: { id: userId } })
+            const user = await this.userRepository.findOne({ where: { email: email } })
+
             if (!user) throw new NotFoundException(`User with id ${user} not found`)
 
             await this.registerCodeRepository.save({
@@ -95,8 +96,8 @@ export class MailService {
             defaultMessage = `Estamos encantados de que hayas tomado esta gran decisión. Para completar tu proceso de registro necesitamos que te ingreses el codigo de suscripcion en nuestra plataforma ${registerCode}, Esperamos verte en nuestros hoteles pronto.`;
             break;
           } catch (err) {
-            console.log(`Error sending email to user with id ${userId}`, err)
-            throw new InternalServerErrorException(`Error sending email to user with id ${userId}`)
+            console.log(`Error sending email to user with email ${email}`, err)
+            throw new InternalServerErrorException(`Error sending email to user with id ${email}`)
           }
         case 'reservation':
           header = `Bienvenido a AquaMaris Hotel's, ${name}!`;
@@ -136,16 +137,16 @@ export class MailService {
   }
 
   async checkRegisterCode(registerUserData: RegisterUserDto) {
-    const { userId, code } = registerUserData
-    const user = await this.userRepository.findOne({ where: { id: userId } })
+    const { email, code } = registerUserData
+    const user = await this.userRepository.findOne({ where: { id: email } })
 
-    if (!user) throw new NotFoundException(`Could get user with id ${userId} `)
+    if (!user) throw new NotFoundException(`Could get user with email ${email} `)
 
     const codeUser = await this.registerCodeRepository.findOne({ where: { user: user } })
-    if (!codeUser) throw new NotFoundException(`Could get a code for the user with id ${userId}`)
+    if (!codeUser) throw new NotFoundException(`Could get a code for the user with email ${email}`)
 
     const codeCode = await this.registerCodeRepository.findOne({ where: { code: code } })
-    if(!codeCode) throw new NotFoundException(`The code ${code} does not exist for user with id ${userId}`)
+    if(!codeCode) throw new NotFoundException(`The code ${code} does not exist for user with email ${email}`)
 
     codeUser.checked = true
 
