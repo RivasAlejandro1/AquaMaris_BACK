@@ -138,6 +138,8 @@ export class MailService {
 
   async checkRegisterCode(registerUserData: RegisterUserDto) {
     const { email, code } = registerUserData
+
+    const codeToNumber = Number(code)
     const user = await this.userRepository.findOne({ where: { id: email } })
 
     if (!user) throw new NotFoundException(`Could get user with email ${email} `)
@@ -145,7 +147,7 @@ export class MailService {
     const codeUser = await this.registerCodeRepository.findOne({ where: { user: user } })
     if (!codeUser) throw new NotFoundException(`Could get a code for the user with email ${email}`)
 
-    const codeCode = await this.registerCodeRepository.findOne({ where: { code: code } })
+    const codeCode = await this.registerCodeRepository.findOne({ where: { code: codeToNumber } })
     if(!codeCode) throw new NotFoundException(`The code ${code} does not exist for user with email ${email}`)
 
     codeUser.checked = true
