@@ -24,8 +24,6 @@ export class RoomsController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 3,
   ) {
-    console.log("hola");
-
     return this.roomsService.getAllRooms(page, limit);
   }
 

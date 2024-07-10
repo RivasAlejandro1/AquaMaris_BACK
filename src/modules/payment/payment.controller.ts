@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Post,
+  Query,
   Req,
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
@@ -27,11 +29,12 @@ export class PaymentController {
   } */
 
   @Post('subscription')
-  async paypal() {
-    return this.paypalService.createProduct();
+  async paypal(@Body() user) {
+    return this.paypalService.createProduct(user.id);
   }
   @Post('webhook')
   async webHook(@Req() request) {
+    console.log(request);
     const type = request.query.type;
     if (type) {
       const id = request.query['data.id'];
@@ -41,8 +44,31 @@ export class PaymentController {
 
   @Post('subswebhook')
   async subsWebHook(@Req() request) {
-    console.log('hola');
+    const eventType = request.body.event_type;
+    if (eventType === 'BILLING.SUBSCRIPTION.ACTIVATED') {
+      return await this.paypalService.suscriptionWebHook(request.body);
+    }
     console.log(request.body);
     return new HttpException('OK', HttpStatus.ACCEPTED);
+  }
+
+  @Get('timeRevenue')
+  async timeBasedRevenue(@Query() query) {
+    const { rango } = query;
+    return await this.paymentService.timeBasedRevenue(rango);
+  }
+
+  @Get('typesRevenue')
+  async roomBasedRevenue(@Query('rango') rango) {
+    return await this.paymentService.roomBasedRevenue(rango);
+  }
+
+  @Get('timeAndTypesRevenue')
+  async timeAndRoomBasedRevenue(@Query('rango') rango) {
+    return await this.paymentService.timeAndRoomBasedRevenue(rango);
+  }
+  @Get('typesRevenuePercent')
+  async roomBasedRevenuePercent(@Query('rango') rango) {
+    return await this.paymentService.roomBasedRevenuePercent(rango);
   }
 }
