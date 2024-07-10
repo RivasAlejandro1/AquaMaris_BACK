@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
+  Post,
   Put,
   Query,
   UseGuards,
@@ -14,6 +15,7 @@ import { UsersService } from './user.service';
 import { RolesAdmin } from '../../help/roles.decoretion';
 import { Guard_admin } from '../../guardiane/admin_guard';
 import { Role } from '../../enum/Role.enum';
+import { RegisterDateDto } from 'src/dtos/RegisterRange.dto';
 
 @Controller('user')
 export class UserController {
@@ -93,6 +95,11 @@ export class UserController {
     return this.userService.updatePassword(id, newPassword)
   }
 
+  @Get('registered/months')
+  async getUsersRegisteredPerMonths(@Body() monthsData: RegisterDateDto){
+    return this.userService.userRegisteredPerMonth(monthsData)
+  }
+
   @Put('photoUrl/:id')
   @RolesAdmin(Role.USER)
   @UseGuards(Guard_admin)
@@ -127,5 +134,16 @@ export class UserController {
     @Param('status') status: boolean
   ){
     return this.userService.getUsersByStatus(status)
+  }
+
+  @Get('membership/percentage')
+  getUsersByMemberShip(@Body() dateRange: RegisterDateDto){
+    return this.userService.checkMembership(dateRange)
+  }
+
+  @Get('booking/percentage')
+  getUsersByBookings(@Body() dateRange: RegisterDateDto){
+    console.log(dateRange)
+    return this.userService.checkUsersBookings(dateRange)
   }
 }
