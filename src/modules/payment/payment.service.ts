@@ -190,7 +190,7 @@ export class PaymentService {
     revenueMap.forEach((value, key) => {
       revenuePercentData.push({
         tipo: key,
-        data: (value / totalData) * 100,
+        data: (value / totalData) * 100 || 0,
       });
     });
 
