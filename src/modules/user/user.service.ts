@@ -7,7 +7,7 @@ import * as users from '../../utils/users.data.json';
 import * as bcrypt from 'bcrypt'
 import { Role } from 'src/enum/Role.enum';
 import { RegisterDateDto } from 'src/dtos/RegisterRange.dto';
-import { endOfMonth, format, startOfMonth, subMonths } from 'date-fns';
+import { addMonths, endOfMonth, format, startOfMonth, subMonths } from 'date-fns';
 
 @Injectable()
 export class UsersService {
@@ -194,19 +194,40 @@ export class UsersService {
   }
 
   async userRegisteredPerMonth(dateRange: RegisterDateDto) {
-    const { months } = dateRange
-    const endDate = new Date()
-    const startDate = subMonths(endDate, months - 1)
+    const { months } = dateRange;
+    const endDate = new Date();
+    const startDate = subMonths(endDate, months - 1);
+    try {
+      const usersPerMonth = await this.userDBrepository
+        .createQueryBuilder('user')
+        .select("DATE_TRUNC('month', user.date_start)", 'month')
+        .addSelect('COUNT(*)', 'count')
+        .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+        .groupBy("DATE_TRUNC('month', user.date_start)")
+        .orderBy("DATE_TRUNC('month', user.date_start)", 'ASC')
+        .getRawMany();
 
-    const count = await this.userDBrepository.count({
-      where: {
-        date_start: Between(startOfMonth(startDate), endOfMonth(endDate))
+      const allMonths = [];
+      for (let i = 0; i < months; i++) {
+        const month = addMonths(startDate, i);
+        allMonths.push({
+          month: format(month, 'MMM'),
+          count: 0,
+        });
       }
-    })
 
-    const currentMonth = format(endDate, 'MMMM')
+      const resultsMap = new Map(usersPerMonth.map(record => [format(new Date(record.month), 'MMM'), parseInt(record.count, 10)]));
 
-    return { count, currentMonth }
+      const combinedResults = allMonths.map(monthObj => ({
+        month: monthObj.month,
+        count: resultsMap.get(monthObj.month) || 0,
+      }));
+
+      return combinedResults;
+    } catch (err) {
+      console.error('Error getting users registered per month', err);
+      throw new InternalServerErrorException('Error getting users registered per month');
+    }
   }
 
   async updatePassword(id: string, newPassword: string) {
@@ -292,54 +313,140 @@ export class UsersService {
     }
   }
 
-  async checkMembership() {
+  async checkMembership(dateRange: RegisterDateDto) {
+    const { months } = dateRange;
+    const endDate = new Date();
+    const startDate = subMonths(endDate, months - 1);
+
     try {
-      const totalUsers = await this.userDBrepository.count()
-      const userWithMembership = await this.userDBrepository.count({ where: { membership_status: MembershipStatus.ACTIVE } })
-      const userWithoutMembership = await this.userDBrepository.count({ where: { membership_status: Not(In([MembershipStatus.ACTIVE])) } })
+      const totalUsers = await this.userDBrepository.count();
 
-      const percentageWithMembership = (userWithMembership / totalUsers) * 100
-      const percentageWithoutMembership = 100 - percentageWithMembership
+      const usersWithMembershipPerMonth = await this.userDBrepository
+        .createQueryBuilder('user')
+        .select("DATE_TRUNC('month', user.date_start)", 'month')
+        .addSelect('COUNT(user.id)', 'count')
+        .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+        .andWhere('user.membership_status = :activeStatus', { activeStatus: MembershipStatus.ACTIVE })
+        .groupBy("DATE_TRUNC('month', user.date_start)")
+        .orderBy("DATE_TRUNC('month', user.date_start)", 'ASC')
+        .getRawMany();
 
-      return {
-        premium: {
-          percentage: Math.round(percentageWithMembership),
-          value: userWithMembership
-        },
-        normal: {
-          percentage: Math.round(percentageWithoutMembership),
-          value: userWithoutMembership
-        }
+      const usersWithoutMembershipPerMonth = await this.userDBrepository
+        .createQueryBuilder('user')
+        .select("DATE_TRUNC('month', user.date_start)", 'month')
+        .addSelect('COUNT(user.id)', 'count')
+        .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+        .andWhere('user.membership_status != :activeStatus', { activeStatus: MembershipStatus.ACTIVE })
+        .groupBy("DATE_TRUNC('month', user.date_start)")
+        .orderBy("DATE_TRUNC('month', user.date_start)", 'ASC')
+        .getRawMany();
+
+      const allMonths = [];
+      for (let i = 0; i < months; i++) {
+        const month = addMonths(startDate, i);
+        allMonths.push({
+          month: format(month, 'MMM'), 
+          withMembership: 0,
+          withoutMembership: 0,
+        });
       }
+
+      const withMembershipMap = new Map(usersWithMembershipPerMonth.map(record => [format(new Date(record.month), 'MMM'), parseInt(record.count, 10)]));
+      const withoutMembershipMap = new Map(usersWithoutMembershipPerMonth.map(record => [format(new Date(record.month), 'MMM'), parseInt(record.count, 10)]));
+
+      const combinedResults = allMonths.map(monthObj => {
+        const withMembership = withMembershipMap.get(monthObj.month) || 0;
+        const withoutMembership = withoutMembershipMap.get(monthObj.month) || 0;
+        const totalUsersInMonth = withMembership + withoutMembership;
+        const percentageWithMembership = totalUsersInMonth ? (withMembership / totalUsersInMonth) * 100 : 0;
+        const percentageWithoutMembership = totalUsersInMonth ? (withoutMembership / totalUsersInMonth) * 100 : 0;
+
+        return {
+          month: monthObj.month,
+          withMembership: {
+            value: withMembership,
+            percentage: Math.round(percentageWithMembership),
+          },
+          withoutMembership: {
+            value: withoutMembership,
+            percentage: Math.round(percentageWithoutMembership),
+          },
+        };
+      });
+
+      return combinedResults;
     } catch (err) {
       console.log(`Error getting users by Membership`, err)
       throw new InternalServerErrorException(`Error getting user by Membership`)
     }
   }
 
-  async checkUsersBookings() {
+  async checkUsersBookings(dateRange: RegisterDateDto) {
+    const { months } = dateRange;
+    const endDate = new Date();
+    const startDate = subMonths(endDate, months - 1);
+
+    console.log(months)
+
     try {
-      const users = await this.userDBrepository.count()
-      const usersWithBookings = await this.userDBrepository
-        .createQueryBuilder('user')
-        .leftJoinAndSelect('user.booking', 'booking')
-        .where('booking.id IS NOT NULL')
-        .getCount();
+        const totalUsers = await this.userDBrepository.count();
 
-      const usersWithoutBookings = users - usersWithBookings
-      const percentageWithBookings = (usersWithBookings / users) * 100
-      const percertageWithoutBookings = 100 - percentageWithBookings
+        const usersWithBookingsPerMonth = await this.userDBrepository
+            .createQueryBuilder('user')
+            .leftJoinAndSelect('user.booking', 'booking')
+            .select("DATE_TRUNC('month', user.date_start)", 'month')
+            .addSelect('COUNT(user.id)', 'count')
+            .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+            .andWhere('booking.id IS NOT NULL')
+            .groupBy("DATE_TRUNC('month', user.date_start)")
+            .orderBy("DATE_TRUNC('month', user.date_start)", 'ASC')
+            .getRawMany();
 
-      return {
-        withBookings: {
-          value: usersWithBookings,
-          percentage: percentageWithBookings
-        }, 
-        withoutBookings: {
-          value: usersWithoutBookings,
-          percentage: percertageWithoutBookings
+        const usersWithoutBookingsPerMonth = await this.userDBrepository
+            .createQueryBuilder('user')
+            .leftJoinAndSelect('user.booking', 'booking')
+            .select("DATE_TRUNC('month', user.date_start)", 'month')
+            .addSelect('COUNT(user.id)', 'count')
+            .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+            .andWhere('booking.id IS NULL')
+            .groupBy("DATE_TRUNC('month', user.date_start)")
+            .orderBy("DATE_TRUNC('month', user.date_start)", 'ASC')
+            .getRawMany();
+
+        const allMonths = [];
+        for (let i = 0; i < months; i++) {
+            const month = addMonths(startDate, i);
+            allMonths.push({
+                month: format(month, 'MMM'),
+                withBookings: 0,
+                withoutBookings: 0,
+            });
         }
-      };
+
+        const withBookingsMap = new Map(usersWithBookingsPerMonth.map(record => [format(new Date(record.month), 'MMM'), parseInt(record.count, 10)]));
+        const withoutBookingsMap = new Map(usersWithoutBookingsPerMonth.map(record => [format(new Date(record.month), 'MMM'), parseInt(record.count, 10)]));
+
+        const combinedResults = allMonths.map(monthObj => {
+            const withBookings = withBookingsMap.get(monthObj.month) || 0;
+            const withoutBookings = withoutBookingsMap.get(monthObj.month) || 0;
+            const totalUsersInMonth = withBookings + withoutBookings;
+            const percentageWithBookings = totalUsersInMonth ? (withBookings / totalUsersInMonth) * 100 : 0;
+            const percentageWithoutBookings = totalUsersInMonth ? (withoutBookings / totalUsersInMonth) * 100 : 0;
+
+            return {
+                month: monthObj.month,
+                withBookings: {
+                    value: withBookings,
+                    percentage: percentageWithBookings,
+                },
+                withoutBookings: {
+                    value: withoutBookings,
+                    percentage: percentageWithoutBookings,
+                },
+            };
+        });
+
+        return combinedResults;
     } catch (err) {
       console.log(`Error getting users by Bookings`, err)
       throw new InternalServerErrorException(`Error getting users by Bookings`)

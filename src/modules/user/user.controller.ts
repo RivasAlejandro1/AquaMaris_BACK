@@ -95,7 +95,7 @@ export class UserController {
     return this.userService.updatePassword(id, newPassword)
   }
 
-  @Post('registeredPerMonths')
+  @Get('registered/months')
   async getUsersRegisteredPerMonths(@Body() monthsData: RegisterDateDto){
     return this.userService.userRegisteredPerMonth(monthsData)
   }
@@ -137,12 +137,13 @@ export class UserController {
   }
 
   @Get('membership/percentage')
-  getUsersByMemberShip(){
-    return this.userService.checkMembership()
+  getUsersByMemberShip(@Body() dateRange: RegisterDateDto){
+    return this.userService.checkMembership(dateRange)
   }
 
   @Get('booking/percentage')
-  getUsersByBookings(){
-    return this.userService.checkUsersBookings()
+  getUsersByBookings(@Body() dateRange: RegisterDateDto){
+    console.log(dateRange)
+    return this.userService.checkUsersBookings(dateRange)
   }
 }
