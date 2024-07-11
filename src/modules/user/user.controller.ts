@@ -5,7 +5,6 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Post,
   Put,
   Query,
   UseGuards,
@@ -15,7 +14,6 @@ import { UsersService } from './user.service';
 import { RolesAdmin } from '../../help/roles.decoretion';
 import { Guard_admin } from '../../guardiane/admin_guard';
 import { Role } from '../../enum/Role.enum';
-import { RegisterDateDto } from 'src/dtos/RegisterRange.dto';
 
 @Controller('user')
 export class UserController {
@@ -95,10 +93,6 @@ export class UserController {
     return this.userService.updatePassword(id, newPassword)
   }
 
-  @Get('registered/months')
-  async getUsersRegisteredPerMonths(@Body() monthsData: RegisterDateDto){
-    return this.userService.userRegisteredPerMonth(monthsData)
-  }
 
   @Put('photoUrl/:id')
   @RolesAdmin(Role.USER)
@@ -136,14 +130,24 @@ export class UserController {
     return this.userService.getUsersByStatus(status)
   }
 
-  @Get('membership/percentage')
-  getUsersByMemberShip(@Body() dateRange: RegisterDateDto){
-    return this.userService.checkMembership(dateRange)
+  
+  @Get('registered/months')
+  async getUsersRegisteredPerMonths(@Query('months') months: number){
+    return this.userService.userRegisteredPerMonth(months)
   }
 
   @Get('booking/percentage')
-  getUsersByBookings(@Body() dateRange: RegisterDateDto){
-    console.log(dateRange)
-    return this.userService.checkUsersBookings(dateRange)
+  getUsersByBookings(@Query('months') months: number){
+    return this.userService.checkUsersBookings(months)
+  }
+
+  @Get('membership/percentage')
+  getUsersByMemberShip(@Query('months') months: number){
+    return this.userService.checkMembership(months)
+  }
+
+  @Get('search/byName')
+  getUsersByName(@Query('name') name:string){
+    return this.userService.getUsersByName(name)
   }
 }

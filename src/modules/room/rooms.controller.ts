@@ -27,6 +27,8 @@ export class RoomsController {
     return this.roomsService.getAllRooms(page, limit);
   }
 
+
+
   @Post()
   async createRoom(@Body() infoRoom: CreateRoomDto) {
     return await this.roomsService.createRoom(infoRoom);
