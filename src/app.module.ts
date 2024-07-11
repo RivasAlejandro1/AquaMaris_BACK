@@ -54,7 +54,7 @@ import { RegisterCode } from './entity/RegisterCodes';
       Payment,
       Companion,
       Comment,
-      RegisterCode
+      RegisterCode,
     ]),
     ConfigModule.forRoot({
       isGlobal: true,

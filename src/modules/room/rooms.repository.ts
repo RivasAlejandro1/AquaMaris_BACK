@@ -321,4 +321,15 @@ export class RoomsRepository {
       },
     });
   }
+
+  async getByNum(num: number) {
+    return await this.roomsRepository.findOne({
+      where: { roomNumber: num },
+      relations: {
+        bookings: true,
+        services: true,
+        images: true,
+      },
+    });
+  }
 }
