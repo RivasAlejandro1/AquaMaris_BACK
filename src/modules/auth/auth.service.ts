@@ -1,6 +1,7 @@
 import { MailService } from './../mail/mail.service';
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -86,6 +87,10 @@ export class AuthService {
 
     if (!isPasswordValid)
       throw new BadRequestException('Email or password is invalid');
+
+    if (!user.status) {
+      throw new ForbiddenException('User account is not active');
+    }
 
     const userPayload = {
       sub: user.id,

@@ -42,6 +42,7 @@ import { Comment } from './entity/Comment.entity';
 import { RegisterCode } from './entity/RegisterCodes';
 import { Promotion } from './entity/Promotion.entity';
 import { PromotionModule } from './modules/promotion/promotion.module';
+import { PromotionService } from './modules/promotion/promotion.service';
 
 
 @Module({
@@ -106,7 +107,8 @@ import { PromotionModule } from './modules/promotion/promotion.module';
     RoomsRepository,
     UserModule,
     RoomsModule,
-    CommentsController
+    CommentsController,
+    PromotionService,
   ],
   controllers: [MailController],
 })

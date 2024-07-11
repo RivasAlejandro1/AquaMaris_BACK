@@ -43,7 +43,7 @@ export class User {
   @OneToMany(() => Booking, (booking) => booking.user)
   booking: Booking[];
 
-  @Column({ default: true })
+  @Column({ default: false })
   status: boolean;
 
   @Column({ default: new Date() })
