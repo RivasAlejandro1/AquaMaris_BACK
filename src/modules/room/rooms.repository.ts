@@ -333,4 +333,9 @@ export class RoomsRepository {
       },
     });
   }
+
+  async changeRoom(infoRoom){
+    const {id, ...allChanges} = infoRoom
+    return await this.roomsRepository.update({id}, allChanges)
+  }
 }

@@ -5,6 +5,7 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Put,
   Query,
   UseInterceptors,
 } from '@nestjs/common';
@@ -32,6 +33,11 @@ export class RoomsController {
   @Post()
   async createRoom(@Body() infoRoom: CreateRoomDto) {
     return await this.roomsService.createRoom(infoRoom);
+  }
+
+  @Put()
+  async changeRoom(@Body() infoRoom: CreateRoomDto) {
+    return await this.roomsService.changeRoom(infoRoom);
   }
 
   @Get()
