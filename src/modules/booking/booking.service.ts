@@ -1,7 +1,10 @@
 import {
   BadRequestException,
+  HttpException,
+  HttpStatus,
   Injectable,
   InternalServerErrorException,
+  MethodNotAllowedException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,13 +16,15 @@ import { PaymentStatus } from '../../enum/PaymentStatus.enum';
 import * as bookingData from '../../utils/booking.data.json';
 import { Companion } from 'src/entity/Companion.entity';
 import { PaymentService } from '../payment/payment.service';
-import { Payment } from 'mercadopago';
+import { Payment } from 'src/entity/Payment.entity';
 import {
   areIntervalsOverlapping,
   format,
   formatISO,
   interval,
+  isBefore,
   parseISO,
+  subDays,
 } from 'date-fns';
 import { Exception } from 'handlebars';
 import { MailService } from '../mail/mail.service';
@@ -41,6 +46,7 @@ export class BookingService {
     private roomRepository: Repository<Room>,
     @InjectRepository(Companion)
     private companionRepository: Repository<Companion>,
+    @InjectRepository(Payment) private paymentRepository: Repository<Payment>,
     private promotionService: PromotionService,
     private mailService: MailService,
   ) {}
@@ -449,5 +455,35 @@ export class BookingService {
     });
 
     return allInfoObject;
+  }
+
+  async cancelBooking(userId, bookingId) {
+    const booking = await this.bookingRepository.findOne({
+      where: { id: bookingId },
+      relations: {
+        user: true,
+      },
+    });
+
+    if (!booking) throw new NotFoundException('Reserva no encontrada');
+    const threeDaysBefore = subDays(booking.check_in_date, 3);
+    const today = new Date().toISOString();
+    const canCancel = isBefore(today, threeDaysBefore);
+    if (booking.user.id !== userId) {
+      throw new MethodNotAllowedException(
+        'Tu no puedes modificar esta reserva',
+      );
+    }
+
+    if (!canCancel)
+      throw new BadRequestException(
+        'Las reservas solo pueden ser canceladas tres dias antes del check in',
+      );
+
+    await this.bookingRepository.update(booking.id, {
+      paymentStatus: PaymentStatus.CANCELLED,
+    });
+
+    return { status: 'Reservación cancelada' };
   }
 }
