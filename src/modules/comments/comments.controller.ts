@@ -22,6 +22,16 @@ export class CommentsController {
         return this.commentsService.getAllowedComments()
     }
 
+    @Get('inrevision')
+    getInRevisionComments(){
+        return this.commentsService.getInRevisionComments()
+    }
+
+    @Get('denied')
+    getDeniedComments(){
+        return this.commentsService.getDeniedComments()
+    }
+
     @Get('admin')
     getAllComments(){
         return this.commentsService.getAllComments()
