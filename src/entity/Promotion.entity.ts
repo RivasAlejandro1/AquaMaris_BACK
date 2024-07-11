@@ -9,7 +9,7 @@ export class Promotion {
   @Column({ type: 'varchar', nullable: false })
   code: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'varchar' })
   description: string;
 
   @Column({ type: 'int', nullable: false })

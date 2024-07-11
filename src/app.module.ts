@@ -40,6 +40,8 @@ import { CommentsModule } from './modules/comments/comments.module';
 import { CommentsService } from './modules/comments/comments.service';
 import { Comment } from './entity/Comment.entity';
 import { RegisterCode } from './entity/RegisterCodes';
+import { Promotion } from './entity/Promotion.entity';
+import { PromotionModule } from './modules/promotion/promotion.module';
 
 
 @Module({
@@ -55,6 +57,7 @@ import { RegisterCode } from './entity/RegisterCodes';
       Companion,
       Comment,
       RegisterCode,
+      Promotion,
     ]),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -82,6 +85,7 @@ import { RegisterCode } from './entity/RegisterCodes';
     PaymentModule,
     MailModule,
     CommentsModule,
+    PromotionModule,
   ],
   providers: [
     MailService,
