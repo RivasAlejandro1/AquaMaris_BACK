@@ -14,11 +14,18 @@ import * as bookingData from '../../utils/booking.data.json';
 import { Companion } from 'src/entity/Companion.entity';
 import { PaymentService } from '../payment/payment.service';
 import { Payment } from 'mercadopago';
-import { areIntervalsOverlapping, format, formatISO, interval, parseISO } from 'date-fns';
+import {
+  areIntervalsOverlapping,
+  format,
+  formatISO,
+  interval,
+  parseISO,
+} from 'date-fns';
 import { Exception } from 'handlebars';
 import { MailService } from '../mail/mail.service';
 import { MailDto } from 'src/dtos/Mail.dto';
 import { MailType } from 'src/enum/MailType.dto';
+import { PromotionService } from '../promotion/promotion.service';
 import { all } from 'axios';
 import { TypesRooms } from 'src/enum/RoomTypes.enum';
 
@@ -34,6 +41,7 @@ export class BookingService {
     private roomRepository: Repository<Room>,
     @InjectRepository(Companion)
     private companionRepository: Repository<Companion>,
+    private promotionService: PromotionService,
     private mailService: MailService,
   ) {}
 
@@ -97,8 +105,15 @@ export class BookingService {
   }
 
   async makeBooking(infoBooking: any) {
-    const { check_in_date, check_out_date, userId, roomId, companions } =
-      infoBooking;
+    const {
+      check_in_date,
+      check_out_date,
+      userId,
+      roomId,
+      companions,
+      promotionCode,
+    } = infoBooking;
+    //console.log(promotionCode.lengh);
     const paymentStatus = PaymentStatus.PENDING;
 
     const newBooking: Booking = this.bookingRepository.create({
@@ -111,9 +126,9 @@ export class BookingService {
       name: 'null',
       subject: 'Confirmacion de reserva',
       type: MailType.RESERVATION,
-      email: ''
+      email: '',
     };
-    
+
     let price: number;
     let numberRoom;
     let allBookings;
@@ -132,7 +147,12 @@ export class BookingService {
 
       allBookings = roomFinded.bookings;
       newBooking.room = roomFinded;
-      price = Number(roomFinded.price);
+      price = !promotionCode
+        ? Number(roomFinded.price)
+        : await this.promotionService.useCode(
+            promotionCode,
+            Number(roomFinded.price),
+          );
       numberRoom = roomFinded.roomNumber;
       newEmail.roomNumber = roomFinded.roomNumber.toString();
     } catch (error) {
@@ -140,7 +160,7 @@ export class BookingService {
         throw new NotFoundException(`The found the room with id: ${roomId}`);
       console.log(error);
       console.log(error.name);
-      throw new InternalServerErrorException('Conection error DB');
+      throw new InternalServerErrorException(error);
     }
 
     try {
@@ -234,23 +254,23 @@ export class BookingService {
     });
   }
 
-  async findBookingsByMonths(rango:number = 1){
-    console.log(rango)
+  async findBookingsByMonths(rango: number = 1) {
+    console.log(rango);
 
-    const nowBogota = new Date()
+    const nowBogota = new Date();
     nowBogota.setHours(nowBogota.getHours() - 5);
-    const firstMonth = new Date(nowBogota.getTime())
-    firstMonth.setMonth(firstMonth.getMonth() - rango +1)
-    firstMonth.setDate(1)
+    const firstMonth = new Date(nowBogota.getTime());
+    firstMonth.setMonth(firstMonth.getMonth() - rango + 1);
+    firstMonth.setDate(1);
 
     const byLastMonth = await this.bookingRepository
-    .createQueryBuilder("booking")
-    .where('booking.check_in_date <= :nowBogota', { nowBogota })
-    .andWhere('booking.check_out_date >= :firstMonth', { firstMonth })
-    .getMany();
-    
-    console.log("byLastMonth:", byLastMonth)
-/*     const byLastMonth = await allBookings
+      .createQueryBuilder('booking')
+      .where('booking.check_in_date <= :nowBogota', { nowBogota })
+      .andWhere('booking.check_out_date >= :firstMonth', { firstMonth })
+      .getMany();
+
+    console.log('byLastMonth:', byLastMonth);
+    /*     const byLastMonth = await allBookings
       .map(booking => {
 
         const start = new Date(booking.check_in_date) 
@@ -273,69 +293,69 @@ export class BookingService {
       })
       .filter(booking => booking != null)
  */
-    
-    let currentMonth :number = nowBogota.getMonth() +1;
+
+    const currentMonth: number = nowBogota.getMonth() + 1;
     let startTime = currentMonth - rango + 1;
-    console.log("currentMonth:",currentMonth)
-    console.log("startTime:",startTime)
+    console.log('currentMonth:', currentMonth);
+    console.log('startTime:', startTime);
 
-    const allInfoObject = []
-    for(startTime; startTime <= currentMonth; startTime++){
-
+    const allInfoObject = [];
+    for (startTime; startTime <= currentMonth; startTime++) {
       const date = new Date(2000, startTime - 1, 1);
       const getMonthName = format(date, 'MMMM');
 
-      const MonthInfo = { mes: "", data: 0 }
+      const MonthInfo = { mes: '', data: 0 };
 
       MonthInfo.mes = getMonthName;
-      
-      console.log("MonthInfo:",MonthInfo)
+
+      console.log('MonthInfo:', MonthInfo);
 
       const startIntervalMonth = new Date(nowBogota.getTime());
-      startIntervalMonth.setMonth(startTime-1);
+      startIntervalMonth.setMonth(startTime - 1);
       startIntervalMonth.setDate(1);
 
       const endIntervalMonth = new Date(nowBogota.getTime());
-      endIntervalMonth.setMonth(startTime-1);
+      endIntervalMonth.setMonth(startTime - 1);
       endIntervalMonth.setDate(1);
 
-      console.log("startIntervalMonth: ", startIntervalMonth)  
-      console.log("nameMonth: ", getMonthName)  
+      console.log('startIntervalMonth: ', startIntervalMonth);
+      console.log('nameMonth: ', getMonthName);
 
-      const intervalMonth = interval(startIntervalMonth,endIntervalMonth);
-      byLastMonth.forEach( booking => {
-        const interval1 = interval (new Date (booking.check_in_date), new Date (booking.check_out_date))
-        
-        if(areIntervalsOverlapping(intervalMonth,interval1)) MonthInfo.data = MonthInfo.data +1;
-      })
+      const intervalMonth = interval(startIntervalMonth, endIntervalMonth);
+      byLastMonth.forEach((booking) => {
+        const interval1 = interval(
+          new Date(booking.check_in_date),
+          new Date(booking.check_out_date),
+        );
 
+        if (areIntervalsOverlapping(intervalMonth, interval1))
+          MonthInfo.data = MonthInfo.data + 1;
+      });
 
-
-      allInfoObject.push(MonthInfo)
+      allInfoObject.push(MonthInfo);
     }
     return allInfoObject;
   }
-  
-  async findBookingsByMonthsWithTypeRoom(rango:number = 1){
-    const nowBogota = new Date()
+
+  async findBookingsByMonthsWithTypeRoom(rango: number = 1) {
+    const nowBogota = new Date();
     nowBogota.setHours(nowBogota.getHours() - 5);
-    const firstMonth = new Date(nowBogota.getTime())
-    firstMonth.setMonth(firstMonth.getMonth() - rango +1)
-    firstMonth.setDate(1)
+    const firstMonth = new Date(nowBogota.getTime());
+    firstMonth.setMonth(firstMonth.getMonth() - rango + 1);
+    firstMonth.setDate(1);
 
     const globalInterval = interval(firstMonth, nowBogota);
 
     const byLastMonth = await this.bookingRepository
-    .createQueryBuilder("booking")
-    .where('booking.check_in_date <= :nowBogota', { nowBogota })
-    .andWhere('booking.check_out_date >= :firstMonth', { firstMonth })
-    .leftJoinAndSelect('booking.room', 'room')
-    .getMany();
-    
+      .createQueryBuilder('booking')
+      .where('booking.check_in_date <= :nowBogota', { nowBogota })
+      .andWhere('booking.check_out_date >= :firstMonth', { firstMonth })
+      .leftJoinAndSelect('booking.room', 'room')
+      .getMany();
 
-    console.log(byLastMonth)
+    console.log(byLastMonth);
 
-   /*  const byLastMonth = await allBookings
+    /*  const byLastMonth = await allBookings
       .map(booking => {
 
         const start = new Date(booking.check_in_date) 
@@ -357,41 +377,40 @@ export class BookingService {
       .filter(booking => booking != null)
      */
     const typeRooms = Object.values(TypesRooms);
-    console.log("typeRooms:",typeRooms)
+    console.log('typeRooms:', typeRooms);
 
-    const allInfoObject = []
-    typeRooms.forEach( type => {
-      const allInfoByType = { type, data: 0}
-      const BookingsForType = byLastMonth.filter( booking => booking.room.type == type)
+    const allInfoObject = [];
+    typeRooms.forEach((type) => {
+      const allInfoByType = { type, data: 0 };
+      const BookingsForType = byLastMonth.filter(
+        (booking) => booking.room.type == type,
+      );
       allInfoByType.data = BookingsForType.length;
 
-    
-      allInfoObject.push(allInfoByType)
-    })
-    
+      allInfoObject.push(allInfoByType);
+    });
 
     return allInfoObject;
-  } 
-  async findBookingsByMonthsWithTypeRoomPorcent(rango:number = 1){
-    const nowBogota = new Date()
+  }
+  async findBookingsByMonthsWithTypeRoomPorcent(rango: number = 1) {
+    const nowBogota = new Date();
     nowBogota.setHours(nowBogota.getHours() - 5);
-    const firstMonth = new Date(nowBogota.getTime())
-    firstMonth.setMonth(firstMonth.getMonth() - rango +1)
-    firstMonth.setDate(1)
+    const firstMonth = new Date(nowBogota.getTime());
+    firstMonth.setMonth(firstMonth.getMonth() - rango + 1);
+    firstMonth.setDate(1);
 
     const globalInterval = interval(firstMonth, nowBogota);
 
     const byLastMonth = await this.bookingRepository
-    .createQueryBuilder("booking")
-    .where('booking.check_in_date <= :nowBogota', { nowBogota })
-    .andWhere('booking.check_out_date >= :firstMonth', { firstMonth })
-    .leftJoinAndSelect('booking.room', 'room')
-    .getMany();
-    
+      .createQueryBuilder('booking')
+      .where('booking.check_in_date <= :nowBogota', { nowBogota })
+      .andWhere('booking.check_out_date >= :firstMonth', { firstMonth })
+      .leftJoinAndSelect('booking.room', 'room')
+      .getMany();
 
-    console.log(byLastMonth)
+    console.log(byLastMonth);
 
-   /*  const byLastMonth = await allBookings
+    /*  const byLastMonth = await allBookings
       .map(booking => {
 
         const start = new Date(booking.check_in_date) 
@@ -413,21 +432,22 @@ export class BookingService {
       .filter(booking => booking != null)
      */
     const typeRooms = Object.values(TypesRooms);
-    console.log("typeRooms:",typeRooms)
+    console.log('typeRooms:', typeRooms);
 
-    const allInfoObject = []
-    typeRooms.forEach( type => {
-      const allInfoByType = { type, data: 0}
-      const BookingsForType = byLastMonth.filter( booking => booking.room.type == type)
-      allInfoByType.data = Math.round((BookingsForType.length*100)/byLastMonth.length *100)/100;
+    const allInfoObject = [];
+    typeRooms.forEach((type) => {
+      const allInfoByType = { type, data: 0 };
+      const BookingsForType = byLastMonth.filter(
+        (booking) => booking.room.type == type,
+      );
+      allInfoByType.data =
+        Math.round(
+          ((BookingsForType.length * 100) / byLastMonth.length) * 100,
+        ) / 100;
 
-    
-      allInfoObject.push(allInfoByType)
-    })
-    
+      allInfoObject.push(allInfoByType);
+    });
 
     return allInfoObject;
-  } 
-
-
+  }
 }

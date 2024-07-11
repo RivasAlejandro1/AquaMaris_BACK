@@ -48,7 +48,7 @@ export class PaymentService {
           back_urls: {
             success: 'https://front-pfg-6.vercel.app/',
           },
-          notification_url: `https://3930-2806-103e-16-8bba-bc17-440-6683-7e1c.ngrok-free.app/payment/webhook`,
+          notification_url: `https://597f-187-232-121-22.ngrok-free.app/payment/webhook`,
           external_reference: orderId,
         },
       });

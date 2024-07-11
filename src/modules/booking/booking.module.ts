@@ -12,13 +12,23 @@ import { PaymentModule } from '../payment/payment.module';
 import { MailService } from '../mail/mail.service';
 import { MailController } from '../mail/mail.controller';
 import { RegisterCode } from 'src/entity/RegisterCodes';
+import { Promotion } from 'src/entity/Promotion.entity';
+import { PromotionService } from '../promotion/promotion.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Booking, User, Room, Companion, RegisterCode]),
+    TypeOrmModule.forFeature([
+      Booking,
+      User,
+      Room,
+      Companion,
+      RegisterCode,
+      Promotion,
+      Payment,
+    ]),
     PaymentModule,
   ],
   controllers: [BookingController, MailController],
-  providers: [BookingService, MailService],
+  providers: [BookingService, MailService, PromotionService, PaymentService],
 })
 export class BookingModule {}
