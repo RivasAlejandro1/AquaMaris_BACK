@@ -109,7 +109,7 @@ export class BookingService {
       name: 'null',
       subject: 'Confirmacion de reserva',
       type: MailType.RESERVATION,
-      userId: ''
+      email: ''
     };
     
     let price: number;

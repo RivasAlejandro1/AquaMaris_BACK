@@ -60,7 +60,7 @@ export class AuthService {
       subject: 'Bienvenido a AquaMaris Hotel\'s',
       name: createUserData.name,
       type: MailType.REGISTER,
-      userId: newUser.id
+      email: email
     }
 
     try {
