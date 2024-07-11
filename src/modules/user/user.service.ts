@@ -406,4 +406,18 @@ export class UsersService {
       throw new InternalServerErrorException('Error getting users by Bookings');
     }
   }
+
+  async getUsersByName(names: string) {
+    try {
+      const usersWithName = await this.userDBrepository
+        .createQueryBuilder('user')
+        .where('user.name LIKE :name', { name: `%${names}%` })
+        .getMany()
+
+      return usersWithName
+    } catch (err) {
+      console.log('Error finding users by name', err);
+      throw new InternalServerErrorException('Error finding users by name');
+    }
+  }
 }

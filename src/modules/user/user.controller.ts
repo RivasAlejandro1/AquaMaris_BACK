@@ -145,4 +145,9 @@ export class UserController {
   getUsersByMemberShip(@Query('months') months: number){
     return this.userService.checkMembership(months)
   }
+
+  @Get('search/byName')
+  getUsersByName(@Query('name') name:string){
+    return this.userService.getUsersByName(name)
+  }
 }
