@@ -6,7 +6,6 @@ import { Between, In, IsNull, Not, Repository } from 'typeorm';
 import * as users from '../../utils/users.data.json';
 import * as bcrypt from 'bcrypt'
 import { Role } from 'src/enum/Role.enum';
-import { RegisterDateDto } from 'src/dtos/RegisterRange.dto';
 import { addMonths, endOfMonth, format, startOfMonth, subMonths } from 'date-fns';
 
 @Injectable()
@@ -193,8 +192,7 @@ export class UsersService {
     }
   }
 
-  async userRegisteredPerMonth(dateRange: RegisterDateDto) {
-    const { months } = dateRange;
+  async userRegisteredPerMonth(months: number) {
     const endDate = new Date();
     const startDate = subMonths(endDate, months - 1);
     try {
@@ -313,103 +311,99 @@ export class UsersService {
     }
   }
 
-  async checkMembership(dateRange: RegisterDateDto) {
-    const { months } = dateRange;
+  async checkMembership(months: number) {
     const endDate = new Date();
     const startDate = subMonths(endDate, months - 1);
 
     try {
-        const totalUsers = await this.userDBrepository
-            .createQueryBuilder('user')
-            .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
-            .getCount();
+      const totalUsers = await this.userDBrepository
+        .createQueryBuilder('user')
+        .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+        .getCount();
 
-        const usersWithMembership = await this.userDBrepository
-            .createQueryBuilder('user')
-            .select('COUNT(user.id)', 'count')
-            .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
-            .andWhere('user.membership_status = :activeStatus', { activeStatus: MembershipStatus.ACTIVE })
-            .getRawOne();
+      const usersWithMembership = await this.userDBrepository
+        .createQueryBuilder('user')
+        .select('COUNT(user.id)', 'count')
+        .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+        .andWhere('user.membership_status = :activeStatus', { activeStatus: MembershipStatus.ACTIVE })
+        .getRawOne();
 
-        const usersWithoutMembership = await this.userDBrepository
-            .createQueryBuilder('user')
-            .select('COUNT(user.id)', 'count')
-            .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
-            .andWhere('user.membership_status != :activeStatus', { activeStatus: MembershipStatus.ACTIVE })
-            .getRawOne();
+      const usersWithoutMembership = await this.userDBrepository
+        .createQueryBuilder('user')
+        .select('COUNT(user.id)', 'count')
+        .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+        .andWhere('user.membership_status != :activeStatus', { activeStatus: MembershipStatus.ACTIVE })
+        .getRawOne();
 
-        const totalUsersWithMembership = usersWithMembership ? parseInt(usersWithMembership.count, 10) : 0;
-        const totalUsersWithoutMembership = usersWithoutMembership ? parseInt(usersWithoutMembership.count, 10) : 0;
+      const totalUsersWithMembership = usersWithMembership ? parseInt(usersWithMembership.count, 10) : 0;
+      const totalUsersWithoutMembership = usersWithoutMembership ? parseInt(usersWithoutMembership.count, 10) : 0;
 
-        const percentageWithMembership = totalUsers ? (totalUsersWithMembership / totalUsers) * 100 : 0;
-        const percentageWithoutMembership = totalUsers ? (totalUsersWithoutMembership / totalUsers) * 100 : 0;
+      const percentageWithMembership = totalUsers ? (totalUsersWithMembership / totalUsers) * 100 : 0;
+      const percentageWithoutMembership = totalUsers ? (totalUsersWithoutMembership / totalUsers) * 100 : 0;
 
-        return {
-            totalUsers,
-            withMembership: {
-                value: totalUsersWithMembership,
-                percentage: Math.round(percentageWithMembership * 100) / 100,
-            },
-            withoutMembership: {
-                value: totalUsersWithoutMembership,
-                percentage: Math.round(percentageWithoutMembership * 100) / 100,
-            },
-        };
+      return {
+        totalUsers,
+        withMembership: {
+          value: totalUsersWithMembership,
+          percentage: Math.round(percentageWithMembership * 100) / 100,
+        },
+        withoutMembership: {
+          value: totalUsersWithoutMembership,
+          percentage: Math.round(percentageWithoutMembership * 100) / 100,
+        },
+      };
     } catch (err) {
-        console.log(`Error getting users by Membership`, err)
-        throw new InternalServerErrorException(`Error getting users by Membership`);
+      console.log(`Error getting users by Membership`, err)
+      throw new InternalServerErrorException(`Error getting users by Membership`);
     }
-}
+  }
 
-  async checkUsersBookings(dateRange: RegisterDateDto) {
-    const { months } = dateRange;
+  async checkUsersBookings(months: number) {
     const endDate = new Date();
     const startDate = subMonths(endDate, months - 1);
 
-    console.log(months)
-
     try {
-        const totalUsersInRange = await this.userDBrepository
-            .createQueryBuilder('user')
-            .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
-            .getCount();
+      const totalUsersInRange = await this.userDBrepository
+        .createQueryBuilder('user')
+        .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+        .getCount();
 
-        const usersWithBookings = await this.userDBrepository
-            .createQueryBuilder('user')
-            .leftJoin('user.booking', 'booking')
-            .select('COUNT(user.id)', 'count')
-            .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
-            .andWhere('booking.id IS NOT NULL')
-            .getRawOne();
+      const usersWithBookingsResult = await this.userDBrepository
+        .createQueryBuilder('user')
+        .leftJoin('user.booking', 'booking')
+        .select('COUNT(DISTINCT user.id)', 'count')
+        .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+        .andWhere('booking.id IS NOT NULL')
+        .getRawOne();
 
-        const usersWithoutBookings = await this.userDBrepository
-            .createQueryBuilder('user')
-            .leftJoin('user.booking', 'booking')
-            .select('COUNT(user.id)', 'count')
-            .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
-            .andWhere('booking.id IS NULL')
-            .getRawOne();
+      const usersWithoutBookingsResult = await this.userDBrepository
+        .createQueryBuilder('user')
+        .leftJoin('user.booking', 'booking')
+        .select('COUNT(DISTINCT user.id)', 'count')
+        .where('user.date_start BETWEEN :startDate AND :endDate', { startDate: startOfMonth(startDate), endDate: endOfMonth(endDate) })
+        .andWhere('booking.id IS NULL')
+        .getRawOne();
 
-        const totalUsersWithBookings = usersWithBookings ? parseInt(usersWithBookings.count, 10) : 0;
-        const totalUsersWithoutBookings = usersWithoutBookings ? parseInt(usersWithoutBookings.count, 10) : 0;
+      const totalUsersWithBookings = usersWithBookingsResult ? parseInt(usersWithBookingsResult.count, 10) : 0;
+      const totalUsersWithoutBookings = usersWithoutBookingsResult ? parseInt(usersWithoutBookingsResult.count, 10) : 0;
 
-        const percentageWithBookings = totalUsersInRange ? (totalUsersWithBookings / totalUsersInRange) * 100 : 0;
-        const percentageWithoutBookings = totalUsersInRange ? (totalUsersWithoutBookings / totalUsersInRange) * 100 : 0;
+      const percentageWithBookings = totalUsersInRange ? (totalUsersWithBookings / totalUsersInRange) * 100 : 0;
+      const percentageWithoutBookings = totalUsersInRange ? (totalUsersWithoutBookings / totalUsersInRange) * 100 : 0;
 
-        return {
-            totalUsers: totalUsersInRange,
-            withBookings: {
-                value: totalUsersWithBookings,
-                percentage: Math.round(percentageWithBookings * 100) / 100,
-            },
-            withoutBookings: {
-                value: totalUsersWithoutBookings,
-                percentage: Math.round(percentageWithoutBookings * 100) / 100,
-            },
-        };
+      return {
+        totalUsers: totalUsersInRange,
+        withBookings: {
+          value: totalUsersWithBookings,
+          percentage: Math.round(percentageWithBookings * 100) / 100,
+        },
+        withoutBookings: {
+          value: totalUsersWithoutBookings,
+          percentage: Math.round(percentageWithoutBookings * 100) / 100,
+        },
+      };
     } catch (err) {
-        console.log(`Error getting users by Bookings`, err)
-        throw new InternalServerErrorException(`Error getting users by Bookings`)
+      console.log('Error getting users by Bookings', err);
+      throw new InternalServerErrorException('Error getting users by Bookings');
     }
-}
+  }
 }
