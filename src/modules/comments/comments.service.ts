@@ -7,6 +7,7 @@ import { CommentStatus } from "src/enum/CommentsStatus.enum";
 import { Repository } from "typeorm";
 import { Comment } from "src/entity/Comment.entity";
 import * as comments from '../../utils/comments.data.json'
+import { ChangeCommentStatusDto } from "src/dtos/ChangeCommentStatus.dto";
 
 @Injectable()
 export class CommentsService {
@@ -66,6 +67,24 @@ export class CommentsService {
         }
     }
 
+
+    async changeCommentStatus(commentData: ChangeCommentStatusDto){
+        const { commentId, newStatus } = commentData
+        try {
+            const comment = await this.commentRepository.findOne({where: {id: commentId}})
+            comment.comment_status = newStatus
+
+            await this.commentRepository.save(comment)
+
+            return {
+                message: `Comment ${commentId} has changed the status to ${newStatus} `
+            }
+        }catch(err){
+            console.log(`Error changing comment with id ${commentId}: `, err)
+            throw new InternalServerErrorException(`Error changing comment with id ${commentId}`)
+        }
+    }
+
     async getAllComments() {
         try {
             return await this.commentRepository.find()
@@ -113,17 +132,12 @@ export class CommentsService {
                 throw new NotFoundException(`Room with id ${roomId} was not found`);
             }
 
-            const regex = /\b(?:fuck|shit|bitch|asshole|damn|cunt|faggot|pussy|dick|bastard|crap|slut|whore|mierda|puta|pendejo|coño|gilipollas|cabrón|joder|maricón|chingar|hijo\s?de\s?puta)\b/i;
-
-            function containsOffensiveWords(comment): boolean {
-                return regex.test(comment)
-            }
 
             const newComment = await this.commentRepository.create({
                 comment,
                 rating,
                 comment_date: new Date(),
-                comment_status: containsOffensiveWords(comment) ? CommentStatus.DENIED : CommentStatus.APPROVED,
+                comment_status: CommentStatus.IN_REVISION,
                 user: existingUser,
                 room: existingRoom,
             });
@@ -134,6 +148,16 @@ export class CommentsService {
         } catch (err) {
             console.log(`Could create and commeto to user with id ${userId} and reservation room ${roomId}`, err)
             throw new InternalServerErrorException(`Could create and commeto to user with id ${userId} and reservation room ${roomId}`)
+        }
+    }
+
+    async getCommentsByRoomId(roomId: string){
+        try{
+            const room = await this.roomRepository.findOne({where: {id: roomId}})
+            return {"comments" :room.comment}
+        }catch(err){
+            console.log(`Error getting comments by room id ${roomId}`, err)
+            throw new InternalServerErrorException(`Error getting comments by room id ${roomId}`)
         }
     }
 }

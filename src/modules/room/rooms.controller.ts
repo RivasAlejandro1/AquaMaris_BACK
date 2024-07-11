@@ -24,8 +24,6 @@ export class RoomsController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 3,
   ) {
-    console.log("hola");
-
     return this.roomsService.getAllRooms(page, limit);
   }
 
@@ -45,6 +43,11 @@ export class RoomsController {
   @UseInterceptors(filtersInterceptor)
   filterRooms(@Query() query) {
     return this.roomsService.filterRoom(query);
+  }
+
+  @Get('roomByNum/:num')
+  async getByNum(@Param('num') num) {
+    return await this.roomsService.getByNum(Number(num));
   }
 
   @Get(':id')

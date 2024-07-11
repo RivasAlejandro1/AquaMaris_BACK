@@ -52,9 +52,12 @@ export class User {
   @Column({ default: '' })
   date_end: string;
 
-  @OneToMany(()=> Comment, (comment) => comment.user)
-  comments: Comment[]
+  @Column({ type: 'varchar', default: '' })
+  suscription_id: string;
 
-  @OneToMany(()=> RegisterCode, (code) => code.user)
-  registerCode: RegisterCode
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
+
+  @OneToMany(() => RegisterCode, (code) => code.user)
+  registerCode: RegisterCode;
 }

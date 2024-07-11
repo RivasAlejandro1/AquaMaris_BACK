@@ -28,8 +28,8 @@ export class MailDto {
   @IsString()
   @IsOptional()
   roomNumber?: string;
-  
-  @IsUUID()
+
+  @IsEmail()
   @IsOptional()
-  userId: string
+  email: string  
 }

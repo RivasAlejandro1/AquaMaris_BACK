@@ -1,7 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { User } from '../../entity/User.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
 
 dotenv.config();
 
@@ -10,7 +13,9 @@ export class PayPalService {
   private readonly clientId = process.env.PAYPAL_CLIENT;
   private readonly clientSecret = process.env.PAYPAL_SECRET;
   private readonly apiUrl = process.env.PAYPAL_API;
-
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+  ) {}
   private async getAccessToken(): Promise<string> {
     const auth = Buffer.from(`${this.clientId}:${this.clientSecret}`).toString(
       'base64',
@@ -29,7 +34,11 @@ export class PayPalService {
     return response.data.access_token;
   }
 
-  public async createProduct() {
+  public async createProduct(userId) {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    if (!user) throw new NotFoundException('Usuario no encontrado');
     const accessToken = await this.getAccessToken();
     const product = {
       name: 'AquaMaris Premium',
@@ -52,11 +61,11 @@ export class PayPalService {
     );
     console.log(response.data);
     console.log(response.data.id);
-    const plan = await this.createPlan(response.data.id, accessToken);
+    const plan = await this.createPlan(response.data.id, accessToken, user);
     return plan;
   }
 
-  public async createPlan(productId, accessToken) {
+  public async createPlan(productId, accessToken, user) {
     const plan = {
       product_id: productId,
       name: 'AquaMaris Premium',
@@ -73,7 +82,7 @@ export class PayPalService {
           total_cycles: 12,
           pricing_scheme: {
             fixed_price: {
-              value: '100',
+              value: '100.00',
               currency_code: 'USD',
             },
           },
@@ -81,9 +90,18 @@ export class PayPalService {
       ],
       payment_preferences: {
         auto_bill_outstanding: true,
-        setup_fee_failure_action: 'CANCEL',
+        setup_fee: {
+          value: '0',
+          currency_code: 'USD',
+        },
+        setup_fee_failure_action: 'CONTINUE',
         payment_failure_threshold: 3,
       },
+      taxes: {
+        percentage: '10',
+        inclusive: false,
+      },
+      custom_id: user.id,
     };
     try {
       const response = await axios.post(
@@ -98,9 +116,11 @@ export class PayPalService {
           },
         },
       );
+      console.log(response.data);
       const subscription = await this.createSubscription(
         response.data.id,
         accessToken,
+        user,
       );
       return subscription;
     } catch (error) {
@@ -108,23 +128,23 @@ export class PayPalService {
     }
   }
 
-  public async createSubscription(planId: string, accessToken) {
-    const startTime = new Date();
-    startTime.setMinutes(startTime.getMinutes() + 10);
+  public async createSubscription(planId: string, accessToken, user) {
+    //const startTime = new Date(Date.now() + 60000).toISOString();
+    //startTime.setMinutes(startTime.getMinutes() + 5);
     const subscription = {
       plan_id: planId,
-      start_time: startTime.toISOString(), // Adjust start time as needed
+      start_time: new Date(Date.now() + 60000).toISOString(), // Adjust start time as needed
       quantity: '1',
       auto_renewal: true,
       shipping_amount: {
         currency_code: 'USD',
-        value: '100.00',
+        value: '0.00',
       },
       subscriber: {
         name: {
-          given_name: 'Joshua',
+          given_name: user.name,
         },
-        email_address: 'ejemplo@ejemplo.com',
+        email_address: user.email,
       },
       application_context: {
         brand_name: 'AquaMaris',
@@ -135,9 +155,10 @@ export class PayPalService {
           payer_selected: 'PAYPAL',
           payee_preferred: 'IMMEDIATE_PAYMENT_REQUIRED',
         },
-        return_url: 'https://aqua-maris-hotel.vercel.app/',
+        return_url: 'https://front-pfg-6.vercel.app/',
         cancel_url: 'https://example.com/cancelUrl',
       },
+      custom_id: user.id,
     };
 
     try {
@@ -158,6 +179,79 @@ export class PayPalService {
     } catch (error) {
       console.error(
         'Error creating subscription:',
+        error.response?.data || error.message,
+      );
+      throw error;
+    }
+  }
+
+  public async suscriptionWebHook(request) {
+    const userId = request.resource.custom_id;
+    const status = request.resource.status;
+    const suscription_id = request.resource.id;
+    console.log(suscription_id);
+    console.log(userId);
+    console.log(status);
+    try {
+      const user = await this.userRepository.findOne({
+        where: { id: userId },
+      });
+
+      if (!user) throw new NotFoundException('Usuario no encontrado');
+
+      await this.userRepository.update(user, {
+        suscription_id: suscription_id,
+        membership_status: status,
+      });
+      return 'OK';
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async cancelSubscriptionWebHook(request) {
+    try {
+      const user = await this.userRepository.findOne({
+        where: { id: request.resource.custom_id },
+      });
+      await this.userRepository.update(user, {
+        membership_status: MembershipStatus.CANCELLED,
+        suscription_id: '',
+      });
+      return 'OK';
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async cancelSubscription(userId) {
+    console.log(userId);
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    if (!user) throw new NotFoundException('Usuario no encontrado');
+    const accessToken = await this.getAccessToken();
+    const suscription = user.suscription_id;
+    const cancel = {
+      reason: 'Not satisfied with the service',
+    };
+    try {
+      const response = await axios.post(
+        `${this.apiUrl}/v1/billing/subscriptions/${suscription}/cancel`,
+        cancel,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Prefer: 'return=representation',
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        'Error cancelating subscription:',
         error.response?.data || error.message,
       );
       throw error;

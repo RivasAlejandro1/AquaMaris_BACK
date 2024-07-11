@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Post,
+  Query,
   Req,
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
@@ -21,17 +23,13 @@ export class PaymentController {
     return await this.paymentService.createOrder(newOrder);
   }
 
-  /* @Post('subscription')
-  async createPreApprobalPla(@Body() cardFormData) {
-    return await this.paymentService.createPreApprobalPlan(cardFormData);
-  } */
-
   @Post('subscription')
-  async paypal() {
-    return this.paypalService.createProduct();
+  async paypal(@Body() user) {
+    return this.paypalService.createProduct(user.id);
   }
   @Post('webhook')
   async webHook(@Req() request) {
+    console.log(request);
     const type = request.query.type;
     if (type) {
       const id = request.query['data.id'];
@@ -41,8 +39,40 @@ export class PaymentController {
 
   @Post('subswebhook')
   async subsWebHook(@Req() request) {
-    console.log('hola');
     console.log(request.body);
+    const eventType = request.body.event_type;
+    if (eventType === 'BILLING.SUBSCRIPTION.ACTIVATED') {
+      return await this.paypalService.suscriptionWebHook(request.body);
+    }
+    if (eventType === 'BILLING.SUBSCRIPTION.CANCELLED') {
+      return await this.paypalService.cancelSubscriptionWebHook(request.body);
+    }
     return new HttpException('OK', HttpStatus.ACCEPTED);
+  }
+
+  @Post('cancelSubscription')
+  async cancelSubscription(@Body() userId) {
+    console.log(userId.id);
+    return await this.paypalService.cancelSubscription(userId.id);
+  }
+
+  @Get('timeRevenue')
+  async timeBasedRevenue(@Query() query) {
+    const { rango } = query;
+    return await this.paymentService.timeBasedRevenue(rango);
+  }
+
+  @Get('typesRevenue')
+  async roomBasedRevenue(@Query('rango') rango) {
+    return await this.paymentService.roomBasedRevenue(rango);
+  }
+
+  @Get('timeAndTypesRevenue')
+  async timeAndRoomBasedRevenue(@Query('rango') rango) {
+    return await this.paymentService.timeAndRoomBasedRevenue(rango);
+  }
+  @Get('typesRevenuePercent')
+  async roomBasedRevenuePercent(@Query('rango') rango) {
+    return await this.paymentService.roomBasedRevenuePercent(rango);
   }
 }

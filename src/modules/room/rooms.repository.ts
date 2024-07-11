@@ -53,12 +53,10 @@ export class RoomsRepository {
       ]);
     const totalCount = await allRoomsQuery.getCount();
 
-    // Calculate the total number of pages
     const totalPages = Math.ceil(totalCount / limit);
 
-    // Get the paginated results
     const allRooms = await allRoomsQuery.skip(offset).take(limit).getMany();
-    console.log({ allRooms, totalPages });
+    //console.log({ allRooms, totalPages });
     return { totalPages, allRooms };
   }
 
@@ -325,4 +323,14 @@ export class RoomsRepository {
     });
   }
 
+  async getByNum(num: number) {
+    return await this.roomsRepository.findOne({
+      where: { roomNumber: num },
+      relations: {
+        bookings: true,
+        services: true,
+        images: true,
+      },
+    });
+  }
 }
