@@ -19,6 +19,7 @@ import { Exception } from 'handlebars';
 import { MailService } from '../mail/mail.service';
 import { MailDto } from 'src/dtos/Mail.dto';
 import { MailType } from 'src/enum/MailType.dto';
+import { PromotionService } from '../promotion/promotion.service';
 
 @Injectable()
 export class BookingService {
@@ -32,6 +33,7 @@ export class BookingService {
     private roomRepository: Repository<Room>,
     @InjectRepository(Companion)
     private companionRepository: Repository<Companion>,
+    private promotionService: PromotionService,
     private mailService: MailService,
   ) {}
 
@@ -95,8 +97,15 @@ export class BookingService {
   }
 
   async makeBooking(infoBooking: any) {
-    const { check_in_date, check_out_date, userId, roomId, companions } =
-      infoBooking;
+    const {
+      check_in_date,
+      check_out_date,
+      userId,
+      roomId,
+      companions,
+      promotionCode,
+    } = infoBooking;
+    //console.log(promotionCode.lengh);
     const paymentStatus = PaymentStatus.PENDING;
 
     const newBooking: Booking = this.bookingRepository.create({
@@ -109,9 +118,9 @@ export class BookingService {
       name: 'null',
       subject: 'Confirmacion de reserva',
       type: MailType.RESERVATION,
-      email: ''
+      email: '',
     };
-    
+
     let price: number;
     let numberRoom;
     let allBookings;
@@ -130,7 +139,12 @@ export class BookingService {
 
       allBookings = roomFinded.bookings;
       newBooking.room = roomFinded;
-      price = Number(roomFinded.price);
+      price = !promotionCode
+        ? Number(roomFinded.price)
+        : await this.promotionService.useCode(
+            promotionCode,
+            Number(roomFinded.price),
+          );
       numberRoom = roomFinded.roomNumber;
       newEmail.roomNumber = roomFinded.roomNumber.toString();
     } catch (error) {
@@ -138,7 +152,7 @@ export class BookingService {
         throw new NotFoundException(`The found the room with id: ${roomId}`);
       console.log(error);
       console.log(error.name);
-      throw new InternalServerErrorException('Conection error DB');
+      throw new InternalServerErrorException(error);
     }
 
     try {

@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PromotionService } from './promotion.service';
-import { PromotionDto } from 'src/dtos/createPromotion.dto';
 
 @Controller('promotion')
 export class PromotionController {
