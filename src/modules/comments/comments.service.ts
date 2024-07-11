@@ -103,6 +103,26 @@ export class CommentsService {
         }
     }
 
+    
+    async getInRevisionComments() {
+        try {
+            return await this.commentRepository.find({ where: { comment_status: CommentStatus.IN_REVISION } })
+        } catch (err) {
+            console.log(`Error getting all the allowed comments`, err)
+            throw new InternalServerErrorException(`Error getting all the allowed comments`)
+        }
+    }
+
+    
+    async getDeniedComments() {
+        try {
+            return await this.commentRepository.find({ where: { comment_status: CommentStatus.DENIED } })
+        } catch (err) {
+            console.log(`Error getting all the allowed comments`, err)
+            throw new InternalServerErrorException(`Error getting all the allowed comments`)
+        }
+    }
+
     async getCommentsById(id: string) {
         try {
             const user = await this.userRepository.findOne({
