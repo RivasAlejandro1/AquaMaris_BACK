@@ -23,11 +23,6 @@ export class PaymentController {
     return await this.paymentService.createOrder(newOrder);
   }
 
-  /* @Post('subscription')
-  async createPreApprobalPla(@Body() cardFormData) {
-    return await this.paymentService.createPreApprobalPlan(cardFormData);
-  } */
-
   @Post('subscription')
   async paypal(@Body() user) {
     return this.paypalService.createProduct(user.id);
@@ -44,12 +39,21 @@ export class PaymentController {
 
   @Post('subswebhook')
   async subsWebHook(@Req() request) {
+    console.log(request.body);
     const eventType = request.body.event_type;
     if (eventType === 'BILLING.SUBSCRIPTION.ACTIVATED') {
       return await this.paypalService.suscriptionWebHook(request.body);
     }
-    console.log(request.body);
+    if (eventType === 'BILLING.SUBSCRIPTION.CANCELLED') {
+      return await this.paypalService.cancelSubscriptionWebHook(request.body);
+    }
     return new HttpException('OK', HttpStatus.ACCEPTED);
+  }
+
+  @Post('cancelSubscription')
+  async cancelSubscription(@Body() userId) {
+    console.log(userId.id);
+    return await this.paypalService.cancelSubscription(userId.id);
   }
 
   @Get('timeRevenue')

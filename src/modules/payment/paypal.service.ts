@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { User } from '../../entity/User.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
 
 dotenv.config();
 
@@ -187,6 +188,8 @@ export class PayPalService {
   public async suscriptionWebHook(request) {
     const userId = request.resource.custom_id;
     const status = request.resource.status;
+    const suscription_id = request.resource.id;
+    console.log(suscription_id);
     console.log(userId);
     console.log(status);
     try {
@@ -196,10 +199,62 @@ export class PayPalService {
 
       if (!user) throw new NotFoundException('Usuario no encontrado');
 
-      await this.userRepository.update(user, { membership_status: status });
+      await this.userRepository.update(user, {
+        suscription_id: suscription_id,
+        membership_status: status,
+      });
       return 'OK';
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  public async cancelSubscriptionWebHook(request) {
+    try {
+      const user = await this.userRepository.findOne({
+        where: { id: request.resource.custom_id },
+      });
+      await this.userRepository.update(user, {
+        membership_status: MembershipStatus.CANCELLED,
+        suscription_id: '',
+      });
+      return 'OK';
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async cancelSubscription(userId) {
+    console.log(userId);
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+    if (!user) throw new NotFoundException('Usuario no encontrado');
+    const accessToken = await this.getAccessToken();
+    const suscription = user.suscription_id;
+    const cancel = {
+      reason: 'Not satisfied with the service',
+    };
+    try {
+      const response = await axios.post(
+        `${this.apiUrl}/v1/billing/subscriptions/${suscription}/cancel`,
+        cancel,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Prefer: 'return=representation',
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        'Error cancelating subscription:',
+        error.response?.data || error.message,
+      );
+      throw error;
     }
   }
 }
