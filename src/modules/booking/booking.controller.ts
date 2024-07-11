@@ -13,6 +13,24 @@ export class BookingController {
     await this.bookingService.bookingSeeder();
   }
 
+  @Get("forMonths")
+  async findBookingsByMonths(@Body() infoRango){
+    const { rango } = infoRango
+    return await this.bookingService.findBookingsByMonths(rango)
+  }
+
+  @Get("forMonths/typeRoom")
+  async findBookingsByMonthsWithTypeRoom(@Body() infoRango){
+    const { rango } = infoRango
+    return await this.bookingService.findBookingsByMonthsWithTypeRoom(rango)
+  }
+
+  @Get("forMonths/typeRoom/porcent")
+  async findBookingsByMonthsWithTypeRoomPorcent(@Body() infoRango){
+    const { rango } = infoRango
+    return await this.bookingService.findBookingsByMonthsWithTypeRoomPorcent(rango)
+  }
+
   @Post()
   @UseInterceptors(dataBookingDatesInterceptor)
   async makeBooking(@Body() infoBooking: MakeBookingDto){
@@ -22,5 +40,5 @@ export class BookingController {
   @Get(":id")
   async getAllBookingsById(@Param("id") id: string){
     return await this.bookingService.getAllBookingsById(id)
-  }
+  } 
 }
