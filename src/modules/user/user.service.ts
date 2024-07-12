@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../entity/User.entity';
 import { MembershipStatus } from '../../enum/MembershipStatus.enum';
@@ -419,5 +419,26 @@ export class UsersService {
       console.log('Error finding users by name', err);
       throw new InternalServerErrorException('Error finding users by name');
     }
+  }
+
+  async blockUser(id) {
+    
+    const exist = await this.userDBrepository.existsBy({id})
+    if(!exist) throw new NotFoundException(`The user with ${id} no exist in DB`)
+    const wasLOCKED = await this.userDBrepository.findOne({
+      where:{
+        id,
+        role: Role.LOCKED
+      }
+    })
+    if(wasLOCKED) throw new ConflictException(`Previously this operation, the user with ${id} was LOCKED`)
+    const isLOCKED = await this.userDBrepository
+    .createQueryBuilder()
+    .update(User)
+    .set({role:Role.LOCKED})
+    .where("id = :id", {id})
+    .execute()
+
+    return `The user with ${id} is LOCKED correctly` 
   }
 }
