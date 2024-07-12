@@ -24,7 +24,7 @@ export class PaymentService {
   ) {}
 
   async createOrder(newOrderData) {
-    //const webhook = process.env.MERCADO_PAGO_WEBHOOK;
+    const webhook = process.env.MERCADO_PAGO_WEBHOOK;
     const { title, price, orderId } = newOrderData;
     try {
       const client = new MercadoPagoConfig({
@@ -48,7 +48,7 @@ export class PaymentService {
           back_urls: {
             success: 'https://front-pfg-6.vercel.app/',
           },
-          notification_url: `https://597f-187-232-121-22.ngrok-free.app/payment/webhook`,
+          notification_url: `${webhook}/payment/webhook`,
           external_reference: orderId,
         },
       });
