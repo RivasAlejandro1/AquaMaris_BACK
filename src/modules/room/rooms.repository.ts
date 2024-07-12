@@ -8,11 +8,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Hotel } from '../../entity/Hotel.entity';
 import { Room } from '../../entity/Room.entity';
 import { Service } from '../../entity/Service.entity';
-import { Repository } from 'typeorm';
+import { Brackets, Not, Repository } from 'typeorm';
 import * as data from '../../utils/rooms.data.json';
 import { Image } from '../../entity/Image.entity';
 import { Booking } from '../../entity/Booking.entity';
 import { isThisWeek } from 'date-fns';
+import { RoomStates } from 'src/enum/RoomStates.enum';
+import { PaymentStatus } from 'src/enum/PaymentStatus.enum';
 
 @Injectable()
 export class RoomsRepository {
@@ -334,8 +336,47 @@ export class RoomsRepository {
     });
   }
 
-  async changeRoom(infoRoom){
-    const {id, ...allChanges} = infoRoom
-    return await this.roomsRepository.update({id}, allChanges)
+  async changeRoom(id, infoRoom){
+
+    try{
+      const exist = await this.roomsRepository.existsBy({id})
+      if(!exist) throw new NotFoundException()
+      
+      await this.roomsRepository.update({id}, infoRoom);
+      return `The Room ${id} was changed`;
+    }catch(error){
+      throw new NotFoundException(`The room with id: ${id} no exist`)
+    }
+
+  }
+
+  async changeStateRoom(id,state, youAreShore){
+    try{
+
+      const IN_PROGRESS = PaymentStatus.IN_PROGRESS
+      const PENDING = PaymentStatus.PENDING
+      const bookingsPendigs = await this.roomsRepository
+      .createQueryBuilder("rooms")
+      .where("rooms.id = :id", {id}) 
+      .leftJoinAndSelect("rooms.bookings", "bookings")
+      .andWhere(
+        new Brackets((qb) => {
+          qb.where("bookings.paymentStatus = :PENDING", {PENDING})
+          .orWhere("bookings.paymentStatus = :IN_PROGRESS", {IN_PROGRESS})
+        })
+      )
+      .getOne()
+
+      if(bookingsPendigs && !youAreShore)  throw new NotFoundException()
+
+
+      
+      await this.roomsRepository.update({id}, {state} );
+      return `The Room is ${state}`;
+    }catch(error){
+      console.log("error:", error)
+      throw new NotFoundException(`The room with id: ${id} have reservation inPending or Pending`)
+    }
+
   }
 }
