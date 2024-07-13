@@ -17,6 +17,7 @@ import { Repository } from 'typeorm';
 import { Role } from 'src/enum/Role.enum';
 import { MailDto } from 'src/dtos/Mail.dto';
 import { MailType } from 'src/enum/MailType.dto';
+import { UserIsLockedException } from 'src/exceptions/UserIsLocked.exception';
 
 @Injectable()
 export class AuthService {
@@ -80,7 +81,7 @@ export class AuthService {
     const user = await this.userRepository.findOne({ where: { email } });
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Email or password is invalid');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -88,6 +89,7 @@ export class AuthService {
     if (!isPasswordValid)
       throw new BadRequestException('Email or password is invalid');
 
+    if (user.is_locked) throw new UserIsLockedException()
     if (!user.status) {
       throw new ForbiddenException('User account is not active');
     }

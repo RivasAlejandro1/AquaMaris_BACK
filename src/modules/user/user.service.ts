@@ -131,7 +131,7 @@ export class UsersService {
     }
   }
 
-  async deleteUser(id: string) {
+ /*  async deleteUser(id: string) {
     try {
       const date = new Date().toDateString();
       const user = await this.userDBrepository.findOneBy({ id: id });
@@ -147,7 +147,7 @@ export class UsersService {
       console.log(`Could not disabled user with id ${id}`)
       throw new InternalServerErrorException(`Could not disabled user with ud ${id}`)
     }
-  }
+  } */
 
   async getUserByRole(role: string) {
     try {
@@ -424,21 +424,21 @@ export class UsersService {
   async blockUser(id) {
     
     const exist = await this.userDBrepository.existsBy({id})
-    if(!exist) throw new NotFoundException(`The user with ${id} no exist in DB`)
+    if(!exist) throw new NotFoundException(`El usuario con el ${id} no exist en la base de datos`)
     const wasLOCKED = await this.userDBrepository.findOne({
       where:{
         id,
-        role: Role.LOCKED
+        is_locked: true 
       }
     })
-    if(wasLOCKED) throw new ConflictException(`Previously this operation, the user with ${id} was LOCKED`)
+    if(wasLOCKED) throw new ConflictException(`El usuario con el ${id} ya estaba bloqueado`)
     const isLOCKED = await this.userDBrepository
     .createQueryBuilder()
     .update(User)
-    .set({role:Role.LOCKED})
+    .set({is_locked:true})
     .where("id = :id", {id})
     .execute()
 
-    return `The user with ${id} is LOCKED correctly` 
+    return `El usuario con el ${id}} se bloqueo correctamente ` 
   }
 }

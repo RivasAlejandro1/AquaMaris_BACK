@@ -70,10 +70,10 @@ export class UserController {
     return this.userService.updateUser(id, data);
   }
 
-  @Delete(':id')
+/*   @Delete(':id')
   deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.deleteUser(id);
-  }
+  } */
 
   @Get("role/:role")
   @RolesAdmin(Role.ADMIN)
