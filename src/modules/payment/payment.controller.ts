@@ -29,7 +29,6 @@ export class PaymentController {
   }
   @Post('webhook')
   async webHook(@Req() request) {
-    console.log(request);
     const type = request.query.type;
     if (type) {
       const id = request.query['data.id'];
@@ -39,13 +38,15 @@ export class PaymentController {
 
   @Post('subswebhook')
   async subsWebHook(@Req() request) {
-    console.log(request.body);
     const eventType = request.body.event_type;
     if (eventType === 'BILLING.SUBSCRIPTION.ACTIVATED') {
       return await this.paypalService.suscriptionWebHook(request.body);
     }
     if (eventType === 'BILLING.SUBSCRIPTION.CANCELLED') {
       return await this.paypalService.cancelSubscriptionWebHook(request.body);
+    }
+    if (eventType === 'BILLING.SUBSCRIPTION.CREATED') {
+      return await this.paypalService.suscriptionPenddingWebHook(request.body);
     }
     return new HttpException('OK', HttpStatus.ACCEPTED);
   }
