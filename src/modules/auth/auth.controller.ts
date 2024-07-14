@@ -7,7 +7,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { Guard_admin } from 'src/guardiane/admin_guard';
 
 @ApiTags('Authorization')
-@UseGuards(Guard_admin)
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -25,7 +24,6 @@ export class AuthController {
     return this.authService.login(loginUserData);
   }
 
-  // @UseGuards(JwtAuthGuard)
   @Post('auth0login')
   async auth0Login(@Req() req) {
     console.log(req.body);
