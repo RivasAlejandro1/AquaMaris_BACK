@@ -44,7 +44,6 @@ import { Promotion } from './entity/Promotion.entity';
 import { PromotionModule } from './modules/promotion/promotion.module';
 import { PromotionService } from './modules/promotion/promotion.service';
 
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -120,22 +119,27 @@ export class AppModule {
     private readonly ImagesController: ImagesController,
     private readonly userController: UserController,
     private readonly bookingController: BookingController,
-    private readonly commentsController: CommentsController
+    private readonly commentsController: CommentsController,
   ) {}
 
   async onApplicationBootstrap() {
     console.log('RUN HOTEL SEEDER');
     const successHotel = await this.hotelController.hotelSeeder(true);
     console.log('RUN SERVICE SEEDER');
-    const successService =await this.serviceController.serviceSeeder(successHotel);
+    const successService =
+      await this.serviceController.serviceSeeder(successHotel);
+    console.log('RUN SUPER USERS SEEDER');
+    const successSuperAdmin =
+      await this.userController.superAdminSeeder(successService);
     console.log('RUN USERS SEEDER');
-    const successUser = await this.userController.seeder(successService);
+    const successUser = await this.userController.seeder(successSuperAdmin);
     console.log('RUN IMAGES SEEDER');
     const successImages = await this.ImagesController.imagesSeeder(successUser);
     console.log('RUN ROOMS SEEDER');
     const successRooms = await this.roomsController.roomsSeeder(successImages);
     console.log('RUN BOOKING SEEDER');
-    const successComments = await this.commentsController.commentSeeder(successImages)
+    const successComments =
+      await this.commentsController.commentSeeder(successRooms);
     await this.bookingController.bookingSeeder(successComments);
   }
 }

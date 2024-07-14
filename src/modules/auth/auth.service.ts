@@ -21,12 +21,11 @@ import { UserIsLockedException } from 'src/exceptions/UserIsLocked.exception';
 
 @Injectable()
 export class AuthService {
-
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-    private readonly mailService: MailService
-  ) { }
+    private readonly mailService: MailService,
+  ) {}
 
   async signUp(createUserData: CreateUserDto) {
     const { email, password } = createUserData;
@@ -59,17 +58,17 @@ export class AuthService {
 
     const mailData: MailDto = {
       to: email,
-      subject: 'Bienvenido a AquaMaris Hotel\'s',
+      subject: "Bienvenido a AquaMaris Hotel's",
       name: createUserData.name,
       type: MailType.REGISTER,
-      email: email
-    }
+      email: email,
+    };
 
     try {
-      await this.mailService.sendMail(mailData)
+      await this.mailService.sendMail(mailData);
     } catch (err) {
-      console.error('Error sending welcome email ', err)
-      throw new InternalServerErrorException('Error sending welcome email')
+      console.error('Error sending welcome email ', err);
+      throw new InternalServerErrorException('Error sending welcome email');
     }
 
     return userWithoutPassword;
@@ -85,12 +84,13 @@ export class AuthService {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log(isPasswordValid);
 
     if (!isPasswordValid)
       throw new BadRequestException('Email or password is invalid');
 
-    if (user.is_locked) throw new UserIsLockedException()
-    if (!user.status) {
+    if (user.is_locked) throw new UserIsLockedException();
+    if (user.status === false) {
       throw new ForbiddenException('User account is not active');
     }
 
@@ -103,7 +103,7 @@ export class AuthService {
 
     const token = this.jwtService.sign(userPayload);
 
-    const { password: _, ...userData } = user
+    const { password: _, ...userData } = user;
 
     return { message: 'User Logged succesfully', token, userData };
   }
@@ -113,12 +113,12 @@ export class AuthService {
       sub: userData.id,
       id: userData.id,
       email: userData.email,
-      name: userData.name
-    }
+      name: userData.name,
+    };
 
     return {
       access_token: this.jwtService.sign(payload),
       userData,
-    }
+    };
   }
 }

@@ -1,9 +1,7 @@
-import { HttpException, HttpStatus } from "@nestjs/common";
-
-
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class UserIsLockedException extends HttpException {
-    constructor(){
-        super("User is locked", HttpStatus.FORBIDDEN);
-    }
+  constructor() {
+    super('User is locked', HttpStatus.FORBIDDEN);
+  }
 }
