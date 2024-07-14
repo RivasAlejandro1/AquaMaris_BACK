@@ -10,13 +10,12 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { filtersInterceptor } from '../../interceptors/filtersInterceptor.interceptor';
-import { filterResponseInterceptor } from '../../interceptors/filtersResponseInterceptor';
 import { CreateRoomDto } from 'src/dtos/CreateRoom.dto';
 import { ChangeRoomDto } from 'src/dtos/changeRoom.dto';
-import { IsUUID, isUUID } from 'class-validator';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Rooms')
 @Controller('rooms')
 //@UseInterceptors(filterResponseInterceptor)
 export class RoomsController {

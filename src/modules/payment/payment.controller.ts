@@ -10,7 +10,9 @@ import {
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { PayPalService } from './paypal.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Payments')
 @Controller('payment')
 export class PaymentController {
   constructor(

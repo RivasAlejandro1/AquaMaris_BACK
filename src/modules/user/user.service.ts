@@ -2,7 +2,7 @@ import { BadRequestException, ConflictException, Injectable, InternalServerError
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../entity/User.entity';
 import { MembershipStatus } from '../../enum/MembershipStatus.enum';
-import { Between, In, IsNull, Not, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import * as users from '../../utils/users.data.json';
 import * as bcrypt from 'bcrypt'
 import { Role } from 'src/enum/Role.enum';
@@ -131,23 +131,23 @@ export class UsersService {
     }
   }
 
- /*  async deleteUser(id: string) {
-    try {
-      const date = new Date().toDateString();
-      const user = await this.userDBrepository.findOneBy({ id: id });
-      if (!user) throw new NotFoundException('not user found');
-      user.status = false;
-      user.date_end = date;
-      const userDelete = await this.userDBrepository.save(user);
-      return {
-        message: 'User disabled succesfully',
-        user: userDelete
-      };
-    } catch (err) {
-      console.log(`Could not disabled user with id ${id}`)
-      throw new InternalServerErrorException(`Could not disabled user with ud ${id}`)
-    }
-  } */
+  /*  async deleteUser(id: string) {
+     try {
+       const date = new Date().toDateString();
+       const user = await this.userDBrepository.findOneBy({ id: id });
+       if (!user) throw new NotFoundException('not user found');
+       user.status = false;
+       user.date_end = date;
+       const userDelete = await this.userDBrepository.save(user);
+       return {
+         message: 'User disabled succesfully',
+         user: userDelete
+       };
+     } catch (err) {
+       console.log(`Could not disabled user with id ${id}`)
+       throw new InternalServerErrorException(`Could not disabled user with ud ${id}`)
+     }
+   } */
 
   async getUserByRole(role: string) {
     try {
@@ -422,23 +422,23 @@ export class UsersService {
   }
 
   async blockUser(id) {
-    
-    const exist = await this.userDBrepository.existsBy({id})
-    if(!exist) throw new NotFoundException(`El usuario con el ${id} no exist en la base de datos`)
+
+    const exist = await this.userDBrepository.existsBy({ id })
+    if (!exist) throw new NotFoundException(`El usuario con el ${id} no exist en la base de datos`)
     const wasLOCKED = await this.userDBrepository.findOne({
-      where:{
+      where: {
         id,
-        is_locked: true 
+        is_locked: true
       }
     })
-    if(wasLOCKED) throw new ConflictException(`El usuario con el ${id} ya estaba bloqueado`)
+    if (wasLOCKED) throw new ConflictException(`El usuario con el ${id} ya estaba bloqueado`)
     const isLOCKED = await this.userDBrepository
-    .createQueryBuilder()
-    .update(User)
-    .set({is_locked:true})
-    .where("id = :id", {id})
-    .execute()
+      .createQueryBuilder()
+      .update(User)
+      .set({ is_locked: true })
+      .where("id = :id", { id })
+      .execute()
 
-    return `El usuario con el ${id}} se bloqueo correctamente ` 
+    return `El usuario con el ${id}} se bloqueo correctamente `
   }
 }

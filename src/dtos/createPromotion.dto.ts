@@ -1,6 +1,7 @@
 import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 
 export class PromotionDto {
+  
   @IsString()
   description: string;
 

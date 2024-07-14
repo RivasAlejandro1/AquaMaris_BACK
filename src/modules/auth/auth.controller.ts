@@ -4,7 +4,9 @@ import { AuthService } from './auth.service';
 import { LoginUserDto } from '../../dtos/LoginUser.dto';
 import { JwtAuthGuard } from 'src/guardiane/jwt-auth.guard';
 import { UsersService } from '../user/user.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Authorization')
 @Controller('auth')
 export class AuthController {
   constructor(

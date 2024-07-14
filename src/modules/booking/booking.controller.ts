@@ -1,9 +1,11 @@
 import { Body, Controller, Get, Param, Post, Query, UseInterceptors } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { MakeBookingDto } from 'src/dtos/MakeBooking.dto';
-import { dataBookingDatesInterceptor } from 'src/interceptors/dataBookingDates.interceptor';
-import { areIntervalsOverlapping, interval, parseISO } from 'date-fns';
+  import { areIntervalsOverlapping, interval, parseISO } from 'date-fns';
+import {  dataBookingDatesInterceptor } from 'src/interceptors/dataBookingDates.interceptor';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Bookings')
 @Controller('booking')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
