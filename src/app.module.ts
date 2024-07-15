@@ -43,6 +43,7 @@ import { RegisterCode } from './entity/RegisterCodes';
 import { Promotion } from './entity/Promotion.entity';
 import { PromotionModule } from './modules/promotion/promotion.module';
 import { PromotionService } from './modules/promotion/promotion.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { PromotionService } from './modules/promotion/promotion.service';
       RegisterCode,
       Promotion,
     ]),
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeOrmConfig],

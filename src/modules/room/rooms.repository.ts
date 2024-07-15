@@ -91,12 +91,17 @@ export class RoomsRepository {
       .select('booking.roomId', 'room_id')
       .where(
         depart
-          ? `(booking.check_in_date >= :check_in_date AND booking.check_in_date <= :exit)
+          ? `((booking.check_in_date >= :check_in_date AND booking.check_in_date <= :exit)
          OR (booking.check_out_date >= :check_in_date AND booking.check_out_date <= :exit)
          OR (booking.check_in_date <= :check_in_date AND booking.check_out_date >= :exit)
-         OR (booking.check_in_date >= :check_in_date AND booking.check_out_date <= :exit)`
-          : 'booking.check_in_date <= :check_in_date AND booking.check_out_date >= :check_in_date',
-        { check_in_date: arrive, exit: depart },
+         OR (booking.check_in_date >= :check_in_date AND booking.check_out_date <= :exit))
+         AND booking.paymentStatus != :paymentStatus`
+          : 'booking.check_in_date <= :check_in_date AND booking.check_out_date >= :check_in_date AND booking.paymentStatus != :paymentStatus',
+        {
+          check_in_date: arrive,
+          exit: depart,
+          paymentStatus: PaymentStatus.CANCELLED,
+        },
       )
       .getRawMany()
       .then((results) => results.map((result) => result.room_id));
@@ -336,47 +341,45 @@ export class RoomsRepository {
     });
   }
 
-  async changeRoom(id, infoRoom){
+  async changeRoom(id, infoRoom) {
+    try {
+      const exist = await this.roomsRepository.existsBy({ id });
+      if (!exist) throw new NotFoundException();
 
-    try{
-      const exist = await this.roomsRepository.existsBy({id})
-      if(!exist) throw new NotFoundException()
-      
-      await this.roomsRepository.update({id}, infoRoom);
+      await this.roomsRepository.update({ id }, infoRoom);
       return `The Room ${id} was changed`;
-    }catch(error){
-      throw new NotFoundException(`The room with id: ${id} no exist`)
+    } catch (error) {
+      throw new NotFoundException(`The room with id: ${id} no exist`);
     }
-
   }
 
-  async changeStateRoom(id,state, youAreShore){
-    try{
-
-      const IN_PROGRESS = PaymentStatus.IN_PROGRESS
-      const PENDING = PaymentStatus.PENDING
+  async changeStateRoom(id, state, youAreShore) {
+    try {
+      const IN_PROGRESS = PaymentStatus.IN_PROGRESS;
+      const PENDING = PaymentStatus.PENDING;
       const bookingsPendigs = await this.roomsRepository
-      .createQueryBuilder("rooms")
-      .where("rooms.id = :id", {id}) 
-      .leftJoinAndSelect("rooms.bookings", "bookings")
-      .andWhere(
-        new Brackets((qb) => {
-          qb.where("bookings.paymentStatus = :PENDING", {PENDING})
-          .orWhere("bookings.paymentStatus = :IN_PROGRESS", {IN_PROGRESS})
-        })
-      )
-      .getOne()
+        .createQueryBuilder('rooms')
+        .where('rooms.id = :id', { id })
+        .leftJoinAndSelect('rooms.bookings', 'bookings')
+        .andWhere(
+          new Brackets((qb) => {
+            qb.where('bookings.paymentStatus = :PENDING', { PENDING }).orWhere(
+              'bookings.paymentStatus = :IN_PROGRESS',
+              { IN_PROGRESS },
+            );
+          }),
+        )
+        .getOne();
 
-      if(bookingsPendigs && !youAreShore)  throw new NotFoundException()
+      if (bookingsPendigs && !youAreShore) throw new NotFoundException();
 
-
-      
-      await this.roomsRepository.update({id}, {state} );
+      await this.roomsRepository.update({ id }, { state });
       return `The Room is ${state}`;
-    }catch(error){
-      console.log("error:", error)
-      throw new NotFoundException(`The room with id: ${id} have reservation inPending or Pending`)
+    } catch (error) {
+      console.log('error:', error);
+      throw new NotFoundException(
+        `The room with id: ${id} have reservation inPending or Pending`,
+      );
     }
-
   }
 }

@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
@@ -29,6 +30,9 @@ export class Booking {
 
   @Column({ type: 'text' })
   paymentStatus: string;
+
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
   @OneToMany(() => Companion, (companion) => companion.booking)
   companions: Companion[];

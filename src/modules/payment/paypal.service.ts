@@ -189,9 +189,6 @@ export class PayPalService {
     const userId = request.resource.custom_id;
     const status = request.resource.status;
     const suscription_id = request.resource.id;
-    console.log(suscription_id);
-    console.log(userId);
-    console.log(status);
     try {
       const user = await this.userRepository.findOne({
         where: { id: userId },
@@ -225,7 +222,6 @@ export class PayPalService {
   }
 
   public async cancelSubscription(userId) {
-    console.log(userId);
     const user = await this.userRepository.findOne({
       where: { id: userId },
     });
@@ -255,6 +251,24 @@ export class PayPalService {
         error.response?.data || error.message,
       );
       throw error;
+    }
+  }
+
+  public async suscriptionPenddingWebHook(request) {
+    const userId = request.resource.custom_id;
+    try {
+      const user = await this.userRepository.findOne({
+        where: { id: userId },
+      });
+
+      if (!user) throw new NotFoundException('Usuario no encontrado');
+
+      await this.userRepository.update(user, {
+        membership_status: MembershipStatus.PENDING,
+      });
+      return 'OK';
+    } catch (error) {
+      console.log(error);
     }
   }
 }
