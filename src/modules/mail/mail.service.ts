@@ -21,7 +21,7 @@ export class MailService {
 
     try {
       let htmlTemplate = `
-        <!DOCTYPE html>
+         <!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="UTF-8">
@@ -36,7 +36,7 @@ export class MailService {
             .container {
               max-width: 600px;
               margin: 20px auto;
-              background-color: #7fffd4;
+              background-color: #51A1A8; 
               padding: 20px;
               border-radius: 8px;
               box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -44,10 +44,16 @@ export class MailService {
             .header {
               text-align: center;
               padding-bottom: 20px;
+              color: #000000;
+            }
+            .header img {
+              max-width: 200px;
             }
             .content {
               font-size: 16px;
               line-height: 1.6;
+              color: #000000; 
+              text-align: center;
             }
             .footer {
               text-align: center;
@@ -55,11 +61,30 @@ export class MailService {
               color: #777777;
               font-size: 12px;
             }
+            .button {
+              display: inline-block;
+              background-color: #17858A;
+              color: #ffffff; 
+              text-decoration: none;
+              padding: 10px 20px;
+              border-radius: 5px;
+              border: none;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+            }
+            .button a {
+              color: #ffffff; 
+              text-decoration: none;
+            }
+            .button:hover {
+              background-color: #035155;
+            }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
+              <img src="URL" alt="Logo de la empresa">
               <h1>{{header}}</h1>
             </div>
             <div class="content">
@@ -67,7 +92,10 @@ export class MailService {
               {{#if reservationDate}}
                 <p>Tu reservación es el {{reservationDate}} en la habitación número {{roomNumber}}.</p>
               {{/if}}
-              <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
+              <p style="color: #000000;">Si tienes alguna pregunta, no dudes en contactarnos.</p>
+              <button class="button">
+                <a href="h" style="color: #ffffff;">Confirmar codigo</a>
+              </button>
             </div>
             <div class="footer">
               <p>&copy; 2024 AquaMaris Hotel's. Todos los derechos reservados.</p>

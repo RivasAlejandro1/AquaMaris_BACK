@@ -478,20 +478,21 @@ export class BookingService {
 
     if (!canCancel)
       throw new BadRequestException(
-        'Las reservas solo pueden ser canceladas tres dias antes del check in',
+        'Las reservas solo pueden ser canceladas hasta tres dias antes del check in',
       );
 
     await this.bookingRepository.update(booking.id, {
       paymentStatus: PaymentStatus.CANCELLED,
     });
 
-    return { status: 'Reservación cancelada' };
+    return {
+      message: 'reservaicon cancelada',
+      status: 200,
+    };
   }
 
   @Cron(CronExpression.EVERY_HOUR)
   async checkAndCancelBookings() {
-    console.log('Cancelando reservas');
-
     const twoDaysAgo = subDays(new Date(), 1);
 
     const bookings = await this.bookingRepository.find({

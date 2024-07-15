@@ -14,14 +14,21 @@ import { UsersService } from './user.service';
 import { RolesAdmin } from '../../help/roles.decoretion';
 import { Guard_admin } from '../../guardiane/admin_guard';
 import { Role } from '../../enum/Role.enum';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('User')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UsersService) { }
+  constructor(private readonly userService: UsersService) {}
 
   @Get('seeder')
   async seeder(success: boolean) {
     return await this.userService.userSeeder();
+  }
+
+  @Get('superAdminSeeder')
+  async superAdminSeeder(success: boolean) {
+    return await this.userService.superAdminSeeder();
   }
 
   @Get()
@@ -34,6 +41,11 @@ export class UserController {
   @Get(':id')
   userByid(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.getUserByID(id);
+  }
+
+  @Put('superadmin/blockUser/:id')
+  blockUser(@Param('id') id) {
+    return this.userService.blockUser(id);
   }
 
   @Put('superadmin/:id')
@@ -64,23 +76,23 @@ export class UserController {
     return this.userService.updateUser(id, data);
   }
 
-  @Delete(':id')
+  /*   @Delete(':id')
   deleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.deleteUser(id);
-  }
+  } */
 
-  @Get("role/:role")
+  @Get('role/:role')
   @RolesAdmin(Role.ADMIN)
   @UseGuards(Guard_admin)
   getUserByRole(@Query() role: string) {
-    return this.userService.getUserByRole(role)
+    return this.userService.getUserByRole(role);
   }
 
   @Put('membership/:status')
   @RolesAdmin(Role.ADMIN)
   @UseGuards(Guard_admin)
   permantlyDeleteUser(@Param('id', ParseUUIDPipe) id: string) {
-    return this.userService.permantlyDeleteUser(id)
+    return this.userService.permantlyDeleteUser(id);
   }
 
   @Put('password/:id')
@@ -88,27 +100,26 @@ export class UserController {
   @UseGuards(Guard_admin)
   updatePassword(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body('newPassword') newPassword: string
+    @Body('newPassword') newPassword: string,
   ) {
-    return this.userService.updatePassword(id, newPassword)
+    return this.userService.updatePassword(id, newPassword);
   }
-
 
   @Put('photoUrl/:id')
   @RolesAdmin(Role.USER)
   @UseGuards(Guard_admin)
   updateUserPhoto(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body('photoUrl') photoUrl: string
+    @Body('photoUrl') photoUrl: string,
   ) {
-    return this.userService.updateUserPhoto(id, photoUrl)
+    return this.userService.updateUserPhoto(id, photoUrl);
   }
 
   @Get('count/role/:role')
   @RolesAdmin(Role.SUPERADMIN)
   @UseGuards(Guard_admin)
   countUserByRole(@Param('role') role: string) {
-    return this.userService.countUserByRole(role)
+    return this.userService.countUserByRole(role);
   }
 
   @Put('status/:id')
@@ -116,38 +127,35 @@ export class UserController {
   @UseGuards(Guard_admin)
   updateUserStatus(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body('status') status: boolean
+    @Body('status') status: boolean,
   ) {
-    return this.userService.updateUserStatus(id, status)
+    return this.userService.updateUserStatus(id, status);
   }
 
   @Get('status/:status')
   @RolesAdmin(Role.ADMIN)
   @UseGuards(Guard_admin)
-  getUsersByStatus(
-    @Param('status') status: boolean
-  ){
-    return this.userService.getUsersByStatus(status)
+  getUsersByStatus(@Param('status') status: boolean) {
+    return this.userService.getUsersByStatus(status);
   }
 
-  
   @Get('registered/months')
-  async getUsersRegisteredPerMonths(@Query('months') months: number){
-    return this.userService.userRegisteredPerMonth(months)
+  async getUsersRegisteredPerMonths(@Query('months') months: number) {
+    return this.userService.userRegisteredPerMonth(months);
   }
 
   @Get('booking/percentage')
-  getUsersByBookings(@Query('months') months: number){
-    return this.userService.checkUsersBookings(months)
+  getUsersByBookings(@Query('months') months: number) {
+    return this.userService.checkUsersBookings(months);
   }
 
   @Get('membership/percentage')
-  getUsersByMemberShip(@Query('months') months: number){
-    return this.userService.checkMembership(months)
+  getUsersByMemberShip(@Query('months') months: number) {
+    return this.userService.checkMembership(months);
   }
 
   @Get('search/byName')
-  getUsersByName(@Query('name') name:string){
-    return this.userService.getUsersByName(name)
+  getUsersByName(@Query('name') name: string) {
+    return this.userService.getUsersByName(name);
   }
 }

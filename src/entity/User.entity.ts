@@ -49,8 +49,8 @@ export class User {
   @Column({ default: new Date() })
   date_start: Date;
 
-  @Column({ default: '' })
-  date_end: string;
+  @Column({ type: "boolean", default: false })
+  is_locked: boolean;
 
   @Column({ type: 'varchar', default: '' })
   suscription_id: string;
