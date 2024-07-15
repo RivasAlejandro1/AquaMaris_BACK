@@ -13,8 +13,8 @@ export class PromotionController {
 
   @ApiBearerAuth()
   @Post('newPromotionCode')
-  @RolesAdmin(Role.ADMIN)
-  @UseGuards(AuthGuard, Guard_admin)
+  /* @RolesAdmin(Role.ADMIN)
+  @UseGuards(AuthGuard, Guard_admin) */
   async createPromotionCode(@Body() data) {
     const { description, percentage, available_uses } = data;
     return await this.promotionService.createNewPromotion(
@@ -25,8 +25,8 @@ export class PromotionController {
   }
   @ApiBearerAuth()
   @Post('useCode')
-  @RolesAdmin(Role.USER)
-  @UseGuards(AuthGuard, Guard_admin)
+  /* @RolesAdmin(Role.USER)
+  @UseGuards(AuthGuard, Guard_admin) */
   async useCode(@Body() data) {
     const { code, price } = data;
     return await this.promotionService.useCode(code, price);
