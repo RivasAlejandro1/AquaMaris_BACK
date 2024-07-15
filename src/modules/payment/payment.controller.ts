@@ -7,10 +7,15 @@ import {
   Post,
   Query,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { PayPalService } from './paypal.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { RolesAdmin } from '../../help/roles.decoretion';
+import { Role } from '../../enum/Role.enum';
+import { Guard_admin } from '../../guardiane/admin_guard';
+import { AuthGuard } from 'src/guardiane/auth.guard';
 
 @ApiTags('Payments')
 @Controller('payment')
@@ -58,23 +63,35 @@ export class PaymentController {
     console.log(userId.id);
     return await this.paypalService.cancelSubscription(userId.id);
   }
-
+  @ApiBearerAuth()
   @Get('timeRevenue')
+  @RolesAdmin(Role.ADMIN)
+  @UseGuards(AuthGuard, Guard_admin)
   async timeBasedRevenue(@Query() query) {
     const { rango } = query;
     return await this.paymentService.timeBasedRevenue(rango);
   }
 
+  @ApiBearerAuth()
   @Get('typesRevenue')
+  @RolesAdmin(Role.ADMIN)
+  @UseGuards(AuthGuard, Guard_admin)
   async roomBasedRevenue(@Query('rango') rango) {
     return await this.paymentService.roomBasedRevenue(rango);
   }
 
+  @ApiBearerAuth()
   @Get('timeAndTypesRevenue')
+  @RolesAdmin(Role.ADMIN)
+  @UseGuards(AuthGuard, Guard_admin)
   async timeAndRoomBasedRevenue(@Query('rango') rango) {
     return await this.paymentService.timeAndRoomBasedRevenue(rango);
   }
+
+  @ApiBearerAuth()
   @Get('typesRevenuePercent')
+  @RolesAdmin(Role.ADMIN)
+  @UseGuards(AuthGuard, Guard_admin)
   async roomBasedRevenuePercent(@Query('rango') rango) {
     return await this.paymentService.roomBasedRevenuePercent(rango);
   }

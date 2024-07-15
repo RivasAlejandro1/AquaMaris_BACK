@@ -15,8 +15,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { Guard_admin } from 'src/guardiane/admin_guard';
 import { Role } from 'src/enum/Role.enum';
 import { RolesAdmin } from 'src/help/roles.decoretion';
+import { AuthGuard } from 'src/guardiane/auth.guard';
 
-@UseGuards(Guard_admin)
+@UseGuards(AuthGuard, Guard_admin)
 @ApiTags('Bookings')
 @Controller('booking')
 export class BookingController {
@@ -48,6 +49,7 @@ export class BookingController {
   }
 
   @Post()
+  @RolesAdmin(Role.USER)
   @UseInterceptors(dataBookingDatesInterceptor)
   async makeBooking(@Body() infoBooking: MakeBookingDto) {
     return await this.bookingService.makeBooking(infoBooking);
@@ -58,8 +60,8 @@ export class BookingController {
     return await this.bookingService.getAllBookingsById(id);
   }
 
-  @RolesAdmin(Role.USER)
   @Post('cancel')
+  @RolesAdmin(Role.USER)
   async cancelBooking(@Body() data) {
     const { userId, bookingId } = data;
     return await this.bookingService.cancelBooking(userId, bookingId);
