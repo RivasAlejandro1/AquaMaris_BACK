@@ -13,6 +13,7 @@ import * as data from '../../utils/rooms.data.json';
 import { Image } from '../../entity/Image.entity';
 import { Booking } from '../../entity/Booking.entity';
 import { isThisWeek } from 'date-fns';
+import { PaymentStatus } from 'src/enum/PaymentStatus.enum';
 
 @Injectable()
 export class RoomsRepository {
@@ -89,12 +90,17 @@ export class RoomsRepository {
       .select('booking.roomId', 'room_id')
       .where(
         depart
-          ? `(booking.check_in_date >= :check_in_date AND booking.check_in_date <= :exit)
+          ? `((booking.check_in_date >= :check_in_date AND booking.check_in_date <= :exit)
          OR (booking.check_out_date >= :check_in_date AND booking.check_out_date <= :exit)
          OR (booking.check_in_date <= :check_in_date AND booking.check_out_date >= :exit)
-         OR (booking.check_in_date >= :check_in_date AND booking.check_out_date <= :exit)`
-          : 'booking.check_in_date <= :check_in_date AND booking.check_out_date >= :check_in_date',
-        { check_in_date: arrive, exit: depart },
+         OR (booking.check_in_date >= :check_in_date AND booking.check_out_date <= :exit))
+         AND booking.paymentStatus != :paymentStatus`
+          : 'booking.check_in_date <= :check_in_date AND booking.check_out_date >= :check_in_date AND booking.paymentStatus != :paymentStatus',
+        {
+          check_in_date: arrive,
+          exit: depart,
+          paymentStatus: PaymentStatus.CANCELLED,
+        },
       )
       .getRawMany()
       .then((results) => results.map((result) => result.room_id));
@@ -334,8 +340,8 @@ export class RoomsRepository {
     });
   }
 
-  async changeRoom(infoRoom){
-    const {id, ...allChanges} = infoRoom
-    return await this.roomsRepository.update({id}, allChanges)
+  async changeRoom(infoRoom) {
+    const { id, ...allChanges } = infoRoom;
+    return await this.roomsRepository.update({ id }, allChanges);
   }
 }

@@ -8,7 +8,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import { Booking } from '../../entity/Booking.entity';
 import { User } from '../../entity/User.entity';
 import { Room } from '../../entity/Room.entity';
@@ -33,6 +33,7 @@ import { MailType } from 'src/enum/MailType.dto';
 import { PromotionService } from '../promotion/promotion.service';
 import { all } from 'axios';
 import { TypesRooms } from 'src/enum/RoomTypes.enum';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class BookingService {
@@ -485,5 +486,24 @@ export class BookingService {
     });
 
     return { status: 'Reservación cancelada' };
+  }
+
+  @Cron(CronExpression.EVERY_HOUR)
+  async checkAndCancelBookings() {
+    console.log('Cancelando reservas');
+
+    const twoDaysAgo = subDays(new Date(), 1);
+
+    const bookings = await this.bookingRepository.find({
+      where: {
+        paymentStatus: PaymentStatus.PENDING,
+        createdAt: LessThan(twoDaysAgo),
+      },
+    });
+
+    bookings.forEach(async (booking) => {
+      booking.paymentStatus = PaymentStatus.CANCELLED;
+      await this.bookingRepository.save(booking);
+    });
   }
 }
