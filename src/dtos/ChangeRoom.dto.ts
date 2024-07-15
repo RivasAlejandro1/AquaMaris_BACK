@@ -15,7 +15,6 @@ import {
   ValidatorConstraintInterface,
   ValidatorConstraint,
 } from 'class-validator';
-import { RoomStates } from 'src/enum/RoomStates.enum';
 import { TypesRooms } from 'src/enum/RoomTypes.enum';
 import { Services } from 'src/enum/Services.enum';
 

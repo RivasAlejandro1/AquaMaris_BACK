@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { filtersInterceptor } from '../../interceptors/filtersInterceptor.interceptor';
-import { CreateRoomDto } from 'src/dtos/CreateRoom.dto';
-import { ChangeRoomDto } from 'src/dtos/changeRoom.dto';
+import { CreateRoomDto } from '../../dtos/CreateRoom.dto';
+import { ChangeRoomDto } from '../../dtos/changeRoom.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { filterResponseInterceptor } from 'src/interceptors/filtersResponseInterceptor';
 
@@ -64,7 +64,6 @@ export class RoomsController {
     @Param('id', ParseUUIDPipe) id,
     @Body() infoRoom: ChangeRoomDto,
   ) {
-    console.log('hola');
     return await this.roomsService.changeRoom(id, infoRoom);
   }
   @Get(':id')
