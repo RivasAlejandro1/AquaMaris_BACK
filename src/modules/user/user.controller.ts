@@ -14,7 +14,8 @@ import { UsersService } from './user.service';
 import { RolesAdmin } from '../../help/roles.decoretion';
 import { Guard_admin } from '../../guardiane/admin_guard';
 import { Role } from '../../enum/Role.enum';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guardiane/auth.guard';
 
 @ApiTags('User')
 @Controller('user')
@@ -48,9 +49,10 @@ export class UserController {
     return this.userService.blockUser(id);
   }
 
-  @Put('superadmin/:id')
+  @ApiBearerAuth()
   @RolesAdmin(Role.SUPERADMIN)
-  @UseGuards(Guard_admin)
+  @UseGuards(AuthGuard, Guard_admin)
+  @Put('superadmin/:id')
   superAdminUpdate(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() datauser: CreateUserDto,
@@ -58,9 +60,10 @@ export class UserController {
     return this.userService.updateSuperAdmin(datauser, id);
   }
 
+  @ApiBearerAuth()
   @Put('admin/:id')
-  @RolesAdmin(Role.ADMIN)
-  @UseGuards(Guard_admin)
+  @RolesAdmin(Role.SUPERADMIN)
+  @UseGuards(AuthGuard, Guard_admin)
   updateAdmin(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() datauser: CreateUserDto,
@@ -81,23 +84,26 @@ export class UserController {
     return this.userService.deleteUser(id);
   } */
 
+  @ApiBearerAuth()
   @Get('role/:role')
-  @RolesAdmin(Role.ADMIN)
-  @UseGuards(Guard_admin)
+  @UseGuards(AuthGuard, Guard_admin)
+  @RolesAdmin(Role.ADMIN, Role.SUPERADMIN)
   getUserByRole(@Query() role: string) {
     return this.userService.getUserByRole(role);
   }
 
+  @ApiBearerAuth()
+  @RolesAdmin(Role.ADMIN, Role.SUPERADMIN)
+  @UseGuards(AuthGuard, Guard_admin)
   @Put('membership/:status')
-  @RolesAdmin(Role.ADMIN)
-  @UseGuards(Guard_admin)
   permantlyDeleteUser(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.permantlyDeleteUser(id);
   }
 
-  @Put('password/:id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, Guard_admin)
   @RolesAdmin(Role.USER)
-  @UseGuards(Guard_admin)
+  @Put('password/:id')
   updatePassword(
     @Param('id', ParseUUIDPipe) id: string,
     @Body('newPassword') newPassword: string,
@@ -105,9 +111,10 @@ export class UserController {
     return this.userService.updatePassword(id, newPassword);
   }
 
-  @Put('photoUrl/:id')
+  @ApiBearerAuth()
   @RolesAdmin(Role.USER)
-  @UseGuards(Guard_admin)
+  @UseGuards(AuthGuard, Guard_admin)
+  @Put('photoUrl/:id')
   updateUserPhoto(
     @Param('id', ParseUUIDPipe) id: string,
     @Body('photoUrl') photoUrl: string,
@@ -115,16 +122,18 @@ export class UserController {
     return this.userService.updateUserPhoto(id, photoUrl);
   }
 
+  @ApiBearerAuth()
+  @RolesAdmin(Role.SUPERADMIN, Role.ADMIN)
+  @UseGuards(AuthGuard, Guard_admin)
   @Get('count/role/:role')
-  @RolesAdmin(Role.SUPERADMIN)
-  @UseGuards(Guard_admin)
   countUserByRole(@Param('role') role: string) {
     return this.userService.countUserByRole(role);
   }
 
+  @ApiBearerAuth()
+  @RolesAdmin(Role.ADMIN, Role.SUPERADMIN)
+  @UseGuards(AuthGuard, Guard_admin)
   @Put('status/:id')
-  @RolesAdmin(Role.ADMIN)
-  @UseGuards(Guard_admin)
   updateUserStatus(
     @Param('id', ParseUUIDPipe) id: string,
     @Body('status') status: boolean,
@@ -132,28 +141,41 @@ export class UserController {
     return this.userService.updateUserStatus(id, status);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, Guard_admin)
+  @RolesAdmin(Role.ADMIN, Role.SUPERADMIN)
   @Get('status/:status')
-  @RolesAdmin(Role.ADMIN)
-  @UseGuards(Guard_admin)
   getUsersByStatus(@Param('status') status: boolean) {
     return this.userService.getUsersByStatus(status);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, Guard_admin)
+  @RolesAdmin(Role.ADMIN, Role.SUPERADMIN)
   @Get('registered/months')
   async getUsersRegisteredPerMonths(@Query('months') months: number) {
     return this.userService.userRegisteredPerMonth(months);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, Guard_admin)
+  @RolesAdmin(Role.ADMIN, Role.SUPERADMIN)
   @Get('booking/percentage')
   getUsersByBookings(@Query('months') months: number) {
     return this.userService.checkUsersBookings(months);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, Guard_admin)
+  @RolesAdmin(Role.ADMIN, Role.SUPERADMIN)
   @Get('membership/percentage')
   getUsersByMemberShip(@Query('months') months: number) {
     return this.userService.checkMembership(months);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, Guard_admin)
+  @RolesAdmin(Role.ADMIN, Role.SUPERADMIN)
   @Get('search/byName')
   getUsersByName(@Query('name') name: string) {
     return this.userService.getUsersByName(name);
