@@ -1,6 +1,6 @@
-import * as handlebars from 'handlebars'; // Importa Handlebars para la plantilla HTML dinámica
-import { transporter } from 'src/config/mailer'; // Importa el transporter de nodemailer
-import { MailDto } from 'src/dtos/Mail.dto'; // Importa el DTO de correo
+import * as handlebars from 'handlebars';
+import { transporter } from 'src/config/mailer'; 
+import { MailDto } from 'src/dtos/Mail.dto'; 
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { getRegisterCode } from 'src/helpers/getRegisterCode';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -92,10 +92,12 @@ export class MailService {
               {{#if reservationDate}}
                 <p>Tu reservación es el {{reservationDate}} en la habitación número {{roomNumber}}.</p>
               {{/if}}
+              {{#if showButton}}
+                <button class="button">
+                  <a href="h" style="color: #ffffff;">Confirmar código</a>
+                </button>
+              {{/if}}
               <p style="color: #000000;">Si tienes alguna pregunta, no dudes en contactarnos.</p>
-              <button class="button">
-                <a href="h" style="color: #ffffff;">Confirmar codigo</a>
-              </button>
             </div>
             <div class="footer">
               <p>&copy; 2024 AquaMaris Hotel's. Todos los derechos reservados.</p>
@@ -105,7 +107,7 @@ export class MailService {
         </html>
       `;
 
-      let header, defaultMessage;
+      let header, defaultMessage, showButton = false;
 
       switch (type) {
         case 'register':
@@ -115,7 +117,6 @@ export class MailService {
 
             if (!user) throw new NotFoundException(`User with id ${user} not found`)
 
-
             await this.registerCodeRepository.save({
               code: registerCode,
               user: user
@@ -123,6 +124,7 @@ export class MailService {
 
             header = `Bienvenido a AquaMaris, ${name}!`;
             defaultMessage = `Estamos encantados de que hayas tomado esta gran decisión. Para completar tu proceso de registro necesitamos que te ingreses el codigo de suscripcion en nuestra plataforma ${registerCode}, Esperamos verte en nuestros hoteles pronto.`;
+            showButton = true;
             break;
           } catch (err) {
             console.log(`Error sending email to user with email ${email}`, err)
@@ -149,7 +151,7 @@ export class MailService {
       }
 
       const template = handlebars.compile(htmlTemplate);
-      const htmlToSend = template({ header, message: message || defaultMessage, reservationDate, roomNumber });
+      const htmlToSend = template({ header, message: message || defaultMessage, reservationDate, roomNumber, showButton });
 
       const info = await transporter.sendMail({
         from: '"AquaMaris Hotels" <aquamarishotelz@gmail.com>',
