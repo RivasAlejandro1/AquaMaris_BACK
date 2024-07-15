@@ -173,7 +173,7 @@ export class CommentsService {
 
     async getCommentsByRoomId(roomId: string){
         try{
-            const room = await this.roomRepository.findOne({where: {id: roomId}})
+            const room = await this.roomRepository.findOne({where: {id: roomId}, relations: ['comment']})
             return {"comments" :room.comment}
         }catch(err){
             console.log(`Error getting comments by room id ${roomId}`, err)
