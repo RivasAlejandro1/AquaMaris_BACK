@@ -47,7 +47,7 @@ export class MailService {
               color: #000000;
             }
             .header img {
-              max-width: 200px;
+              max-width: 500px;
             }
             .content {
               font-size: 16px;
@@ -84,7 +84,7 @@ export class MailService {
         <body>
           <div class="container">
             <div class="header">
-              <img src="URL" alt="Logo de la empresa">
+              <img src="https://res.cloudinary.com/dvog7iykc/image/upload/v1721088898/logoBlanco_ey1kdn_lfnuzd.png" alt="Logo de la empresa">
               <h1>{{header}}</h1>
             </div>
             <div class="content">
