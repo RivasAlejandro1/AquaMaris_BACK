@@ -14,6 +14,20 @@
     "paymentStatus": "DONE"
   },
   {
+    "user": "Jane Smith",
+    "room": 10,
+    "check_in_date": "2024-08-10",
+    "check_out_date": "2024-08-15",
+    "paymentStatus": "DONE"
+  },
+  {
+    "user": "Jane Smith",
+    "room": 22,
+    "check_in_date": "2024-08-10",
+    "check_out_date": "2024-08-15",
+    "paymentStatus": "DONE"
+  },
+  {
     "user": "Alice Johnson",
     "room": 35,
     "check_in_date": "2024-09-20",

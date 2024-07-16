@@ -23,4 +23,21 @@ export class RoomsService {
   async getById(id) {
     return await this.roomsRepository.getById(id);
   }
+
+  async getByNum(num: number) {
+    return await this.roomsRepository.getByNum(num);
+  }
+
+  async changeRoom(id, infoRoom){
+    return await this.roomsRepository.changeRoom(id, infoRoom);
+  }
+
+  async changeStateRoom(id, state, youAreShore){
+    
+    return await this.roomsRepository.changeStateRoom(id, state, youAreShore);
+  }
+  
+/*   async deleteRoom(id){
+    return await this.roomsRepository.deleteRoom(id);
+  } */
 }

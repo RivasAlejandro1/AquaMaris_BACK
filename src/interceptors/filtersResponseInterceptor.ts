@@ -12,8 +12,11 @@ export class filterResponseInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((data) => {
-        if (Array.isArray(data)) {
-          return data.map(this.transformRoom);
+        if (data && data.allRooms && Array.isArray(data.allRooms)) {
+          return {
+            ...data,
+            allRooms: data.allRooms.map(this.transformRoom),
+          };
         } else {
           return this.transformRoom(data);
         }

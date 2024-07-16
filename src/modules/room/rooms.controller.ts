@@ -5,15 +5,19 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Put,
   Query,
   UseInterceptors,
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { filtersInterceptor } from '../../interceptors/filtersInterceptor.interceptor';
-import { filterResponseInterceptor } from '../../interceptors/filtersResponseInterceptor';
-import { CreateRoomDto } from 'src/dtos/CreateRoom.dto';
+import { CreateRoomDto } from '../../dtos/CreateRoom.dto';
+import { ChangeRoomDto } from '../../dtos/ChangeRoom.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { filterResponseInterceptor } from 'src/interceptors/filtersResponseInterceptor';
 
+
+@ApiTags('Rooms')
 @Controller('rooms')
 @UseInterceptors(filterResponseInterceptor)
 export class RoomsController {
@@ -28,27 +32,44 @@ export class RoomsController {
   }
 
   @Post()
-  async createRoom(@Body() infoRoom: CreateRoomDto){
+  async createRoom(@Body() infoRoom: CreateRoomDto) {
     return await this.roomsService.createRoom(infoRoom);
   }
 
-  
   @Get()
   async roomsSeeder(success: boolean) {
     return await this.roomsService.roomSeeder();
   }
 
-
-  @Get('filter')
   @UseInterceptors(filtersInterceptor)
+  @Get('filter')
   filterRooms(@Query() query) {
     return this.roomsService.filterRoom(query);
   }
 
+  @UseInterceptors(filtersInterceptor)
+  @Get('roomByNum/:num')
+  async getByNum(@Param('num') num) {
+    return await this.roomsService.getByNum(Number(num));
+  }
 
+  @Put('suspend/:id')
+  async changeStateRoom(
+    @Param('id', ParseUUIDPipe) id,
+    @Query('state') state: string = 'inmaintenance',
+    @Query('youAreShore') youAreShore: boolean = false,
+  ) {
+    return await this.roomsService.changeStateRoom(id, state, youAreShore);
+  }
+  @Put(':id')
+  async changeRoom(
+    @Param('id', ParseUUIDPipe) id,
+    @Body() infoRoom: ChangeRoomDto,
+  ) {
+    return await this.roomsService.changeRoom(id, infoRoom);
+  }
   @Get(':id')
-  async getById(@Param('id', ParseUUIDPipe) id: string) {
+  async getById(@Param('id') id) {
     return await this.roomsService.getById(id);
   }
-  
 }

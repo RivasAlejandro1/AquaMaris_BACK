@@ -8,11 +8,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Hotel } from '../../entity/Hotel.entity';
 import { Room } from '../../entity/Room.entity';
 import { Service } from '../../entity/Service.entity';
-import { Repository } from 'typeorm';
+import { Brackets, Not, Repository } from 'typeorm';
 import * as data from '../../utils/rooms.data.json';
 import { Image } from '../../entity/Image.entity';
 import { Booking } from '../../entity/Booking.entity';
-import { UUID } from 'crypto';
+import { isThisWeek } from 'date-fns';
+import { RoomStates } from 'src/enum/RoomStates.enum';
+import { PaymentStatus } from 'src/enum/PaymentStatus.enum';
 
 @Injectable()
 export class RoomsRepository {
@@ -25,17 +27,16 @@ export class RoomsRepository {
     private bookingsRepository: Repository<Booking>,
   ) {}
 
-  
   async getAllRooms(page, limit) {
     const offset = (page - 1) * limit;
-    const allRooms = await this.roomsRepository
+    const allRoomsQuery = await this.roomsRepository
       .createQueryBuilder('room')
       .leftJoinAndSelect('room.services', 'services')
       .leftJoinAndSelect('room.images', 'images')
       .leftJoinAndSelect(
-        'room.booking',
-        'booking',
-        'booking.check_in_date >= :today',
+        'room.bookings',
+        'bookings',
+        'bookings.check_in_date >= :today',
         {
           today: new Date().toISOString().split('T')[0],
         },
@@ -49,14 +50,16 @@ export class RoomsRepository {
         'room.roomNumber',
         'services',
         'images',
-        'booking.check_in_date',
-        'booking.check_out_date',
-      ])
-      .skip(offset)
-      .take(limit)
-      .getMany();
+        'bookings.check_in_date',
+        'bookings.check_out_date',
+      ]);
+    const totalCount = await allRoomsQuery.getCount();
 
-      return allRooms;
+    const totalPages = Math.ceil(totalCount / limit);
+
+    const allRooms = await allRoomsQuery.skip(offset).take(limit).getMany();
+    //console.log({ allRooms, totalPages });
+    return { totalPages, allRooms };
   }
 
   async filterRoom(filters) {
@@ -77,12 +80,9 @@ export class RoomsRepository {
     if (types) availableRooms = this.getByType(types, availableRooms);
 
     if (services) availableRooms = this.getByServices(services, availableRooms);
-    console.log('sin paginado');
-    console.log(availableRooms);
-    const paginatedRooms = availableRooms.slice(startIndex, endIndex);
-    console.log('con paginado');
-    console.log(paginatedRooms);
-    return paginatedRooms;
+    const totalPages = Math.ceil(availableRooms.length / pageSize);
+    const allRooms = availableRooms.slice(startIndex, endIndex);
+    return { totalPages, allRooms };
   }
 
   async reserveredRooms(arrive: Date, depart?: Date, orderBy?) {
@@ -91,12 +91,17 @@ export class RoomsRepository {
       .select('booking.roomId', 'room_id')
       .where(
         depart
-          ? `(booking.check_in_date >= :check_in_date AND booking.check_in_date <= :exit)
+          ? `((booking.check_in_date >= :check_in_date AND booking.check_in_date <= :exit)
          OR (booking.check_out_date >= :check_in_date AND booking.check_out_date <= :exit)
          OR (booking.check_in_date <= :check_in_date AND booking.check_out_date >= :exit)
-         OR (booking.check_in_date >= :check_in_date AND booking.check_out_date <= :exit)`
-          : 'booking.check_in_date <= :check_in_date AND booking.check_out_date >= :check_in_date',
-        { check_in_date: arrive, exit: depart },
+         OR (booking.check_in_date >= :check_in_date AND booking.check_out_date <= :exit))
+         AND booking.paymentStatus != :paymentStatus`
+          : 'booking.check_in_date <= :check_in_date AND booking.check_out_date >= :check_in_date AND booking.paymentStatus != :paymentStatus',
+        {
+          check_in_date: arrive,
+          exit: depart,
+          paymentStatus: PaymentStatus.CANCELLED,
+        },
       )
       .getRawMany()
       .then((results) => results.map((result) => result.room_id));
@@ -165,16 +170,9 @@ export class RoomsRepository {
   }
   //! CURRENT
   async createRoom(infoRoom) {
-    const {
-      type,
-      price,
-      description,
-      state,
-      roomNumber,
-      services,
-      images,
-    } = infoRoom;
-    
+    const { type, price, description, state, roomNumber, services, images } =
+      infoRoom;
+
     const newRoom = this.roomsRepository.create({
       type,
       price,
@@ -183,80 +181,81 @@ export class RoomsRepository {
       roomNumber,
     });
 
-    let hotelFound :any
+    let hotelFound: any;
     try {
-      hotelFound = infoRoom.hotel ? 
-          { id : infoRoom.hotel} 
-        : 
-          await this.hotelRepository.findOne({
-          where: {
-            name: "AquaMaris Hotel's Beach"
-          },
-          select: [ "id"]
-        })
-        
-      }catch(Error){
-        throw new NotFoundException()
+      hotelFound = infoRoom.hotel
+        ? { id: infoRoom.hotel }
+        : await this.hotelRepository.findOne({
+            where: {
+              name: "AquaMaris Hotel's Beach",
+            },
+            select: ['id'],
+          });
+    } catch (Error) {
+      throw new NotFoundException();
     }
-    const hotelID = hotelFound.id
-    
-    
-    try{
+    const hotelID = hotelFound.id;
+
+    try {
       const findedHotel = await this.hotelRepository.findOneOrFail({
-        where:{
-          id: hotelID
-        }
+        where: {
+          id: hotelID,
+        },
       });
       newRoom.hotel = findedHotel;
-    } catch(error) {
-      if(error.name === "EntityNotFoundError"){
-        throw new NotFoundException(`Hotel with name ${hotelID} not exist in DB`)
-      }else{
-        console.log(error)
-        throw new InternalServerErrorException("")
+    } catch (error) {
+      if (error.name === 'EntityNotFoundError') {
+        throw new NotFoundException(
+          `Hotel with name ${hotelID} not exist in DB`,
+        );
+      } else {
+        console.log(error);
+        throw new InternalServerErrorException('');
       }
     }
-
 
     let currentName: string;
     try {
-      const allServicesFinded = !services ? [] : await Promise.all(
-        services.map(async (name) => {
-            currentName = name;
-            const service = await this.serviceRepository.findOneOrFail({ 
-              where : {
-                  name 
-                } 
-            });
-            return service
-          }),
+      const allServicesFinded = !services
+        ? []
+        : await Promise.all(
+            services.map(async (name) => {
+              currentName = name;
+              const service = await this.serviceRepository.findOneOrFail({
+                where: {
+                  name,
+                },
+              });
+              return service;
+            }),
+          );
+      newRoom.services = allServicesFinded;
+    } catch (error) {
+      if (error.name === 'EntityNotFoundError') {
+        throw new NotFoundException(
+          `Service with name ${currentName} not exist in DB`,
         );
-        newRoom.services = allServicesFinded;
-      }catch(error){
-        if(error.name === "EntityNotFoundError"){
-          throw new NotFoundException(`Service with name ${currentName} not exist in DB`)
-        }else{
-          throw new InternalServerErrorException(`Database connection error`);
+      } else {
+        throw new InternalServerErrorException(`Database connection error`);
       }
     }
 
-    
-    try{
-      const allImageMaked = !images ? [] : await Promise.all(
-      images.map(async (url) => {
-        const newImage = this.imagesRepository.create({ url });
-        newImage.date = new Date();
-          return await this.imagesRepository.save(newImage);;
-        }),
-      );
+    try {
+      const allImageMaked = !images
+        ? []
+        : await Promise.all(
+            images.map(async (url) => {
+              const newImage = this.imagesRepository.create({ url });
+              newImage.date = new Date();
+              return await this.imagesRepository.save(newImage);
+            }),
+          );
       newRoom.images = allImageMaked;
       return await this.roomsRepository.save(newRoom);
-    }catch(error){
-      throw new InternalServerErrorException("Database connection error")
+    } catch (error) {
+      throw new InternalServerErrorException('Database connection error');
     }
-
   }
-  
 
   async roomSeeder() {
     try {
@@ -324,10 +323,63 @@ export class RoomsRepository {
     return await this.roomsRepository.findOne({
       where: { id: id },
       relations: {
-        booking: true,
+        bookings: true,
         services: true,
         images: true,
       },
     });
+  }
+
+  async getByNum(num: number) {
+    return await this.roomsRepository.findOne({
+      where: { roomNumber: num },
+      relations: {
+        bookings: true,
+        services: true,
+        images: true,
+      },
+    });
+  }
+
+  async changeRoom(id, infoRoom) {
+    try {
+      const exist = await this.roomsRepository.existsBy({ id });
+      if (!exist) throw new NotFoundException();
+
+      await this.roomsRepository.update({ id }, infoRoom);
+      return `The Room ${id} was changed`;
+    } catch (error) {
+      throw new NotFoundException(`The room with id: ${id} no exist`);
+    }
+  }
+
+  async changeStateRoom(id, state, youAreShore) {
+    try {
+      const IN_PROGRESS = PaymentStatus.IN_PROGRESS;
+      const PENDING = PaymentStatus.PENDING;
+      const bookingsPendigs = await this.roomsRepository
+        .createQueryBuilder('rooms')
+        .where('rooms.id = :id', { id })
+        .leftJoinAndSelect('rooms.bookings', 'bookings')
+        .andWhere(
+          new Brackets((qb) => {
+            qb.where('bookings.paymentStatus = :PENDING', { PENDING }).orWhere(
+              'bookings.paymentStatus = :IN_PROGRESS',
+              { IN_PROGRESS },
+            );
+          }),
+        )
+        .getOne();
+
+      if (bookingsPendigs && !youAreShore) throw new NotFoundException();
+
+      await this.roomsRepository.update({ id }, { state });
+      return `The Room is ${state}`;
+    } catch (error) {
+      console.log('error:', error);
+      throw new NotFoundException(
+        `The room with id: ${id} have reservation inPending or Pending`,
+      );
+    }
   }
 }

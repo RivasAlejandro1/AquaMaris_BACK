@@ -1,0 +1,11 @@
+[
+  {
+    "name": "SuperAdmin",
+    "email": "aquamarishotelz@gmail.com",
+    "password": "superAdmin123@",
+    "role": "SUPERADMIN",
+    "country": "Anywhere",
+    "user_photo": "",
+    "status": true
+  }
+]

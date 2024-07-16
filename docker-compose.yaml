@@ -2,7 +2,7 @@ version: '3.8'
 
 services: 
   nestapp:  
-    build: ./
+    image: stylelotus/aquamaris:v1.0
     ports:
       - "3001:3000"
     env_file:

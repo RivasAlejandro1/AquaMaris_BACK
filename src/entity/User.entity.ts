@@ -7,6 +7,8 @@ import {
 } from 'typeorm';
 import { MembershipStatus } from '../enum/MembershipStatus.enum';
 import { Booking } from './Booking.entity';
+import { Comment } from './Comment.entity';
+import { RegisterCode } from './RegisterCodes';
 
 @Entity({ name: 'users' })
 @Unique(['email'])
@@ -26,27 +28,36 @@ export class User {
   @Column()
   role: string;
 
-  @Column({ type: 'decimal' })
+  @Column({ type: 'decimal', nullable: true })
   phone: number;
 
   @Column({ type: 'varchar' })
-  address: string;
+  country: string;
 
   @Column({ type: 'varchar', nullable: true })
   user_photo: string;
 
-  @Column({ type: 'varchar', enum: MembershipStatus })
+  @Column({ type: 'varchar', enum: MembershipStatus, nullable: true })
   membership_status: MembershipStatus;
 
   @OneToMany(() => Booking, (booking) => booking.user)
   booking: Booking[];
 
-  @Column({ default: true })
+  @Column({ default: false })
   status: boolean;
 
   @Column({ default: new Date() })
   date_start: Date;
 
-  @Column({ default: '' })
-  date_end: string;
+  @Column({ type: "boolean", default: false })
+  is_locked: boolean;
+
+  @Column({ type: 'varchar', default: '' })
+  suscription_id: string;
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
+
+  @OneToMany(() => RegisterCode, (code) => code.user)
+  registerCode: RegisterCode;
 }

@@ -1,3 +1,4 @@
+import { CommentsController } from './modules/comments/comments.controller';
 import { ImagesController } from './modules/images/images.controller';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -29,12 +30,37 @@ import { ImagesService } from './modules/images/images.service';
 import { UsersService } from './modules/user/user.service';
 import { BookingService } from './modules/booking/booking.service';
 import { RoomsRepository } from './modules/room/rooms.repository';
-// import { CloudinaryService } from './modules/cloudinary/cloudinary.service';
-
+import { MailService } from './modules/mail/mail.service';
+import { MailController } from './modules/mail/mail.controller';
+import { Companion } from './entity/Companion.entity';
+import { Payment } from './entity/Payment.entity';
+import { PaymentModule } from './modules/payment/payment.module';
+import { MailModule } from './modules/mail/mail.module';
+import { CommentsModule } from './modules/comments/comments.module';
+import { CommentsService } from './modules/comments/comments.service';
+import { Comment } from './entity/Comment.entity';
+import { RegisterCode } from './entity/RegisterCodes';
+import { Promotion } from './entity/Promotion.entity';
+import { PromotionModule } from './modules/promotion/promotion.module';
+import { PromotionService } from './modules/promotion/promotion.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Booking, Hotel, Image, Room, Service]),
+    TypeOrmModule.forFeature([
+      User,
+      Booking,
+      Hotel,
+      Image,
+      Room,
+      Service,
+      Payment,
+      Companion,
+      Comment,
+      RegisterCode,
+      Promotion,
+    ]),
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeOrmConfig],
@@ -58,8 +84,13 @@ import { RoomsRepository } from './modules/room/rooms.repository';
     RoomsModule,
     ServiceModule,
     UserModule,
+    PaymentModule,
+    MailModule,
+    CommentsModule,
+    PromotionModule,
   ],
   providers: [
+    MailService,
     HotelController,
     ServiceController,
     RoomsController,
@@ -68,6 +99,7 @@ import { RoomsRepository } from './modules/room/rooms.repository';
     BookingController,
     HotelService,
     ServiceService,
+    CommentsService,
     // CloudinaryService,
     RoomsService,
     ImagesService,
@@ -76,7 +108,10 @@ import { RoomsRepository } from './modules/room/rooms.repository';
     RoomsRepository,
     UserModule,
     RoomsModule,
+    CommentsController,
+    PromotionService,
   ],
+  controllers: [MailController],
 })
 export class AppModule {
   constructor(
@@ -86,6 +121,7 @@ export class AppModule {
     private readonly ImagesController: ImagesController,
     private readonly userController: UserController,
     private readonly bookingController: BookingController,
+    private readonly commentsController: CommentsController,
   ) {}
 
   async onApplicationBootstrap() {
@@ -94,13 +130,18 @@ export class AppModule {
     console.log('RUN SERVICE SEEDER');
     const successService =
       await this.serviceController.serviceSeeder(successHotel);
+    console.log('RUN SUPER USERS SEEDER');
+    const successSuperAdmin =
+      await this.userController.superAdminSeeder(successService);
     console.log('RUN USERS SEEDER');
-    const successUser = await this.userController.seeder(successService);
+    const successUser = await this.userController.seeder(successSuperAdmin);
     console.log('RUN IMAGES SEEDER');
     const successImages = await this.ImagesController.imagesSeeder(successUser);
     console.log('RUN ROOMS SEEDER');
     const successRooms = await this.roomsController.roomsSeeder(successImages);
     console.log('RUN BOOKING SEEDER');
-    await this.bookingController.bookingSeeder(successService);
+    const successComments =
+      await this.commentsController.commentSeeder(successRooms);
+    await this.bookingController.bookingSeeder(successComments);
   }
 }
