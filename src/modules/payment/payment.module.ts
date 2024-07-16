@@ -7,11 +7,15 @@ import { Booking } from 'src/entity/Booking.entity';
 import { PayPalService } from './paypal.service';
 import { User } from 'src/entity/User.entity';
 import { Room } from 'src/entity/Room.entity';
+import { PromotionService } from '../promotion/promotion.service';
+import { Promotion } from 'src/entity/Promotion.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Payment, Booking, User, Room])],
+  imports: [
+    TypeOrmModule.forFeature([Payment, Booking, User, Room, Promotion]),
+  ],
   controllers: [PaymentController],
-  providers: [PaymentService, PayPalService],
+  providers: [PaymentService, PayPalService, PromotionService],
   exports: [PaymentService],
 })
 export class PaymentModule {}

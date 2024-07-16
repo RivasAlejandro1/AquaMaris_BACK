@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   HttpException,
+  HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -83,14 +84,23 @@ export class PromotionService {
       const percentage = code.percentage * 0.01;
       const discountedPrice = price - price * percentage;
 
-      await this.promotionRepository.update(code, {
-        available_uses: code.available_uses - 1,
-        state: code.available_uses - 1 === 0 ? 'DISABLE' : 'AVAILABLE',
-      });
       return discountedPrice;
     } catch (error) {
       console.log(error);
       throw new HttpException(error.response.message, error.status);
+    }
+  }
+
+  async subtractNumberOfAvailableUses(codePromotion) {
+    try {
+      const code = await this.getByCode(codePromotion);
+      await this.promotionRepository.update(code, {
+        available_uses: code.available_uses - 1,
+        state: code.available_uses - 1 === 0 ? 'DISABLE' : 'AVAILABLE',
+      });
+      return new HttpException('OK', HttpStatus.ACCEPTED);
+    } catch (error) {
+      console.log(error);
     }
   }
 }
