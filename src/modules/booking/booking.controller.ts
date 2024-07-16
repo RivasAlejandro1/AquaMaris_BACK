@@ -53,10 +53,10 @@ export class BookingController {
     );
   }
 
-  @ApiBearerAuth()
+  // @ApiBearerAuth()
   @Post()
-  @RolesAdmin(Role.USER)
-  @UseGuards(AuthGuard, Guard_admin)
+  // @RolesAdmin(Role.USER)
+  // @UseGuards(AuthGuard, Guard_admin)
   @UseInterceptors(dataBookingDatesInterceptor)
   async makeBooking(@Body() infoBooking: MakeBookingDto) {
     return await this.bookingService.makeBooking(infoBooking);
