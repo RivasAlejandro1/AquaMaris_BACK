@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
+import { Booking } from './Booking.entity';
 
 @Entity('promotion')
 export class Promotion {
@@ -20,4 +21,7 @@ export class Promotion {
 
   @Column({ type: 'varchar', nullable: false })
   state: string;
+
+  @OneToMany(() => Booking, (booking) => booking.promotion)
+  bookings: Booking[];
 }

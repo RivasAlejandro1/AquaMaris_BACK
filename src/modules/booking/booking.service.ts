@@ -34,6 +34,7 @@ import { PromotionService } from '../promotion/promotion.service';
 import { all } from 'axios';
 import { TypesRooms } from 'src/enum/RoomTypes.enum';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { Promotion } from 'src/entity/Promotion.entity';
 
 @Injectable()
 export class BookingService {
@@ -48,6 +49,8 @@ export class BookingService {
     @InjectRepository(Companion)
     private companionRepository: Repository<Companion>,
     @InjectRepository(Payment) private paymentRepository: Repository<Payment>,
+    @InjectRepository(Promotion)
+    private promotionRepository: Repository<Promotion>,
     private promotionService: PromotionService,
     private mailService: MailService,
   ) {}
@@ -120,13 +123,16 @@ export class BookingService {
       companions,
       promotionCode,
     } = infoBooking;
-    //console.log(promotionCode.lengh);
     const paymentStatus = PaymentStatus.PENDING;
+    const promotionCodeFinded = await this.promotionRepository.findOne({
+      where: { code: promotionCode },
+    });
 
     const newBooking: Booking = this.bookingRepository.create({
       check_in_date,
       check_out_date,
       paymentStatus,
+      promotion: promotionCodeFinded ? promotionCodeFinded : null,
     });
     const newEmail: MailDto = {
       to: 'null',
@@ -154,7 +160,7 @@ export class BookingService {
 
       allBookings = roomFinded.bookings;
       newBooking.room = roomFinded;
-      price = !promotionCode
+      price = !promotionCodeFinded
         ? Number(roomFinded.price)
         : await this.promotionService.useCode(
             promotionCode,

@@ -2,14 +2,17 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './User.entity';
 import { Room } from './Room.entity';
 import { PaymentStatus } from '../enum/PaymentStatus.enum';
 import { Companion } from './Companion.entity';
+import { Promotion } from './Promotion.entity';
 
 @Entity()
 export class Booking {
@@ -36,4 +39,8 @@ export class Booking {
 
   @OneToMany(() => Companion, (companion) => companion.booking)
   companions: Companion[];
+
+  @ManyToOne(() => Promotion, (promotion) => promotion.bookings)
+  @JoinColumn()
+  promotion: Promotion;
 }
