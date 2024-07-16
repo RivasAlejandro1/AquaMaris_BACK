@@ -48,7 +48,7 @@ export class AuthService {
       phone: createUserData.phone,
       country: createUserData.country,
       user_photo: createUserData.user_photo,
-      membership_status: MembershipStatus.DISABLED,
+      membership_status: MembershipStatus.DISABLED
     });
     const {
       confirmPassword: confirmP,
