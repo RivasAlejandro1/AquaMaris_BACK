@@ -64,16 +64,16 @@ export class BookingController {
 
   @ApiBearerAuth()
   @Get(':id')
-  @RolesAdmin(Role.USER)
-  @UseGuards(AuthGuard, Guard_admin)
+  /* @RolesAdmin(Role.USER)
+  @UseGuards(AuthGuard, Guard_admin) */
   async getAllBookingsById(@Param('id') id: string) {
     return await this.bookingService.getAllBookingsById(id);
   }
 
   @ApiBearerAuth()
   @Post('cancel')
-  @RolesAdmin(Role.USER)
-  @UseGuards(AuthGuard, Guard_admin)
+  /* @RolesAdmin(Role.USER)
+  @UseGuards(AuthGuard, Guard_admin) */
   async cancelBooking(@Body() data) {
     const { userId, bookingId } = data;
     return await this.bookingService.cancelBooking(userId, bookingId);
