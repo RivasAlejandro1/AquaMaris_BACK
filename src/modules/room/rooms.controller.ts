@@ -46,7 +46,6 @@ export class RoomsController {
     return this.roomsService.filterRoom(query);
   }
 
-  @UseInterceptors(filtersInterceptor)
   @Get('roomByNum/:num')
   async getByNum(@Param('num') num) {
     return await this.roomsService.getByNum(Number(num));
