@@ -16,6 +16,7 @@ import { ChangeRoomDto } from '../../dtos/ChangeRoom.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { filterResponseInterceptor } from 'src/interceptors/filtersResponseInterceptor';
 
+
 @ApiTags('Rooms')
 @Controller('rooms')
 export class RoomsController {
