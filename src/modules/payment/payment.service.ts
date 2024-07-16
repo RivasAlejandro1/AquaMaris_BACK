@@ -50,7 +50,7 @@ export class PaymentService {
           back_urls: {
             success: 'https://front-pfg-6.vercel.app/',
           },
-          notification_url: `${webhook}/payment/webhook`,
+          notification_url: `https://aquamaris-v1-0.onrender.com/payment/webhook`,
           external_reference: orderId,
         },
       });

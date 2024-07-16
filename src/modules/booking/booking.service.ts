@@ -35,6 +35,7 @@ import { all } from 'axios';
 import { TypesRooms } from 'src/enum/RoomTypes.enum';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Promotion } from 'src/entity/Promotion.entity';
+import { MembershipStatus } from 'src/enum/MembershipStatus.enum';
 
 @Injectable()
 export class BookingService {
@@ -209,6 +210,9 @@ export class BookingService {
       newBooking.user = userFinded;
       newEmail.to = userFinded.email;
       newEmail.name = userFinded.name;
+      if (userFinded.membership_status == 'ACTIVE') {
+        price = price - price * 0.05;
+      }
     } catch (error) {
       if (error.name == 'EntityNotFoundError')
         throw new NotFoundException(`The found the user with id: ${userId}`);
