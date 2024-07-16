@@ -125,11 +125,11 @@ export class BookingService {
       promotionCode,
     } = infoBooking;
     const paymentStatus = PaymentStatus.PENDING;
-    const exist = await this.promotionService.getByCode(promotionCode);
-    const promotionCodeFinded = await this.promotionRepository.findOne({
-      where: { code: promotionCode },
-    });
-
+    let promotionCodeFinded = undefined;
+    if (promotionCode) {
+      promotionCodeFinded =
+        await this.promotionService.getByCode(promotionCode);
+    }
     const newBooking: Booking = this.bookingRepository.create({
       check_in_date,
       check_out_date,
@@ -211,7 +211,7 @@ export class BookingService {
       newBooking.user = userFinded;
       newEmail.to = userFinded.email;
       newEmail.name = userFinded.name;
-      if (userFinded.membership_status == 'ACTIVE') {
+      if (userFinded.membership_status == MembershipStatus.ACTIVE) {
         price = price - price * 0.05;
       }
     } catch (error) {
