@@ -8,6 +8,7 @@ import {
   IsNumber,
   Min,
   Max,
+  IsNumberString,
 } from 'class-validator';
 import { MembershipStatus } from '../enum/MembershipStatus.enum';
 import { Role } from '../enum/Role.enum';
@@ -62,9 +63,8 @@ export class CreateUserDto {
    * Número de teléfono del usuario (opcional).
    * @example 1234567890
    */
-  @IsNumber()
+  @IsNumberString()
   @IsOptional()
-  @Min(8)
   phone: number;
 
    /**
