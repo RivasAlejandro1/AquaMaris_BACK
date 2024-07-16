@@ -59,8 +59,7 @@ export class PayPalService {
         },
       },
     );
-    console.log(response.data);
-    console.log(response.data.id);
+
     const plan = await this.createPlan(response.data.id, accessToken, user);
     return plan;
   }
@@ -116,7 +115,7 @@ export class PayPalService {
           },
         },
       );
-      console.log(response.data);
+
       const subscription = await this.createSubscription(
         response.data.id,
         accessToken,

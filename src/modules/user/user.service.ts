@@ -123,6 +123,7 @@ export class UsersService {
               images: true,
               services: true,
             },
+            promotion: true,
           },
           comments: true,
         },

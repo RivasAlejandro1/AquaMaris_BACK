@@ -24,12 +24,8 @@ export class Guard_admin implements CanActivate {
     const user = request.user;
 
     const hasRole = () => roles.some((role) => user?.role?.includes(role));
-    console.log(user);
-    console.log(user.role);
-    
+
     const valid = user && user.role && hasRole();
-    console.log(valid);
-    
 
     if (!valid) throw new ForbiddenException('Unauthorized Access');
 

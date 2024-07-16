@@ -10,6 +10,7 @@ import * as dotenv from 'dotenv';
 import { subMonths, startOfMonth, endOfMonth, format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Room } from 'src/entity/Room.entity';
+import { PromotionService } from '../promotion/promotion.service';
 //import { MailService } from '../mail/mail.service';
 
 dotenv.config();
@@ -20,6 +21,7 @@ export class PaymentService {
     @InjectRepository(Pay) private paymentReposotory: Repository<Pay>,
     @InjectRepository(Booking) private bookingRepository: Repository<Booking>,
     @InjectRepository(Room) private roomRepository: Repository<Room>,
+    private readonly promotionService: PromotionService,
     //@InjectRepository(MailService) private mailService: MailService,
   ) {}
 
@@ -52,7 +54,6 @@ export class PaymentService {
           external_reference: orderId,
         },
       });
-      console.log(result);
       const response = {
         id: result.id,
         init_point: result.init_point,
@@ -73,6 +74,9 @@ export class PaymentService {
       const orderId = pay.external_reference;
       const order = await this.bookingRepository.findOne({
         where: { id: orderId },
+        relations: {
+          promotion: true,
+        },
       });
       if (order) {
         const newPayment: Partial<Pay> = {
@@ -86,7 +90,11 @@ export class PaymentService {
         await this.paymentReposotory.save(newPayment);
         order.paymentStatus = pay.status;
         await this.bookingRepository.save(order);
-
+        if (order.promotion) {
+          await this.promotionService.subtractNumberOfAvailableUses(
+            order.promotion.code,
+          );
+        }
         //await this.mailService.sendMail()
       } else {
         throw new NotFoundException('orden no encontrada');
