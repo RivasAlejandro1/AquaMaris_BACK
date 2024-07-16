@@ -11,10 +11,10 @@ import {
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
 import { filtersInterceptor } from '../../interceptors/filtersInterceptor.interceptor';
-import { CreateRoomDto } from '../../dtos/CreateRoom.dto';
-import { ChangeRoomDto } from '../../dtos/changeRoom.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { filterResponseInterceptor } from 'src/interceptors/filtersResponseInterceptor';
+import { CreateRoomDto } from 'src/dtos/CreateRoom.dto';
+import { ChangeRoomDto } from 'src/dtos/ChangeRoom.dto';
 
 @ApiTags('Rooms')
 @Controller('rooms')
