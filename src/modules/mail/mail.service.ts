@@ -175,26 +175,26 @@ export class MailService {
   async checkRegisterCode(registerUserData: RegisterUserDto) {
     const { email, code } = registerUserData;
 
-  const codeToNumber = Number(code);
-  const user = await this.userRepository.findOne({ where: { email } });
+    const codeToNumber = Number(code);
+    const user = await this.userRepository.findOne({ where: { email } });
 
-  console.log(codeToNumber);
+    console.log(codeToNumber);
 
-  if (!user) throw new NotFoundException(`Could get user with email ${email}`);
+    if (!user) throw new NotFoundException(`Could get user with email ${email}`);
 
-  const codeUser = await this.registerCodeRepository.findOne({ where: { user: user } });
-  if (!codeUser) throw new NotFoundException(`Could get a code for the user with email ${email}`);
+    const codeUser = await this.registerCodeRepository.findOne({ where: { user: user } });
+    if (!codeUser) throw new NotFoundException(`Could get a code for the user with email ${email}`);
 
-  const codeCode = await this.registerCodeRepository.findOne({ where: { code: codeToNumber } });
-  if (!codeCode) throw new NotFoundException(`The code ${code} does not exist for user with email ${email}`);
+    const codeCode = await this.registerCodeRepository.findOne({ where: { code: codeToNumber } });
+    if (!codeCode) throw new NotFoundException(`The code ${code} does not exist for user with email ${email}`);
 
-  codeUser.checked = true;
+    codeUser.checked = true;
 
-  user.status = true;
-  await this.userRepository.save(user);
+    user.status = true;
+    await this.userRepository.save(user);
 
-  await this.registerCodeRepository.save(codeUser);
+    await this.registerCodeRepository.save(codeUser);
 
-  return { message: `The code was succesfully verified` };
+    return { message: `The code was succesfully verified` };
   }
 }
