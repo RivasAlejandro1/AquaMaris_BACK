@@ -19,6 +19,7 @@ import { filterResponseInterceptor } from 'src/interceptors/filtersResponseInter
 
 @ApiTags('Rooms')
 @Controller('rooms')
+@UseInterceptors(filterResponseInterceptor)
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
@@ -40,14 +41,14 @@ export class RoomsController {
     return await this.roomsService.roomSeeder();
   }
 
+  @UseInterceptors(filtersInterceptor)
   @Get('filter')
-  @UseInterceptors(filtersInterceptor, filterResponseInterceptor)
   filterRooms(@Query() query) {
     return this.roomsService.filterRoom(query);
   }
 
+  @UseInterceptors(filtersInterceptor)
   @Get('roomByNum/:num')
-  @UseInterceptors(filtersInterceptor, filterResponseInterceptor)
   async getByNum(@Param('num') num) {
     return await this.roomsService.getByNum(Number(num));
   }
