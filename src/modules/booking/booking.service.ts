@@ -125,6 +125,7 @@ export class BookingService {
       promotionCode,
     } = infoBooking;
     const paymentStatus = PaymentStatus.PENDING;
+    const exist = await this.promotionService.getByCode(promotionCode);
     const promotionCodeFinded = await this.promotionRepository.findOne({
       where: { code: promotionCode },
     });

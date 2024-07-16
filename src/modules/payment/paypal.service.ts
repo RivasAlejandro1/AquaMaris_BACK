@@ -199,7 +199,7 @@ export class PayPalService {
         { id: user.id },
         {
           suscription_id: suscription_id,
-          membership_status: status,
+          membership_status: MembershipStatus.ACTIVE,
         },
       );
       return 'OK';
