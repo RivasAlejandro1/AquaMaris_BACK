@@ -65,7 +65,7 @@ export class CreateUserDto {
    */
   @IsNumberString()
   @IsOptional()
-  phone: string;
+  phone: number;
 
    /**
    * País del usuario (opcional).
