@@ -12,7 +12,7 @@ import {
 import { RoomsService } from './rooms.service';
 import { filtersInterceptor } from '../../interceptors/filtersInterceptor.interceptor';
 import { CreateRoomDto } from '../../dtos/CreateRoom.dto';
-import { ChangeRoomDto } from '../../dtos/ChangeRoom.dto';
+import { ChangeRoomDto } from '../../dtos/changeRoom.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { filterResponseInterceptor } from 'src/interceptors/filtersResponseInterceptor';
 

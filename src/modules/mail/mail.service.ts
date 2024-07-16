@@ -99,7 +99,7 @@ export class MailService {
       {{/if}}
       {{#if showButton}}
         <button class="button">
-          <a href="h" style="color: #ffffff;">Confirmar código</a>
+          <a href="${process.env.DEPLOY_LINK}/codigo" style="color: #ffffff;">Confirmar código</a>
         </button>
       {{/if}}
       <p style="color: #000000;">Si tienes alguna pregunta, no dudes en contactarnos.</p>
