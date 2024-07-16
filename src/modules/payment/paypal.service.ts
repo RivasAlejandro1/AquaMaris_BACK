@@ -195,10 +195,13 @@ export class PayPalService {
 
       if (!user) throw new NotFoundException('Usuario no encontrado');
 
-      await this.userRepository.update(user, {
-        suscription_id: suscription_id,
-        membership_status: status,
-      });
+      await this.userRepository.update(
+        { id: user.id },
+        {
+          suscription_id: suscription_id,
+          membership_status: status,
+        },
+      );
       return 'OK';
     } catch (error) {
       console.log(error);
@@ -210,10 +213,13 @@ export class PayPalService {
       const user = await this.userRepository.findOne({
         where: { id: request.resource.custom_id },
       });
-      await this.userRepository.update(user, {
-        membership_status: MembershipStatus.CANCELLED,
-        suscription_id: '',
-      });
+      await this.userRepository.update(
+        { id: user.id },
+        {
+          membership_status: MembershipStatus.CANCELLED,
+          suscription_id: '',
+        },
+      );
       return 'OK';
     } catch (error) {
       console.log(error);
@@ -262,9 +268,12 @@ export class PayPalService {
 
       if (!user) throw new NotFoundException('Usuario no encontrado');
 
-      await this.userRepository.update(user, {
-        membership_status: MembershipStatus.PENDING,
-      });
+      await this.userRepository.update(
+        { id: user.id },
+        {
+          membership_status: MembershipStatus.PENDING,
+        },
+      );
       return 'OK';
     } catch (error) {
       console.log(error);
