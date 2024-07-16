@@ -92,7 +92,7 @@ export class AuthService {
     if (user.is_locked) throw new UserIsLockedException();
     if (user.status === false) {
       console.log('User account is not active')
-      throw new ForbiddenException('User account is not active');
+      throw new ForbiddenException('La cuenta del usuario no ha sido activada. Revise su correo');
     }
 
     const userPayload = {
