@@ -14,10 +14,10 @@ import { MembershipStatus } from '../../enum/MembershipStatus.enum';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../entity/User.entity';
 import { Repository } from 'typeorm';
-import { Role } from 'src/enum/Role.enum';
+import { Role } from '../../enum/Role.enum';
 import { MailDto } from 'src/dtos/Mail.dto';
-import { MailType } from 'src/enum/MailType.dto';
-import { UserIsLockedException } from 'src/exceptions/UserIsLocked.exception';
+import { MailType } from '../../enum/MailType.dto';
+import { UserIsLockedException } from '../../exceptions/UserIsLocked.exception';
 
 @Injectable()
 export class AuthService {
@@ -87,7 +87,7 @@ export class AuthService {
     console.log(isPasswordValid);
 
     if (!isPasswordValid)
-      throw new BadRequestException('Email or password is invalid');
+      throw new BadRequestException('El correo o la contraseña son invalidas');
 
     if (user.is_locked) throw new UserIsLockedException();
     if (user.status === false) {

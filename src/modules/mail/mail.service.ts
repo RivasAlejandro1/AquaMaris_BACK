@@ -1,13 +1,13 @@
 import * as handlebars from 'handlebars';
-import { transporter } from 'src/config/mailer';
+import { transporter } from '../../config/mailer';
 import { MailDto } from 'src/dtos/Mail.dto';
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
-import { getRegisterCode } from 'src/helpers/getRegisterCode';
+import { getRegisterCode } from '../../helpers/getRegisterCode';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from 'src/entity/User.entity';
-import { RegisterCode } from 'src/entity/RegisterCodes';
-import { RegisterUserDto } from 'src/dtos/RegisterCode.dto';
+import { User } from '../../entity/User.entity';
+import { RegisterCode } from '../../entity/RegisterCodes';
+import { RegisterUserDto } from '../../dtos/RegisterCode.dto';
 
 @Injectable()
 export class MailService {
