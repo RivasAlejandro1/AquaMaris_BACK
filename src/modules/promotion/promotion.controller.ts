@@ -40,10 +40,10 @@ export class PromotionController {
     return await this.promotionService.getAllAvailableCodes();
   }
 
-  @ApiBearerAuth()
+  //@ApiBearerAuth()
   @Get(':code')
-  @RolesAdmin(Role.ADMIN, Role.USER)
-  @UseGuards(AuthGuard, Guard_admin)
+  /* @RolesAdmin(Role.ADMIN, Role.USER)
+  @UseGuards(AuthGuard, Guard_admin) */
   async getByCode(@Param() code) {
     return await this.promotionService.getByCode(code.code);
   }
