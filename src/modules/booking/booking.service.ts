@@ -215,7 +215,7 @@ export class BookingService {
         price = price - price * 0.05;
       }
     } catch (error) {
-      if (error.name == 'EntityNotFoundError')
+      if (error.name == ' EntityNotFoundError')
         throw new NotFoundException(`The found the user with id: ${userId}`);
       console.log(error);
       throw new InternalServerErrorException('Conection error DB');
