@@ -68,10 +68,10 @@ export class CommentsService {
     }
 
 
-    async changeCommentStatus(commentData: ChangeCommentStatusDto){
+    async changeCommentStatus(commentData: ChangeCommentStatusDto) {
         const { commentId, newStatus } = commentData
         try {
-            const comment = await this.commentRepository.findOne({where: {id: commentId}})
+            const comment = await this.commentRepository.findOne({ where: { id: commentId } })
             comment.comment_status = newStatus
 
             await this.commentRepository.save(comment)
@@ -79,7 +79,7 @@ export class CommentsService {
             return {
                 message: `Comment ${commentId} has changed the status to ${newStatus} `
             }
-        }catch(err){
+        } catch (err) {
             console.log(`Error changing comment with id ${commentId}: `, err)
             throw new InternalServerErrorException(`Error changing comment with id ${commentId}`)
         }
@@ -87,7 +87,23 @@ export class CommentsService {
 
     async getAllComments() {
         try {
-            return await this.commentRepository.find()
+            const comments = await this.commentRepository.find({ relations: { user: true } })
+            const userData = comments.map(comment => {
+                return {
+                    id: comment.id,
+                    comment: comment.comment,
+                    rating: comment.rating,
+                    comment_date: comment.comment_date,
+                    comment_status: comment.comment_status,
+                    user: {
+                        id: comment.user.id,
+                        name: comment.user.name,
+                        email: comment.user.email,
+                        photo: comment.user.user_photo
+                    }
+                };
+            });
+            return userData
         } catch (err) {
             console.log('Error getting all the comments', err)
             throw new InternalServerErrorException('Error getting all the comments')
@@ -96,27 +112,75 @@ export class CommentsService {
 
     async getAllowedComments() {
         try {
-            return await this.commentRepository.find({ where: { comment_status: CommentStatus.APPROVED } })
+            const approvedComments = await this.commentRepository.find({ where: { comment_status: CommentStatus.APPROVED }, relations: { user: true } })
+            const userData = approvedComments.map(comment => {
+                return {
+                    id: comment.id,
+                    comment: comment.comment,
+                    rating: comment.rating,
+                    comment_date: comment.comment_date,
+                    comment_status: comment.comment_status,
+                    user: {
+                        id: comment.user.id,
+                        name: comment.user.name,
+                        email: comment.user.email,
+                        user_photo: comment.user.user_photo
+                    }
+                }
+            })
+            return userData
         } catch (err) {
             console.log(`Error getting all the allowed comments`, err)
             throw new InternalServerErrorException(`Error getting all the allowed comments`)
         }
     }
 
-    
+
     async getInRevisionComments() {
         try {
-            return await this.commentRepository.find({ where: { comment_status: CommentStatus.IN_REVISION } })
+            const inRevisionComments = await this.commentRepository.find({ where: { comment_status: CommentStatus.IN_REVISION }, relations: { user: true } })
+            const userData = inRevisionComments.map(comment => {
+                return {
+                    id: comment.id,
+                    comment: comment.comment,
+                    rating: comment.rating,
+                    comment_date: comment.comment_date,
+                    comment_status: comment.comment_status,
+                    user: {
+                        id: comment.user.id,
+                        name: comment.user.name,
+                        email: comment.user.email,
+                        user_photo: comment.user.user_photo
+                    }
+                }
+            })
+            return userData
         } catch (err) {
             console.log(`Error getting all the allowed comments`, err)
             throw new InternalServerErrorException(`Error getting all the allowed comments`)
         }
     }
 
-    
+
     async getDeniedComments() {
         try {
-            return await this.commentRepository.find({ where: { comment_status: CommentStatus.DENIED } })
+            const deniedComments = await this.commentRepository.find({ where: { comment_status: CommentStatus.DENIED }, relations: { user: true } })
+            const userData = deniedComments.map(comment =>{
+                return {
+                    id: comment.id,
+                    comment: comment.comment,
+                    rating: comment.rating,
+                    comment_date: comment.comment_date,
+                    comment_status: comment.comment_status,
+                    user: {
+                        id: comment.user.id,
+                        name: comment.user.name,
+                        email: comment.user.email,
+                        user_photo: comment.user.user_photo
+                    }
+                }
+            })
+            return userData
         } catch (err) {
             console.log(`Error getting all the allowed comments`, err)
             throw new InternalServerErrorException(`Error getting all the allowed comments`)
@@ -132,7 +196,10 @@ export class CommentsService {
 
             if (!user) throw new NotFoundException(`User with id ${id} not found`)
 
-            return user.comments
+            return {
+                user: user,
+                comments: user.comments
+            }
         } catch (err) {
             console.log(`Could not get user by id ${id}`, err)
             throw new InternalServerErrorException(`Could not get user by id ${id}`)
@@ -171,11 +238,11 @@ export class CommentsService {
         }
     }
 
-    async getCommentsByRoomId(roomId: string){
-        try{
-            const room = await this.roomRepository.findOne({where: {id: roomId}, relations: ['comment']})
-            return {"comments" :room.comment}
-        }catch(err){
+    async getCommentsByRoomId(roomId: string) {
+        try {
+            const room = await this.roomRepository.findOne({ where: { id: roomId }, relations: ['comment'] })
+            return { "comments": room.comment }
+        } catch (err) {
             console.log(`Error getting comments by room id ${roomId}`, err)
             throw new InternalServerErrorException(`Error getting comments by room id ${roomId}`)
         }
