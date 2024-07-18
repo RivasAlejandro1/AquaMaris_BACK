@@ -26,7 +26,7 @@ import { UserIsLockedException } from 'src/exceptions/UserIsLocked.exception';
 export class UsersService {
   constructor(
     @InjectRepository(User) private userDBrepository: Repository<User>,
-  ) {}
+  ) { }
 
   async userSeeder() {
     try {
@@ -375,8 +375,6 @@ export class UsersService {
         where: { email: userData.email },
       });
 
-      if(user.is_locked) throw new UserIsLockedException()
-
       if (!user) {
         user = this.userDBrepository.create({
           name: userData.name,
@@ -390,8 +388,14 @@ export class UsersService {
 
         user = await this.userDBrepository.save(user);
       }
+      if (user.is_locked) throw new UserIsLockedException()
+
       return user;
     } catch (err) {
+      if (err instanceof UserIsLockedException) {
+        throw err
+      }
+      
       console.log(
         'Hubo un error al crear el usuario con autenticacion de terceros',
         err,
