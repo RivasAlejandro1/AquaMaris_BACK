@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User.entity";
 import { Room } from "./Room.entity";
-import { CommentStatus } from "src/enum/CommentsStatus.enum";
+import { CommentStatus } from "../enum/CommentsStatus.enum";
 
 
 @Entity()

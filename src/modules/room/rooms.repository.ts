@@ -347,7 +347,16 @@ export class RoomsRepository {
       if (!exist) throw new NotFoundException();
 
       await this.roomsRepository.update({ id }, infoRoom);
-      return `The Room ${id} was changed`;
+      return await this.roomsRepository.findOne({
+        where:{
+          id
+        },
+        relations:{
+          bookings:true,
+          images: true,
+          services: true
+        }
+      });
     } catch (error) {
       throw new NotFoundException(`The room with id: ${id} no exist`);
     }
@@ -374,7 +383,16 @@ export class RoomsRepository {
       if (bookingsPendigs && !youAreShore) throw new NotFoundException();
 
       await this.roomsRepository.update({ id }, { state });
-      return `The Room is ${state}`;
+      return await this.roomsRepository.findOne({
+        where:{
+          id
+        },
+        relations:{
+          bookings:true,
+          images: true,
+          services: true
+        }
+      });
     } catch (error) {
       console.log('error:', error);
       throw new NotFoundException(

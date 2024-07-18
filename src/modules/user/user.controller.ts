@@ -45,6 +45,8 @@ export class UserController {
   }
 
   @Put('superadmin/blockUser/:id')
+  @RolesAdmin(Role.SUPERADMIN)
+  @UseGuards(AuthGuard, Guard_admin)
   blockUser(@Param('id') id) {
     return this.userService.blockUser(id);
   }

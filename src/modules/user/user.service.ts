@@ -20,6 +20,7 @@ import {
   startOfMonth,
   subMonths,
 } from 'date-fns';
+import { UserIsLockedException } from 'src/exceptions/UserIsLocked.exception';
 
 @Injectable()
 export class UsersService {
@@ -373,6 +374,8 @@ export class UsersService {
       let user = await this.userDBrepository.findOne({
         where: { email: userData.email },
       });
+
+      if(user.is_locked) throw new UserIsLockedException()
 
       if (!user) {
         user = this.userDBrepository.create({
