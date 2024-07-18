@@ -31,12 +31,12 @@ export class AuthService {
     const { email, password } = createUserData;
 
     if (createUserData.password !== createUserData.confirmPassword) {
-      throw new BadRequestException('Passwords does not match');
+      throw new BadRequestException('Las contraseñas no coinciden, por favor verifique');
     }
 
     const user = await this.userRepository.findOne({ where: { email } });
     if (user) {
-      throw new BadRequestException('User Email is already registered');
+      throw new BadRequestException('El correo de este usuario ya se encuentra registrado, verifique su correo.');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
