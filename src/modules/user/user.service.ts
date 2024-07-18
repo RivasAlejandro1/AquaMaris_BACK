@@ -175,7 +175,7 @@ export class UsersService {
       const userupdate = await this.userDBrepository.update(id, datauser);
       return 'update success';
     } catch (err) {
-      console.log(`Could not update user ${id}`, err);
+      console.log(`Could not update use ${id}`, err);
       throw new InternalServerErrorException(`Could not update user ${id}`);
     }
   }
