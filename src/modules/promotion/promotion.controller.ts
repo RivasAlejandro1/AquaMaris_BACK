@@ -32,10 +32,10 @@ export class PromotionController {
     return await this.promotionService.useCode(code, price);
   }
 
-  @ApiBearerAuth()
+  //@ApiBearerAuth()
   @Get()
-  @RolesAdmin(Role.ADMIN)
-  @UseGuards(AuthGuard, Guard_admin)
+  /* @RolesAdmin(Role.ADMIN)
+  @UseGuards(AuthGuard, Guard_admin) */
   async getAllAvailableCodes() {
     return await this.promotionService.getAllAvailableCodes();
   }

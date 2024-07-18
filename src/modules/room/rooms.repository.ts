@@ -13,8 +13,8 @@ import * as data from '../../utils/rooms.data.json';
 import { Image } from '../../entity/Image.entity';
 import { Booking } from '../../entity/Booking.entity';
 import { isThisWeek } from 'date-fns';
-import { RoomStates } from 'src/enum/RoomStates.enum';
-import { PaymentStatus } from 'src/enum/PaymentStatus.enum';
+import { RoomStates } from '../../enum/RoomStates.enum';
+import { PaymentStatus } from '../../enum/PaymentStatus.enum';
 
 @Injectable()
 export class RoomsRepository {
@@ -128,7 +128,7 @@ export class RoomsRepository {
       .leftJoinAndSelect('room.services', 'service')
       .leftJoinAndSelect('room.images', 'image')
       .where('room.id NOT IN (:...reserveredRoomsId)', { reserveredRoomsId })
-      .andWhere('room.state != :state', { state: 'mantenimiento' });
+      .andWhere('room.state != :state', { state: RoomStates.MAINTENANCE });
     if (orderBy === 'ASC') {
       query.orderBy('room.price', 'ASC');
     } else if (orderBy === 'DESC') {

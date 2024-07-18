@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
 import { User } from '../../entity/User.entity';
@@ -231,6 +235,10 @@ export class PayPalService {
       where: { id: userId },
     });
     if (!user) throw new NotFoundException('Usuario no encontrado');
+    if (user.membership_status != MembershipStatus.ACTIVE)
+      throw new BadRequestException(
+        'Este usuario no tiene activa la membresia',
+      );
     const accessToken = await this.getAccessToken();
     const suscription = user.suscription_id;
     const cancel = {
