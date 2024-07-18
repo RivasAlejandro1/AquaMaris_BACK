@@ -9,8 +9,10 @@ import { Role } from "../../enum/Role.enum";
 import { MembershipStatus } from "../../enum/MembershipStatus.enum";
 import * as bcrypt from 'bcrypt';
 import { MailType } from "../../enum/MailType.dto";
-import { BadRequestException } from "@nestjs/common";
+import { BadRequestException, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { MailService } from "../mail/mail.service";
+import { RegisterCode } from "src/entity/RegisterCodes";
+import { LoginUserDto } from "src/dtos/LoginUser.dto";
 
 jest.mock('bcrypt', () => ({
     hash: jest.fn(),
@@ -123,8 +125,8 @@ describe('Auth Service', () => {
                 phone: createUserData.phone,
                 country: createUserData.country,
                 user_photo: createUserData.user_photo,
-                role: createUserData.role,  
-                membership_status: createUserData.membership_status     
+                role: createUserData.role,
+                membership_status: createUserData.membership_status
             });
         });
 
@@ -145,5 +147,152 @@ describe('Auth Service', () => {
                 BadRequestException,
             );
         });
+
+        it('should throw BadRequestException if the email already exists', async () => {
+            const createUserData: CreateUserDto = {
+                name: 'Test User',
+                email: 'test@example.com',
+                password: 'password',
+                confirmPassword: 'password',
+                phone: 123456789,
+                country: 'Test Country',
+                user_photo: 'photo_url',
+                role: Role.USER,
+                membership_status: MembershipStatus.DISABLED
+            }
+
+
+            const mockUser: Partial<User> = {
+                id: '',
+                name: createUserData.name,
+                email: createUserData.email,
+                password: 'hashedPassword',
+                phone: createUserData.phone,
+                country: createUserData.country,
+                user_photo: createUserData.user_photo,
+                role: Role.USER,
+                booking: [],
+                status: true,
+                date_start: new Date(),
+                is_locked: false,
+            };
+
+            const mockRegisterCode: RegisterCode = {
+                id: 'mock-id',
+                code: 123456,
+                user: mockUser as User,
+                checked: false,
+            };
+
+
+            const existingUser: User = {
+                id: 'existing-user-id',
+                name: 'Existing User',
+                email: 'test@example.com',
+                password: 'hashedPassword',
+                phone: 123456789,
+                country: 'Test Country',
+                user_photo: 'photo_url',
+                role: Role.USER,
+                booking: [],
+                status: true,
+                date_start: new Date(),
+                is_locked: false,
+                membership_status: MembershipStatus.DISABLED,
+                suscription_id: '',
+                comments: [],
+                registerCode: mockRegisterCode
+            }
+
+            jest.spyOn(userRepository, 'findOne').mockResolvedValue(existingUser)
+
+            await expect(service.signUp(createUserData)).rejects.toThrow(
+                BadRequestException,
+            )
+
+            expect(userRepository.findOne).toHaveBeenCalledWith({
+                where: { email: createUserData.email }
+            })
+        })
     });
+    describe('login', () => {
+        it('should authenticate a user and return an access token', async () => {
+            const signInData: LoginUserDto = {
+                email: 'test@example.com',
+                password: 'password',
+            };
+
+            const mockUser: Partial<User> = {
+                id: 'user-id',
+                email: 'test@example.com',
+                password: 'hashedPassword',
+                role: Role.USER,
+            };
+
+            jest.spyOn(userRepository, 'findOne').mockResolvedValue(mockUser as User);
+            (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+
+            const result = await service.login(signInData);
+
+            expect(userRepository.findOne).toHaveBeenCalledWith({
+                where: { email: signInData.email },
+            });
+
+            expect(bcrypt.compare).toHaveBeenCalledWith(signInData.password, mockUser.password);
+            expect(jwtService.sign).toHaveBeenCalledWith({
+                id: mockUser.id,
+                email: mockUser.email,
+                sub: mockUser.id,
+                role: mockUser.role,
+            });
+            expect(result).toEqual({
+                message: "User Logged succesfully",
+                token: 'mockToken',
+                userData: {
+                    email: "test@example.com",
+                    id: 'user-id',
+                    role: Role.USER
+                }
+            });
+        })
+
+        it('should throw BadRequestException if credentials are invalid', async () => {
+            const loginData: LoginUserDto = {
+                email: 'test@example.com',
+                password: 'wrongPassword'
+            }
+
+            const mockUser: Partial<User> = {
+                id: 'user-id',
+                email: 'test@example.com',
+                password: 'hashedPassword',
+                role: Role.USER
+            }
+
+            jest.spyOn(userRepository, 'findOne').mockResolvedValue(mockUser as User);
+            (bcrypt.compare as jest.Mock).mockResolvedValue(false)
+
+            await expect(service.login(loginData)).rejects.toThrow(BadRequestException)
+
+            expect(userRepository.findOne).toHaveBeenCalledWith({
+                where: { email: loginData.email }
+            })
+
+            expect(bcrypt.compare).toHaveBeenCalledWith(loginData.password, mockUser.password)
+        })
+        it('should throw UnauthorizedException si el usuario no existe', async () => {
+            const signInData: LoginUserDto = {
+                email: "nonexistent@example.com",
+                password: "password"
+            }
+
+            jest.spyOn(userRepository, 'findOne').mockResolvedValue(null)
+
+            await expect(service.login(signInData)).rejects.toThrow(NotFoundException)
+
+            expect(userRepository.findOne).toHaveBeenCalledWith({
+                where: { email: signInData.email }
+            })
+        })
+    })
 });
